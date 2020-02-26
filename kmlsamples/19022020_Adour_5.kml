@@ -1,0 +1,4305 @@
+<kml>
+<Document id="" tag="AADC00BA626D1973560F9F5F80D65BFA416F5AC13720FC50FC9E8605D1DFEAA0">
+<Schema name="GeoVideo" id="GeoVideo">
+<SimpleField name="Speed" type="double"/>
+<SimpleField name="Z" type="float"/>
+<SimpleField name="Y" type="float"/>
+<SimpleField name="UTC_Time" type="string"/>
+<SimpleField name="Lon" type="double"/>
+<SimpleField name="UTC_Date" type="string"/>
+<SimpleField name="UID" type="double"/>
+<SimpleField name="X" type="float"/>
+<SimpleField name="Altitude" type="double"/>
+<SimpleField name="Bearing" type="double"/>
+<SimpleField name="Lat" type="double"/>
+<SimpleField name="Distance" type="double"/>
+<SimpleField name="FID" type="int"/>
+</Schema>
+<name>iGeoVideo</name>
+<description>iGeoVideo created 19/02/2020 15:03:52. Android 7.1.2. app 1.0.18. Action-X3</description><Style id="red-pushpin">
+<IconStyle>
+<color>ff0000ff</color>
+<Icon>
+<href>http://www.routeshoot.com/Portals/0/Images/red_pin.png
+</href>
+</Icon>
+<hotSpot x="13" y="4" xunits="pixels" yunits="pixels"/>
+</IconStyle>
+</Style>
+<Style id="grn-pushpin">
+<IconStyle>
+<color>ff00ff00</color>
+<Icon>
+<href>http://www.routeshoot.com/Portals/0/Images/green_pin.png
+</href>
+</Icon>
+<hotSpot x="13" y="4" xunits="pixels" yunits="pixels"/>
+</IconStyle>
+</Style>
+<Style id="yellowLineGreenPoly">
+<LineStyle>
+<color>7f00ffff</color>
+<width>4</width>
+</LineStyle>
+<PolyStyle>
+<color>7f00ff00</color>
+</PolyStyle>
+</Style>
+<Style id="wpmRedLine">
+<LineStyle>
+<color>7f4000cd</color>
+<width>4</width>
+</LineStyle>
+<PolyStyle>
+<color>7f00ff00</color>
+</PolyStyle>
+</Style>
+<Style id="wpmPointBM">
+<IconStyle>
+<Icon>
+	<href>http://www.routeshoot.com/Portals/0/Images/turquoise_pin.png</href>
+</Icon>
+<hotSpot x="13" y="4" xunits="pixels" yunits="pixels"/>
+</IconStyle>
+</Style>
+<Style id="wpmPointBM2">
+<IconStyle>
+<Icon>
+	<href>http://www.routeshoot.com/Portals/0/Images/purple_pin.png</href>
+</Icon>
+<hotSpot x="13" y="4" xunits="pixels" yunits="pixels"/>
+</IconStyle>
+</Style>
+<Style id="wpmPointBM3">
+<IconStyle>
+<Icon>
+	<href>http://www.routeshoot.com/Portals/0/Images/yellow_pin.png</href>
+</Icon>
+<hotSpot x="13" y="4" xunits="pixels" yunits="pixels"/>
+</IconStyle>
+</Style>
+<Style id="wpmLinearBM">
+<LineStyle>
+<color>ff09fcff</color>
+<width>6</width>
+</LineStyle>
+</Style>
+<Style id="wpmLinearBM2">
+<LineStyle>
+<color>ffe40091</color>
+<width>6</width>
+</LineStyle>
+</Style>
+<Style id="wpmLinearBM3">
+<LineStyle>
+<color>ffecea40</color>
+<width>6</width>
+</LineStyle>
+</Style>
+<Placemark>
+<name>Video start</name>
+<description/>
+<styleUrl>#grn-pushpin</styleUrl>
+<Point>
+    <coordinates>-1.370491,43.496386
+    </coordinates>
+</Point>
+</Placemark>
+<Placemark id="2">
+<name>2</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">2</SimpleData>
+        <SimpleData name="Lat">43.496385</SimpleData>
+        <SimpleData name="Lon">-1.370507</SimpleData>
+        <SimpleData name="Bearing">280.299988</SimpleData>
+        <SimpleData name="Speed">0.700000</SimpleData>
+        <SimpleData name="UID">2</SimpleData>
+        <SimpleData name="Altitude">49.564880</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:03:57</SimpleData>
+        <SimpleData name="Distance">1.295983</SimpleData>
+        <SimpleData name="X">9.501172</SimpleData>
+        <SimpleData name="Y">-0.262468</SimpleData>
+        <SimpleData name="Z">0.007471</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370491,43.496386
+        -1.370507,43.496385
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="4">
+<name>4</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">4</SimpleData>
+        <SimpleData name="Lat">43.496383</SimpleData>
+        <SimpleData name="Lon">-1.370525</SimpleData>
+        <SimpleData name="Bearing">280.100006</SimpleData>
+        <SimpleData name="Speed">0.730000</SimpleData>
+        <SimpleData name="UID">4</SimpleData>
+        <SimpleData name="Altitude">49.792175</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:03:59</SimpleData>
+        <SimpleData name="Distance">2.723637</SimpleData>
+        <SimpleData name="X">9.620308</SimpleData>
+        <SimpleData name="Y">-0.066580</SimpleData>
+        <SimpleData name="Z">-0.186651</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370507,43.496385
+        -1.370525,43.496383
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="6">
+<name>6</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">6</SimpleData>
+        <SimpleData name="Lat">43.496381</SimpleData>
+        <SimpleData name="Lon">-1.370543</SimpleData>
+        <SimpleData name="Bearing">282.899994</SimpleData>
+        <SimpleData name="Speed">0.850000</SimpleData>
+        <SimpleData name="UID">6</SimpleData>
+        <SimpleData name="Altitude">48.899780</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:01</SimpleData>
+        <SimpleData name="Distance">4.193447</SimpleData>
+        <SimpleData name="X">9.561490</SimpleData>
+        <SimpleData name="Y">-0.213371</SimpleData>
+        <SimpleData name="Z">-0.231402</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370525,43.496383
+        -1.370543,43.496381
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="8">
+<name>8</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">8</SimpleData>
+        <SimpleData name="Lat">43.496380</SimpleData>
+        <SimpleData name="Lon">-1.370559</SimpleData>
+        <SimpleData name="Bearing">282.500000</SimpleData>
+        <SimpleData name="Speed">0.870000</SimpleData>
+        <SimpleData name="UID">8</SimpleData>
+        <SimpleData name="Altitude">48.412231</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:03</SimpleData>
+        <SimpleData name="Distance">5.521192</SimpleData>
+        <SimpleData name="X">9.682145</SimpleData>
+        <SimpleData name="Y">0.021055</SimpleData>
+        <SimpleData name="Z">-0.079480</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370543,43.496381
+        -1.370559,43.496380
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="10">
+<name>10</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">10</SimpleData>
+        <SimpleData name="Lat">43.496380</SimpleData>
+        <SimpleData name="Lon">-1.370578</SimpleData>
+        <SimpleData name="Bearing">271.799988</SimpleData>
+        <SimpleData name="Speed">0.900000</SimpleData>
+        <SimpleData name="UID">10</SimpleData>
+        <SimpleData name="Altitude">48.941040</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:05</SimpleData>
+        <SimpleData name="Distance">7.013090</SimpleData>
+        <SimpleData name="X">9.574783</SimpleData>
+        <SimpleData name="Y">-0.103378</SimpleData>
+        <SimpleData name="Z">-0.769936</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370559,43.496380
+        -1.370578,43.496380
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="12">
+<name>12</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">12</SimpleData>
+        <SimpleData name="Lat">43.496382</SimpleData>
+        <SimpleData name="Lon">-1.370594</SimpleData>
+        <SimpleData name="Bearing">282.100006</SimpleData>
+        <SimpleData name="Speed">0.840000</SimpleData>
+        <SimpleData name="UID">12</SimpleData>
+        <SimpleData name="Altitude">49.253784</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:07</SimpleData>
+        <SimpleData name="Distance">8.339021</SimpleData>
+        <SimpleData name="X">9.590228</SimpleData>
+        <SimpleData name="Y">-0.095039</SimpleData>
+        <SimpleData name="Z">0.209614</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370578,43.496380
+        -1.370594,43.496382
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="14">
+<name>14</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">14</SimpleData>
+        <SimpleData name="Lat">43.496385</SimpleData>
+        <SimpleData name="Lon">-1.370616</SimpleData>
+        <SimpleData name="Bearing">281.799988</SimpleData>
+        <SimpleData name="Speed">0.940000</SimpleData>
+        <SimpleData name="UID">14</SimpleData>
+        <SimpleData name="Altitude">49.453857</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:09</SimpleData>
+        <SimpleData name="Distance">10.160941</SimpleData>
+        <SimpleData name="X">9.572449</SimpleData>
+        <SimpleData name="Y">-0.132062</SimpleData>
+        <SimpleData name="Z">0.074401</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370594,43.496382
+        -1.370616,43.496385
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="16">
+<name>16</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">16</SimpleData>
+        <SimpleData name="Lat">43.496383</SimpleData>
+        <SimpleData name="Lon">-1.370631</SimpleData>
+        <SimpleData name="Bearing">281.700012</SimpleData>
+        <SimpleData name="Speed">0.740000</SimpleData>
+        <SimpleData name="UID">16</SimpleData>
+        <SimpleData name="Altitude">49.875488</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:11</SimpleData>
+        <SimpleData name="Distance">11.435351</SimpleData>
+        <SimpleData name="X">9.617845</SimpleData>
+        <SimpleData name="Y">-0.028737</SimpleData>
+        <SimpleData name="Z">0.103646</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370616,43.496385
+        -1.370631,43.496383
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="18">
+<name>18</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">18</SimpleData>
+        <SimpleData name="Lat">43.496384</SimpleData>
+        <SimpleData name="Lon">-1.370653</SimpleData>
+        <SimpleData name="Bearing">279.299988</SimpleData>
+        <SimpleData name="Speed">0.890000</SimpleData>
+        <SimpleData name="UID">18</SimpleData>
+        <SimpleData name="Altitude">49.543945</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:13</SimpleData>
+        <SimpleData name="Distance">13.177864</SimpleData>
+        <SimpleData name="X">9.531438</SimpleData>
+        <SimpleData name="Y">-0.167353</SimpleData>
+        <SimpleData name="Z">0.330950</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370631,43.496383
+        -1.370653,43.496384
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="20">
+<name>20</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">20</SimpleData>
+        <SimpleData name="Lat">43.496389</SimpleData>
+        <SimpleData name="Lon">-1.370675</SimpleData>
+        <SimpleData name="Bearing">279.399994</SimpleData>
+        <SimpleData name="Speed">0.910000</SimpleData>
+        <SimpleData name="UID">20</SimpleData>
+        <SimpleData name="Altitude">48.670166</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:15</SimpleData>
+        <SimpleData name="Distance">15.049466</SimpleData>
+        <SimpleData name="X">9.661413</SimpleData>
+        <SimpleData name="Y">-0.011646</SimpleData>
+        <SimpleData name="Z">-0.248307</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370653,43.496384
+        -1.370675,43.496389
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="21">
+<name>21</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">21</SimpleData>
+        <SimpleData name="Lat">43.496392</SimpleData>
+        <SimpleData name="Lon">-1.370687</SimpleData>
+        <SimpleData name="Bearing">279.299988</SimpleData>
+        <SimpleData name="Speed">0.860000</SimpleData>
+        <SimpleData name="UID">21</SimpleData>
+        <SimpleData name="Altitude">48.658691</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:16</SimpleData>
+        <SimpleData name="Distance">16.080678</SimpleData>
+        <SimpleData name="X">9.675312</SimpleData>
+        <SimpleData name="Y">-0.066490</SimpleData>
+        <SimpleData name="Z">-0.145753</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370675,43.496389
+        -1.370687,43.496392
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="22">
+<name>22</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">22</SimpleData>
+        <SimpleData name="Lat">43.496395</SimpleData>
+        <SimpleData name="Lon">-1.370699</SimpleData>
+        <SimpleData name="Bearing">282.899994</SimpleData>
+        <SimpleData name="Speed">0.860000</SimpleData>
+        <SimpleData name="UID">22</SimpleData>
+        <SimpleData name="Altitude">48.380859</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:17</SimpleData>
+        <SimpleData name="Distance">17.092036</SimpleData>
+        <SimpleData name="X">9.603286</SimpleData>
+        <SimpleData name="Y">-0.024523</SimpleData>
+        <SimpleData name="Z">-0.331438</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370687,43.496392
+        -1.370699,43.496395
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="24">
+<name>24</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">24</SimpleData>
+        <SimpleData name="Lat">43.496400</SimpleData>
+        <SimpleData name="Lon">-1.370723</SimpleData>
+        <SimpleData name="Bearing">282.899994</SimpleData>
+        <SimpleData name="Speed">0.940000</SimpleData>
+        <SimpleData name="UID">24</SimpleData>
+        <SimpleData name="Altitude">48.363647</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:19</SimpleData>
+        <SimpleData name="Distance">19.129734</SimpleData>
+        <SimpleData name="X">9.684892</SimpleData>
+        <SimpleData name="Y">0.075130</SimpleData>
+        <SimpleData name="Z">-0.008264</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370699,43.496395
+        -1.370723,43.496400
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="26">
+<name>26</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">26</SimpleData>
+        <SimpleData name="Lat">43.496405</SimpleData>
+        <SimpleData name="Lon">-1.370746</SimpleData>
+        <SimpleData name="Bearing">270.700012</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">26</SimpleData>
+        <SimpleData name="Altitude">48.114441</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:21</SimpleData>
+        <SimpleData name="Distance">21.055888</SimpleData>
+        <SimpleData name="X">9.602812</SimpleData>
+        <SimpleData name="Y">-0.016527</SimpleData>
+        <SimpleData name="Z">0.710359</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370723,43.496400
+        -1.370746,43.496405
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="28">
+<name>28</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">28</SimpleData>
+        <SimpleData name="Lat">43.496408</SimpleData>
+        <SimpleData name="Lon">-1.370770</SimpleData>
+        <SimpleData name="Bearing">270.700012</SimpleData>
+        <SimpleData name="Speed">0.860000</SimpleData>
+        <SimpleData name="UID">28</SimpleData>
+        <SimpleData name="Altitude">47.842896</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:23</SimpleData>
+        <SimpleData name="Distance">22.979956</SimpleData>
+        <SimpleData name="X">9.418483</SimpleData>
+        <SimpleData name="Y">-0.283770</SimpleData>
+        <SimpleData name="Z">0.483321</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370746,43.496405
+        -1.370770,43.496408
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="30">
+<name>30</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">30</SimpleData>
+        <SimpleData name="Lat">43.496408</SimpleData>
+        <SimpleData name="Lon">-1.370792</SimpleData>
+        <SimpleData name="Bearing">272.700012</SimpleData>
+        <SimpleData name="Speed">0.870000</SimpleData>
+        <SimpleData name="UID">30</SimpleData>
+        <SimpleData name="Altitude">47.642578</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:25</SimpleData>
+        <SimpleData name="Distance">24.822963</SimpleData>
+        <SimpleData name="X">9.469831</SimpleData>
+        <SimpleData name="Y">-0.224828</SimpleData>
+        <SimpleData name="Z">0.573810</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370770,43.496408
+        -1.370792,43.496408
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="32">
+<name>32</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">32</SimpleData>
+        <SimpleData name="Lat">43.496411</SimpleData>
+        <SimpleData name="Lon">-1.370811</SimpleData>
+        <SimpleData name="Bearing">272.899994</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">32</SimpleData>
+        <SimpleData name="Altitude">47.678284</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:27</SimpleData>
+        <SimpleData name="Distance">26.352657</SimpleData>
+        <SimpleData name="X">9.485441</SimpleData>
+        <SimpleData name="Y">-0.207326</SimpleData>
+        <SimpleData name="Z">0.683818</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370792,43.496408
+        -1.370811,43.496411
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="34">
+<name>34</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">34</SimpleData>
+        <SimpleData name="Lat">43.496416</SimpleData>
+        <SimpleData name="Lon">-1.370835</SimpleData>
+        <SimpleData name="Bearing">282.399994</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">34</SimpleData>
+        <SimpleData name="Altitude">48.078308</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:29</SimpleData>
+        <SimpleData name="Distance">28.376949</SimpleData>
+        <SimpleData name="X">9.577831</SimpleData>
+        <SimpleData name="Y">-0.048272</SimpleData>
+        <SimpleData name="Z">0.398567</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370811,43.496411
+        -1.370835,43.496416
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="36">
+<name>36</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">36</SimpleData>
+        <SimpleData name="Lat">43.496423</SimpleData>
+        <SimpleData name="Lon">-1.370857</SimpleData>
+        <SimpleData name="Bearing">282.299988</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">36</SimpleData>
+        <SimpleData name="Altitude">47.862915</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:31</SimpleData>
+        <SimpleData name="Distance">30.365123</SimpleData>
+        <SimpleData name="X">9.615021</SimpleData>
+        <SimpleData name="Y">0.009016</SimpleData>
+        <SimpleData name="Z">0.557657</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370835,43.496416
+        -1.370857,43.496423
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="38">
+<name>38</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">38</SimpleData>
+        <SimpleData name="Lat">43.496428</SimpleData>
+        <SimpleData name="Lon">-1.370881</SimpleData>
+        <SimpleData name="Bearing">275.100006</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">38</SimpleData>
+        <SimpleData name="Altitude">48.545471</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:33</SimpleData>
+        <SimpleData name="Distance">32.314641</SimpleData>
+        <SimpleData name="X">9.605253</SimpleData>
+        <SimpleData name="Y">-0.081704</SimpleData>
+        <SimpleData name="Z">0.515771</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370857,43.496423
+        -1.370881,43.496428
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="40">
+<name>40</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">40</SimpleData>
+        <SimpleData name="Lat">43.496432</SimpleData>
+        <SimpleData name="Lon">-1.370903</SimpleData>
+        <SimpleData name="Bearing">275.200012</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">40</SimpleData>
+        <SimpleData name="Altitude">48.960022</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:35</SimpleData>
+        <SimpleData name="Distance">34.147342</SimpleData>
+        <SimpleData name="X">9.500426</SimpleData>
+        <SimpleData name="Y">-0.158009</SimpleData>
+        <SimpleData name="Z">0.842584</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370881,43.496428
+        -1.370903,43.496432
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="41">
+<name>41</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">41</SimpleData>
+        <SimpleData name="Lat">43.496433</SimpleData>
+        <SimpleData name="Lon">-1.370915</SimpleData>
+        <SimpleData name="Bearing">275.000000</SimpleData>
+        <SimpleData name="Speed">0.920000</SimpleData>
+        <SimpleData name="UID">41</SimpleData>
+        <SimpleData name="Altitude">48.802612</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:36</SimpleData>
+        <SimpleData name="Distance">35.158138</SimpleData>
+        <SimpleData name="X">9.522797</SimpleData>
+        <SimpleData name="Y">-0.092410</SimpleData>
+        <SimpleData name="Z">0.662276</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370903,43.496432
+        -1.370915,43.496433
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="42">
+<name>42</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">42</SimpleData>
+        <SimpleData name="Lat">43.496433</SimpleData>
+        <SimpleData name="Lon">-1.370928</SimpleData>
+        <SimpleData name="Bearing">267.700012</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">42</SimpleData>
+        <SimpleData name="Altitude">48.988403</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:37</SimpleData>
+        <SimpleData name="Distance">36.195856</SimpleData>
+        <SimpleData name="X">9.508407</SimpleData>
+        <SimpleData name="Y">-0.164688</SimpleData>
+        <SimpleData name="Z">0.584696</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370915,43.496433
+        -1.370928,43.496433
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="43">
+<name>43</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">43</SimpleData>
+        <SimpleData name="Lat">43.496432</SimpleData>
+        <SimpleData name="Lon">-1.370941</SimpleData>
+        <SimpleData name="Bearing">263.200012</SimpleData>
+        <SimpleData name="Speed">0.990000</SimpleData>
+        <SimpleData name="UID">43</SimpleData>
+        <SimpleData name="Altitude">48.967285</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:38</SimpleData>
+        <SimpleData name="Distance">37.279046</SimpleData>
+        <SimpleData name="X">9.564968</SimpleData>
+        <SimpleData name="Y">-0.167443</SimpleData>
+        <SimpleData name="Z">0.029886</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370928,43.496433
+        -1.370941,43.496432
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="44">
+<name>44</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">44</SimpleData>
+        <SimpleData name="Lat">43.496429</SimpleData>
+        <SimpleData name="Lon">-1.370954</SimpleData>
+        <SimpleData name="Bearing">263.100006</SimpleData>
+        <SimpleData name="Speed">0.890000</SimpleData>
+        <SimpleData name="UID">44</SimpleData>
+        <SimpleData name="Altitude">49.222900</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:39</SimpleData>
+        <SimpleData name="Distance">38.352032</SimpleData>
+        <SimpleData name="X">9.383431</SimpleData>
+        <SimpleData name="Y">-0.475201</SimpleData>
+        <SimpleData name="Z">0.206609</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370941,43.496432
+        -1.370954,43.496429
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="45">
+<name>45</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">45</SimpleData>
+        <SimpleData name="Lat">43.496427</SimpleData>
+        <SimpleData name="Lon">-1.370967</SimpleData>
+        <SimpleData name="Bearing">264.600006</SimpleData>
+        <SimpleData name="Speed">1.010000</SimpleData>
+        <SimpleData name="UID">45</SimpleData>
+        <SimpleData name="Altitude">49.186462</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:40</SimpleData>
+        <SimpleData name="Distance">39.422307</SimpleData>
+        <SimpleData name="X">9.386827</SimpleData>
+        <SimpleData name="Y">-0.442482</SimpleData>
+        <SimpleData name="Z">0.285163</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370954,43.496429
+        -1.370967,43.496427
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="46">
+<name>46</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">46</SimpleData>
+        <SimpleData name="Lat">43.496425</SimpleData>
+        <SimpleData name="Lon">-1.370980</SimpleData>
+        <SimpleData name="Bearing">266.899994</SimpleData>
+        <SimpleData name="Speed">0.870000</SimpleData>
+        <SimpleData name="UID">46</SimpleData>
+        <SimpleData name="Altitude">48.965393</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:41</SimpleData>
+        <SimpleData name="Distance">40.490097</SimpleData>
+        <SimpleData name="X">9.302883</SimpleData>
+        <SimpleData name="Y">-0.590076</SimpleData>
+        <SimpleData name="Z">0.565169</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370967,43.496427
+        -1.370980,43.496425
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="48">
+<name>48</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">48</SimpleData>
+        <SimpleData name="Lat">43.496424</SimpleData>
+        <SimpleData name="Lon">-1.371006</SimpleData>
+        <SimpleData name="Bearing">267.200012</SimpleData>
+        <SimpleData name="Speed">0.890000</SimpleData>
+        <SimpleData name="UID">48</SimpleData>
+        <SimpleData name="Altitude">49.091431</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:43</SimpleData>
+        <SimpleData name="Distance">42.584580</SimpleData>
+        <SimpleData name="X">9.532565</SimpleData>
+        <SimpleData name="Y">-0.178435</SimpleData>
+        <SimpleData name="Z">0.413031</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.370980,43.496425
+        -1.371006,43.496424
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="49">
+<name>49</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">49</SimpleData>
+        <SimpleData name="Lat">43.496426</SimpleData>
+        <SimpleData name="Lon">-1.371019</SimpleData>
+        <SimpleData name="Bearing">267.700012</SimpleData>
+        <SimpleData name="Speed">0.940000</SimpleData>
+        <SimpleData name="UID">49</SimpleData>
+        <SimpleData name="Altitude">49.361023</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:44</SimpleData>
+        <SimpleData name="Distance">43.676744</SimpleData>
+        <SimpleData name="X">9.575697</SimpleData>
+        <SimpleData name="Y">-0.025671</SimpleData>
+        <SimpleData name="Z">-0.103455</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371006,43.496424
+        -1.371019,43.496426
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="51">
+<name>51</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">51</SimpleData>
+        <SimpleData name="Lat">43.496429</SimpleData>
+        <SimpleData name="Lon">-1.371043</SimpleData>
+        <SimpleData name="Bearing">283.000000</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">51</SimpleData>
+        <SimpleData name="Altitude">50.020752</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:46</SimpleData>
+        <SimpleData name="Distance">45.616808</SimpleData>
+        <SimpleData name="X">9.553038</SimpleData>
+        <SimpleData name="Y">-0.196842</SimpleData>
+        <SimpleData name="Z">0.630721</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371019,43.496426
+        -1.371043,43.496429
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="52">
+<name>52</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">52</SimpleData>
+        <SimpleData name="Lat">43.496431</SimpleData>
+        <SimpleData name="Lon">-1.371055</SimpleData>
+        <SimpleData name="Bearing">283.200012</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">52</SimpleData>
+        <SimpleData name="Altitude">49.804443</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:47</SimpleData>
+        <SimpleData name="Distance">46.671015</SimpleData>
+        <SimpleData name="X">9.540454</SimpleData>
+        <SimpleData name="Y">-0.252063</SimpleData>
+        <SimpleData name="Z">0.004133</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371043,43.496429
+        -1.371055,43.496431
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="53">
+<name>53</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">53</SimpleData>
+        <SimpleData name="Lat">43.496432</SimpleData>
+        <SimpleData name="Lon">-1.371068</SimpleData>
+        <SimpleData name="Bearing">283.200012</SimpleData>
+        <SimpleData name="Speed">0.860000</SimpleData>
+        <SimpleData name="UID">53</SimpleData>
+        <SimpleData name="Altitude">49.742493</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:48</SimpleData>
+        <SimpleData name="Distance">47.689605</SimpleData>
+        <SimpleData name="X">9.541205</SimpleData>
+        <SimpleData name="Y">-0.167542</SimpleData>
+        <SimpleData name="Z">0.171674</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371055,43.496431
+        -1.371068,43.496432
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="54">
+<name>54</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">54</SimpleData>
+        <SimpleData name="Lat">43.496434</SimpleData>
+        <SimpleData name="Lon">-1.371080</SimpleData>
+        <SimpleData name="Bearing">283.100006</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">54</SimpleData>
+        <SimpleData name="Altitude">49.753845</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:49</SimpleData>
+        <SimpleData name="Distance">48.720738</SimpleData>
+        <SimpleData name="X">9.685454</SimpleData>
+        <SimpleData name="Y">-0.106309</SimpleData>
+        <SimpleData name="Z">0.223137</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371068,43.496432
+        -1.371080,43.496434
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="55">
+<name>55</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">55</SimpleData>
+        <SimpleData name="Lat">43.496437</SimpleData>
+        <SimpleData name="Lon">-1.371093</SimpleData>
+        <SimpleData name="Bearing">283.399994</SimpleData>
+        <SimpleData name="Speed">0.920000</SimpleData>
+        <SimpleData name="UID">55</SimpleData>
+        <SimpleData name="Altitude">49.719604</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:50</SimpleData>
+        <SimpleData name="Distance">49.787100</SimpleData>
+        <SimpleData name="X">9.516413</SimpleData>
+        <SimpleData name="Y">-0.176557</SimpleData>
+        <SimpleData name="Z">0.067617</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371080,43.496434
+        -1.371093,43.496437
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="56">
+<name>56</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">56</SimpleData>
+        <SimpleData name="Lat">43.496439</SimpleData>
+        <SimpleData name="Lon">-1.371106</SimpleData>
+        <SimpleData name="Bearing">283.799988</SimpleData>
+        <SimpleData name="Speed">1.090000</SimpleData>
+        <SimpleData name="UID">56</SimpleData>
+        <SimpleData name="Altitude">49.493652</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:51</SimpleData>
+        <SimpleData name="Distance">50.875715</SimpleData>
+        <SimpleData name="X">9.611453</SimpleData>
+        <SimpleData name="Y">0.013899</SimpleData>
+        <SimpleData name="Z">0.614193</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371093,43.496437
+        -1.371106,43.496439
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="57">
+<name>57</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">57</SimpleData>
+        <SimpleData name="Lat">43.496442</SimpleData>
+        <SimpleData name="Lon">-1.371120</SimpleData>
+        <SimpleData name="Bearing">284.200012</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">57</SimpleData>
+        <SimpleData name="Altitude">49.294373</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:52</SimpleData>
+        <SimpleData name="Distance">52.016510</SimpleData>
+        <SimpleData name="X">9.466825</SimpleData>
+        <SimpleData name="Y">-0.247556</SimpleData>
+        <SimpleData name="Z">0.324940</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371106,43.496439
+        -1.371120,43.496442
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="58">
+<name>58</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">58</SimpleData>
+        <SimpleData name="Lat">43.496444</SimpleData>
+        <SimpleData name="Lon">-1.371133</SimpleData>
+        <SimpleData name="Bearing">286.100006</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">58</SimpleData>
+        <SimpleData name="Altitude">49.081055</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:53</SimpleData>
+        <SimpleData name="Distance">53.084291</SimpleData>
+        <SimpleData name="X">9.458448</SimpleData>
+        <SimpleData name="Y">-0.393128</SimpleData>
+        <SimpleData name="Z">0.610383</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371120,43.496442
+        -1.371133,43.496444
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="60">
+<name>60</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">60</SimpleData>
+        <SimpleData name="Lat">43.496446</SimpleData>
+        <SimpleData name="Lon">-1.371158</SimpleData>
+        <SimpleData name="Bearing">278.500000</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">60</SimpleData>
+        <SimpleData name="Altitude">48.962830</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:55</SimpleData>
+        <SimpleData name="Distance">55.176520</SimpleData>
+        <SimpleData name="X">9.442220</SimpleData>
+        <SimpleData name="Y">-0.296015</SimpleData>
+        <SimpleData name="Z">0.453225</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371133,43.496444
+        -1.371158,43.496446
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="61">
+<name>61</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">61</SimpleData>
+        <SimpleData name="Lat">43.496446</SimpleData>
+        <SimpleData name="Lon">-1.371172</SimpleData>
+        <SimpleData name="Bearing">269.700012</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">61</SimpleData>
+        <SimpleData name="Altitude">48.837830</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:56</SimpleData>
+        <SimpleData name="Distance">56.260345</SimpleData>
+        <SimpleData name="X">9.430763</SimpleData>
+        <SimpleData name="Y">-0.400822</SimpleData>
+        <SimpleData name="Z">0.643494</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371158,43.496446
+        -1.371172,43.496446
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="62">
+<name>62</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">62</SimpleData>
+        <SimpleData name="Lat">43.496446</SimpleData>
+        <SimpleData name="Lon">-1.371185</SimpleData>
+        <SimpleData name="Bearing">268.200012</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">62</SimpleData>
+        <SimpleData name="Altitude">49.187744</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:57</SimpleData>
+        <SimpleData name="Distance">57.322739</SimpleData>
+        <SimpleData name="X">9.422499</SimpleData>
+        <SimpleData name="Y">-0.518025</SimpleData>
+        <SimpleData name="Z">0.357997</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371172,43.496446
+        -1.371185,43.496446
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="63">
+<name>63</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">63</SimpleData>
+        <SimpleData name="Lat">43.496444</SimpleData>
+        <SimpleData name="Lon">-1.371199</SimpleData>
+        <SimpleData name="Bearing">269.500000</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">63</SimpleData>
+        <SimpleData name="Altitude">49.790710</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:58</SimpleData>
+        <SimpleData name="Distance">58.494226</SimpleData>
+        <SimpleData name="X">9.315062</SimpleData>
+        <SimpleData name="Y">-0.487223</SimpleData>
+        <SimpleData name="Z">-0.095416</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371185,43.496446
+        -1.371199,43.496444
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="64">
+<name>64</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">64</SimpleData>
+        <SimpleData name="Lat">43.496442</SimpleData>
+        <SimpleData name="Lon">-1.371213</SimpleData>
+        <SimpleData name="Bearing">263.500000</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">64</SimpleData>
+        <SimpleData name="Altitude">49.540527</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:04:59</SimpleData>
+        <SimpleData name="Distance">59.644356</SimpleData>
+        <SimpleData name="X">9.392821</SimpleData>
+        <SimpleData name="Y">-0.357998</SimpleData>
+        <SimpleData name="Z">0.346728</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371199,43.496444
+        -1.371213,43.496442
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="65">
+<name>65</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">65</SimpleData>
+        <SimpleData name="Lat">43.496440</SimpleData>
+        <SimpleData name="Lon">-1.371228</SimpleData>
+        <SimpleData name="Bearing">268.000000</SimpleData>
+        <SimpleData name="Speed">1.080000</SimpleData>
+        <SimpleData name="UID">65</SimpleData>
+        <SimpleData name="Altitude">49.912048</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:00</SimpleData>
+        <SimpleData name="Distance">60.865608</SimpleData>
+        <SimpleData name="X">9.443910</SimpleData>
+        <SimpleData name="Y">-0.442895</SimpleData>
+        <SimpleData name="Z">0.284745</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371213,43.496442
+        -1.371228,43.496440
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="66">
+<name>66</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">66</SimpleData>
+        <SimpleData name="Lat">43.496439</SimpleData>
+        <SimpleData name="Lon">-1.371242</SimpleData>
+        <SimpleData name="Bearing">272.799988</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">66</SimpleData>
+        <SimpleData name="Altitude">49.587585</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:01</SimpleData>
+        <SimpleData name="Distance">62.008351</SimpleData>
+        <SimpleData name="X">9.451425</SimpleData>
+        <SimpleData name="Y">-0.316675</SimpleData>
+        <SimpleData name="Z">0.045829</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371228,43.496440
+        -1.371242,43.496439
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="67">
+<name>67</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">67</SimpleData>
+        <SimpleData name="Lat">43.496438</SimpleData>
+        <SimpleData name="Lon">-1.371255</SimpleData>
+        <SimpleData name="Bearing">272.600006</SimpleData>
+        <SimpleData name="Speed">0.920000</SimpleData>
+        <SimpleData name="UID">67</SimpleData>
+        <SimpleData name="Altitude">49.836853</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:02</SimpleData>
+        <SimpleData name="Distance">63.061686</SimpleData>
+        <SimpleData name="X">9.517539</SimpleData>
+        <SimpleData name="Y">-0.196090</SimpleData>
+        <SimpleData name="Z">0.131478</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371242,43.496439
+        -1.371255,43.496438
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="68">
+<name>68</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">68</SimpleData>
+        <SimpleData name="Lat">43.496438</SimpleData>
+        <SimpleData name="Lon">-1.371269</SimpleData>
+        <SimpleData name="Bearing">272.899994</SimpleData>
+        <SimpleData name="Speed">0.980000</SimpleData>
+        <SimpleData name="UID">68</SimpleData>
+        <SimpleData name="Altitude">50.232117</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:03</SimpleData>
+        <SimpleData name="Distance">64.204697</SimpleData>
+        <SimpleData name="X">9.615930</SimpleData>
+        <SimpleData name="Y">-0.102305</SimpleData>
+        <SimpleData name="Z">-0.272814</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371255,43.496438
+        -1.371269,43.496438
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="69">
+<name>69</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">69</SimpleData>
+        <SimpleData name="Lat">43.496439</SimpleData>
+        <SimpleData name="Lon">-1.371284</SimpleData>
+        <SimpleData name="Bearing">277.899994</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">69</SimpleData>
+        <SimpleData name="Altitude">50.406067</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:04</SimpleData>
+        <SimpleData name="Distance">65.382077</SimpleData>
+        <SimpleData name="X">9.606193</SimpleData>
+        <SimpleData name="Y">-0.161906</SimpleData>
+        <SimpleData name="Z">-0.064988</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371269,43.496438
+        -1.371284,43.496439
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="70">
+<name>70</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">70</SimpleData>
+        <SimpleData name="Lat">43.496441</SimpleData>
+        <SimpleData name="Lon">-1.371298</SimpleData>
+        <SimpleData name="Bearing">278.000000</SimpleData>
+        <SimpleData name="Speed">1.100000</SimpleData>
+        <SimpleData name="UID">70</SimpleData>
+        <SimpleData name="Altitude">49.935181</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:05</SimpleData>
+        <SimpleData name="Distance">66.553039</SimpleData>
+        <SimpleData name="X">9.701984</SimpleData>
+        <SimpleData name="Y">-0.062358</SimpleData>
+        <SimpleData name="Z">0.077008</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371284,43.496439
+        -1.371298,43.496441
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="72">
+<name>72</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">72</SimpleData>
+        <SimpleData name="Lat">43.496444</SimpleData>
+        <SimpleData name="Lon">-1.371320</SimpleData>
+        <SimpleData name="Bearing">278.700012</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">72</SimpleData>
+        <SimpleData name="Altitude">50.767212</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:07</SimpleData>
+        <SimpleData name="Distance">68.384116</SimpleData>
+        <SimpleData name="X">9.530874</SimpleData>
+        <SimpleData name="Y">-0.200411</SimpleData>
+        <SimpleData name="Z">-0.168669</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371298,43.496441
+        -1.371320,43.496444
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="74">
+<name>74</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">74</SimpleData>
+        <SimpleData name="Lat">43.496446</SimpleData>
+        <SimpleData name="Lon">-1.371340</SimpleData>
+        <SimpleData name="Bearing">278.899994</SimpleData>
+        <SimpleData name="Speed">0.900000</SimpleData>
+        <SimpleData name="UID">74</SimpleData>
+        <SimpleData name="Altitude">50.694214</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:09</SimpleData>
+        <SimpleData name="Distance">70.017874</SimpleData>
+        <SimpleData name="X">9.504409</SimpleData>
+        <SimpleData name="Y">-0.297237</SimpleData>
+        <SimpleData name="Z">-0.072270</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371320,43.496444
+        -1.371340,43.496446
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="76">
+<name>76</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">76</SimpleData>
+        <SimpleData name="Lat">43.496449</SimpleData>
+        <SimpleData name="Lon">-1.371360</SimpleData>
+        <SimpleData name="Bearing">287.799988</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">76</SimpleData>
+        <SimpleData name="Altitude">50.649963</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:11</SimpleData>
+        <SimpleData name="Distance">71.691104</SimpleData>
+        <SimpleData name="X">9.572759</SimpleData>
+        <SimpleData name="Y">-0.117579</SimpleData>
+        <SimpleData name="Z">-0.049023</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371340,43.496446
+        -1.371360,43.496449
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="78">
+<name>78</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">78</SimpleData>
+        <SimpleData name="Lat">43.496453</SimpleData>
+        <SimpleData name="Lon">-1.371382</SimpleData>
+        <SimpleData name="Bearing">287.700012</SimpleData>
+        <SimpleData name="Speed">0.870000</SimpleData>
+        <SimpleData name="UID">78</SimpleData>
+        <SimpleData name="Altitude">50.540405</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:13</SimpleData>
+        <SimpleData name="Distance">73.502322</SimpleData>
+        <SimpleData name="X">9.552286</SimpleData>
+        <SimpleData name="Y">-0.153641</SimpleData>
+        <SimpleData name="Z">0.374714</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371360,43.496449
+        -1.371382,43.496453
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="80">
+<name>80</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">80</SimpleData>
+        <SimpleData name="Lat">43.496457</SimpleData>
+        <SimpleData name="Lon">-1.371404</SimpleData>
+        <SimpleData name="Bearing">285.399994</SimpleData>
+        <SimpleData name="Speed">0.980000</SimpleData>
+        <SimpleData name="UID">80</SimpleData>
+        <SimpleData name="Altitude">50.158691</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:15</SimpleData>
+        <SimpleData name="Distance">75.290677</SimpleData>
+        <SimpleData name="X">9.434896</SimpleData>
+        <SimpleData name="Y">-0.243798</SimpleData>
+        <SimpleData name="Z">0.743793</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371382,43.496453
+        -1.371404,43.496457
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="82">
+<name>82</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">82</SimpleData>
+        <SimpleData name="Lat">43.496460</SimpleData>
+        <SimpleData name="Lon">-1.371427</SimpleData>
+        <SimpleData name="Bearing">275.299988</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">82</SimpleData>
+        <SimpleData name="Altitude">49.992676</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:17</SimpleData>
+        <SimpleData name="Distance">77.200964</SimpleData>
+        <SimpleData name="X">9.494625</SimpleData>
+        <SimpleData name="Y">-0.191207</SimpleData>
+        <SimpleData name="Z">0.604989</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371404,43.496457
+        -1.371427,43.496460
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="84">
+<name>84</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">84</SimpleData>
+        <SimpleData name="Lat">43.496458</SimpleData>
+        <SimpleData name="Lon">-1.371447</SimpleData>
+        <SimpleData name="Bearing">275.000000</SimpleData>
+        <SimpleData name="Speed">0.900000</SimpleData>
+        <SimpleData name="UID">84</SimpleData>
+        <SimpleData name="Altitude">50.089844</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:19</SimpleData>
+        <SimpleData name="Distance">78.852460</SimpleData>
+        <SimpleData name="X">9.440342</SimpleData>
+        <SimpleData name="Y">-0.289252</SimpleData>
+        <SimpleData name="Z">0.650630</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371427,43.496460
+        -1.371447,43.496458
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="86">
+<name>86</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">86</SimpleData>
+        <SimpleData name="Lat">43.496455</SimpleData>
+        <SimpleData name="Lon">-1.371469</SimpleData>
+        <SimpleData name="Bearing">274.200012</SimpleData>
+        <SimpleData name="Speed">0.880000</SimpleData>
+        <SimpleData name="UID">86</SimpleData>
+        <SimpleData name="Altitude">50.313782</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:21</SimpleData>
+        <SimpleData name="Distance">80.627865</SimpleData>
+        <SimpleData name="X">9.478423</SimpleData>
+        <SimpleData name="Y">-0.456006</SimpleData>
+        <SimpleData name="Z">0.393979</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371447,43.496458
+        -1.371469,43.496455
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="88">
+<name>88</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">88</SimpleData>
+        <SimpleData name="Lat">43.496450</SimpleData>
+        <SimpleData name="Lon">-1.371486</SimpleData>
+        <SimpleData name="Bearing">254.899994</SimpleData>
+        <SimpleData name="Speed">0.890000</SimpleData>
+        <SimpleData name="UID">88</SimpleData>
+        <SimpleData name="Altitude">50.248535</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:23</SimpleData>
+        <SimpleData name="Distance">82.152997</SimpleData>
+        <SimpleData name="X">9.434436</SimpleData>
+        <SimpleData name="Y">-0.405486</SimpleData>
+        <SimpleData name="Z">0.503882</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371469,43.496455
+        -1.371486,43.496450
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="90">
+<name>90</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">90</SimpleData>
+        <SimpleData name="Lat">43.496446</SimpleData>
+        <SimpleData name="Lon">-1.371506</SimpleData>
+        <SimpleData name="Bearing">254.899994</SimpleData>
+        <SimpleData name="Speed">0.870000</SimpleData>
+        <SimpleData name="UID">90</SimpleData>
+        <SimpleData name="Altitude">50.571533</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:25</SimpleData>
+        <SimpleData name="Distance">83.795849</SimpleData>
+        <SimpleData name="X">9.430054</SimpleData>
+        <SimpleData name="Y">-0.343711</SimpleData>
+        <SimpleData name="Z">0.673006</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371486,43.496450
+        -1.371506,43.496446
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="92">
+<name>92</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">92</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371529</SimpleData>
+        <SimpleData name="Bearing">263.000000</SimpleData>
+        <SimpleData name="Speed">0.770000</SimpleData>
+        <SimpleData name="UID">92</SimpleData>
+        <SimpleData name="Altitude">50.448364</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:27</SimpleData>
+        <SimpleData name="Distance">85.724952</SimpleData>
+        <SimpleData name="X">9.345677</SimpleData>
+        <SimpleData name="Y">-0.464682</SimpleData>
+        <SimpleData name="Z">0.584704</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371506,43.496446
+        -1.371529,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="94">
+<name>94</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">94</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371551</SimpleData>
+        <SimpleData name="Bearing">263.600006</SimpleData>
+        <SimpleData name="Speed">0.910000</SimpleData>
+        <SimpleData name="UID">94</SimpleData>
+        <SimpleData name="Altitude">50.280518</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:29</SimpleData>
+        <SimpleData name="Distance">87.496732</SimpleData>
+        <SimpleData name="X">9.413108</SimpleData>
+        <SimpleData name="Y">-0.430122</SimpleData>
+        <SimpleData name="Z">0.399319</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371529,43.496443
+        -1.371551,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="96">
+<name>96</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">96</SimpleData>
+        <SimpleData name="Lat">43.496444</SimpleData>
+        <SimpleData name="Lon">-1.371572</SimpleData>
+        <SimpleData name="Bearing">273.600006</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">96</SimpleData>
+        <SimpleData name="Altitude">49.977417</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:31</SimpleData>
+        <SimpleData name="Distance">89.166746</SimpleData>
+        <SimpleData name="X">9.537637</SimpleData>
+        <SimpleData name="Y">-0.152327</SimpleData>
+        <SimpleData name="Z">0.223325</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371551,43.496443
+        -1.371572,43.496444
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="97">
+<name>97</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">97</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371585</SimpleData>
+        <SimpleData name="Bearing">274.200012</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">97</SimpleData>
+        <SimpleData name="Altitude">49.758362</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:32</SimpleData>
+        <SimpleData name="Distance">90.223335</SimpleData>
+        <SimpleData name="X">9.682075</SimpleData>
+        <SimpleData name="Y">-0.054846</SimpleData>
+        <SimpleData name="Z">-0.099548</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371572,43.496444
+        -1.371585,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="99">
+<name>99</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">99</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371610</SimpleData>
+        <SimpleData name="Bearing">270.700012</SimpleData>
+        <SimpleData name="Speed">1.140000</SimpleData>
+        <SimpleData name="UID">99</SimpleData>
+        <SimpleData name="Altitude">50.104004</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:34</SimpleData>
+        <SimpleData name="Distance">92.296756</SimpleData>
+        <SimpleData name="X">9.638328</SimpleData>
+        <SimpleData name="Y">-0.039644</SimpleData>
+        <SimpleData name="Z">0.244316</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371585,43.496443
+        -1.371610,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="100">
+<name>100</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">100</SimpleData>
+        <SimpleData name="Lat">43.496442</SimpleData>
+        <SimpleData name="Lon">-1.371624</SimpleData>
+        <SimpleData name="Bearing">277.500000</SimpleData>
+        <SimpleData name="Speed">0.980000</SimpleData>
+        <SimpleData name="UID">100</SimpleData>
+        <SimpleData name="Altitude">49.981262</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:35</SimpleData>
+        <SimpleData name="Distance">93.424769</SimpleData>
+        <SimpleData name="X">9.527681</SimpleData>
+        <SimpleData name="Y">-0.151013</SimpleData>
+        <SimpleData name="Z">0.123590</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371610,43.496443
+        -1.371624,43.496442
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="101">
+<name>101</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">101</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371637</SimpleData>
+        <SimpleData name="Bearing">270.500000</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">101</SimpleData>
+        <SimpleData name="Altitude">49.915222</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:36</SimpleData>
+        <SimpleData name="Distance">94.426360</SimpleData>
+        <SimpleData name="X">9.484459</SimpleData>
+        <SimpleData name="Y">-0.173161</SimpleData>
+        <SimpleData name="Z">0.633697</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371624,43.496442
+        -1.371637,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="102">
+<name>102</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">102</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371649</SimpleData>
+        <SimpleData name="Bearing">277.299988</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">102</SimpleData>
+        <SimpleData name="Altitude">49.810242</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:37</SimpleData>
+        <SimpleData name="Distance">95.457365</SimpleData>
+        <SimpleData name="X">9.481477</SimpleData>
+        <SimpleData name="Y">-0.412466</SimpleData>
+        <SimpleData name="Z">0.575500</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371637,43.496443
+        -1.371649,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="104">
+<name>104</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">104</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371673</SimpleData>
+        <SimpleData name="Bearing">272.200012</SimpleData>
+        <SimpleData name="Speed">0.880000</SimpleData>
+        <SimpleData name="UID">104</SimpleData>
+        <SimpleData name="Altitude">49.655884</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:39</SimpleData>
+        <SimpleData name="Distance">97.381588</SimpleData>
+        <SimpleData name="X">9.457936</SimpleData>
+        <SimpleData name="Y">-0.267268</SimpleData>
+        <SimpleData name="Z">0.755141</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371649,43.496443
+        -1.371673,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="105">
+<name>105</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">105</SimpleData>
+        <SimpleData name="Lat">43.496442</SimpleData>
+        <SimpleData name="Lon">-1.371686</SimpleData>
+        <SimpleData name="Bearing">273.899994</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">105</SimpleData>
+        <SimpleData name="Altitude">49.426392</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:40</SimpleData>
+        <SimpleData name="Distance">98.436843</SimpleData>
+        <SimpleData name="X">9.428511</SimpleData>
+        <SimpleData name="Y">-0.257698</SimpleData>
+        <SimpleData name="Z">-0.345225</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371673,43.496443
+        -1.371686,43.496442
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="106">
+<name>106</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">106</SimpleData>
+        <SimpleData name="Lat">43.496441</SimpleData>
+        <SimpleData name="Lon">-1.371699</SimpleData>
+        <SimpleData name="Bearing">273.799988</SimpleData>
+        <SimpleData name="Speed">0.940000</SimpleData>
+        <SimpleData name="UID">106</SimpleData>
+        <SimpleData name="Altitude">49.870361</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:41</SimpleData>
+        <SimpleData name="Distance">99.470198</SimpleData>
+        <SimpleData name="X">9.552098</SimpleData>
+        <SimpleData name="Y">-0.197217</SimpleData>
+        <SimpleData name="Z">-0.262205</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371686,43.496442
+        -1.371699,43.496441
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="107">
+<name>107</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">107</SimpleData>
+        <SimpleData name="Lat">43.496441</SimpleData>
+        <SimpleData name="Lon">-1.371712</SimpleData>
+        <SimpleData name="Bearing">273.000000</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">107</SimpleData>
+        <SimpleData name="Altitude">49.933472</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:42</SimpleData>
+        <SimpleData name="Distance">100.486206</SimpleData>
+        <SimpleData name="X">9.563368</SimpleData>
+        <SimpleData name="Y">-0.237414</SimpleData>
+        <SimpleData name="Z">-0.257322</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371699,43.496441
+        -1.371712,43.496441
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="109">
+<name>109</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">109</SimpleData>
+        <SimpleData name="Lat">43.496442</SimpleData>
+        <SimpleData name="Lon">-1.371734</SimpleData>
+        <SimpleData name="Bearing">273.399994</SimpleData>
+        <SimpleData name="Speed">0.880000</SimpleData>
+        <SimpleData name="UID">109</SimpleData>
+        <SimpleData name="Altitude">49.405945</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:44</SimpleData>
+        <SimpleData name="Distance">102.322017</SimpleData>
+        <SimpleData name="X">9.525845</SimpleData>
+        <SimpleData name="Y">-0.211689</SimpleData>
+        <SimpleData name="Z">0.440831</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371712,43.496441
+        -1.371734,43.496442
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="111">
+<name>111</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">111</SimpleData>
+        <SimpleData name="Lat">43.496443</SimpleData>
+        <SimpleData name="Lon">-1.371756</SimpleData>
+        <SimpleData name="Bearing">283.600006</SimpleData>
+        <SimpleData name="Speed">0.790000</SimpleData>
+        <SimpleData name="UID">111</SimpleData>
+        <SimpleData name="Altitude">49.166260</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:46</SimpleData>
+        <SimpleData name="Distance">104.087072</SimpleData>
+        <SimpleData name="X">9.416489</SimpleData>
+        <SimpleData name="Y">-0.473510</SimpleData>
+        <SimpleData name="Z">0.317614</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371734,43.496442
+        -1.371756,43.496443
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="113">
+<name>113</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">113</SimpleData>
+        <SimpleData name="Lat">43.496445</SimpleData>
+        <SimpleData name="Lon">-1.371777</SimpleData>
+        <SimpleData name="Bearing">283.299988</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">113</SimpleData>
+        <SimpleData name="Altitude">49.199097</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:48</SimpleData>
+        <SimpleData name="Distance">105.838547</SimpleData>
+        <SimpleData name="X">9.434332</SimpleData>
+        <SimpleData name="Y">-0.438387</SimpleData>
+        <SimpleData name="Z">0.341657</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371756,43.496443
+        -1.371777,43.496445
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="115">
+<name>115</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">115</SimpleData>
+        <SimpleData name="Lat">43.496448</SimpleData>
+        <SimpleData name="Lon">-1.371800</SimpleData>
+        <SimpleData name="Bearing">281.899994</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">115</SimpleData>
+        <SimpleData name="Altitude">49.392273</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:50</SimpleData>
+        <SimpleData name="Distance">107.698146</SimpleData>
+        <SimpleData name="X">9.490183</SimpleData>
+        <SimpleData name="Y">-0.291737</SimpleData>
+        <SimpleData name="Z">0.328158</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371777,43.496445
+        -1.371800,43.496448
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="117">
+<name>117</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">117</SimpleData>
+        <SimpleData name="Lat">43.496450</SimpleData>
+        <SimpleData name="Lon">-1.371822</SimpleData>
+        <SimpleData name="Bearing">281.700012</SimpleData>
+        <SimpleData name="Speed">0.900000</SimpleData>
+        <SimpleData name="UID">117</SimpleData>
+        <SimpleData name="Altitude">48.781555</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:52</SimpleData>
+        <SimpleData name="Distance">109.443660</SimpleData>
+        <SimpleData name="X">9.346618</SimpleData>
+        <SimpleData name="Y">-0.767835</SimpleData>
+        <SimpleData name="Z">0.146692</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371800,43.496448
+        -1.371822,43.496450
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="119">
+<name>119</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">119</SimpleData>
+        <SimpleData name="Lat">43.496453</SimpleData>
+        <SimpleData name="Lon">-1.371843</SimpleData>
+        <SimpleData name="Bearing">280.299988</SimpleData>
+        <SimpleData name="Speed">0.890000</SimpleData>
+        <SimpleData name="UID">119</SimpleData>
+        <SimpleData name="Altitude">49.006653</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:54</SimpleData>
+        <SimpleData name="Distance">111.220876</SimpleData>
+        <SimpleData name="X">9.424376</SimpleData>
+        <SimpleData name="Y">-0.494735</SimpleData>
+        <SimpleData name="Z">0.632036</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371822,43.496450
+        -1.371843,43.496453
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="121">
+<name>121</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">121</SimpleData>
+        <SimpleData name="Lat">43.496457</SimpleData>
+        <SimpleData name="Lon">-1.371866</SimpleData>
+        <SimpleData name="Bearing">280.399994</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">121</SimpleData>
+        <SimpleData name="Altitude">48.881104</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:56</SimpleData>
+        <SimpleData name="Distance">113.096288</SimpleData>
+        <SimpleData name="X">9.493497</SimpleData>
+        <SimpleData name="Y">-0.194212</SimpleData>
+        <SimpleData name="Z">0.499994</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371843,43.496453
+        -1.371866,43.496457
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="122">
+<name>122</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">122</SimpleData>
+        <SimpleData name="Lat">43.496459</SimpleData>
+        <SimpleData name="Lon">-1.371878</SimpleData>
+        <SimpleData name="Bearing">279.700012</SimpleData>
+        <SimpleData name="Speed">1.120000</SimpleData>
+        <SimpleData name="UID">122</SimpleData>
+        <SimpleData name="Altitude">49.336670</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:57</SimpleData>
+        <SimpleData name="Distance">114.159490</SimpleData>
+        <SimpleData name="X">9.586283</SimpleData>
+        <SimpleData name="Y">0.030802</SimpleData>
+        <SimpleData name="Z">1.125455</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371866,43.496457
+        -1.371878,43.496459
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="123">
+<name>123</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">123</SimpleData>
+        <SimpleData name="Lat">43.496461</SimpleData>
+        <SimpleData name="Lon">-1.371892</SimpleData>
+        <SimpleData name="Bearing">279.500000</SimpleData>
+        <SimpleData name="Speed">1.080000</SimpleData>
+        <SimpleData name="UID">123</SimpleData>
+        <SimpleData name="Altitude">49.378418</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:58</SimpleData>
+        <SimpleData name="Distance">115.290259</SimpleData>
+        <SimpleData name="X">9.448793</SimpleData>
+        <SimpleData name="Y">-0.139742</SimpleData>
+        <SimpleData name="Z">0.554463</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371878,43.496459
+        -1.371892,43.496461
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="124">
+<name>124</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">124</SimpleData>
+        <SimpleData name="Lat">43.496462</SimpleData>
+        <SimpleData name="Lon">-1.371905</SimpleData>
+        <SimpleData name="Bearing">275.399994</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">124</SimpleData>
+        <SimpleData name="Altitude">49.453491</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:05:59</SimpleData>
+        <SimpleData name="Distance">116.355721</SimpleData>
+        <SimpleData name="X">9.401087</SimpleData>
+        <SimpleData name="Y">-0.406456</SimpleData>
+        <SimpleData name="Z">1.410577</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371892,43.496461
+        -1.371905,43.496462
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="125">
+<name>125</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">125</SimpleData>
+        <SimpleData name="Lat">43.496463</SimpleData>
+        <SimpleData name="Lon">-1.371918</SimpleData>
+        <SimpleData name="Bearing">274.700012</SimpleData>
+        <SimpleData name="Speed">1.010000</SimpleData>
+        <SimpleData name="UID">125</SimpleData>
+        <SimpleData name="Altitude">49.283081</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:00</SimpleData>
+        <SimpleData name="Distance">117.396017</SimpleData>
+        <SimpleData name="X">9.312079</SimpleData>
+        <SimpleData name="Y">-0.369755</SimpleData>
+        <SimpleData name="Z">1.387827</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371905,43.496462
+        -1.371918,43.496463
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="126">
+<name>126</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">126</SimpleData>
+        <SimpleData name="Lat">43.496464</SimpleData>
+        <SimpleData name="Lon">-1.371931</SimpleData>
+        <SimpleData name="Bearing">273.600006</SimpleData>
+        <SimpleData name="Speed">1.090000</SimpleData>
+        <SimpleData name="UID">126</SimpleData>
+        <SimpleData name="Altitude">49.222778</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:01</SimpleData>
+        <SimpleData name="Distance">118.442797</SimpleData>
+        <SimpleData name="X">9.453680</SimpleData>
+        <SimpleData name="Y">-0.193086</SimpleData>
+        <SimpleData name="Z">0.876023</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371918,43.496463
+        -1.371931,43.496464
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="127">
+<name>127</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">127</SimpleData>
+        <SimpleData name="Lat">43.496465</SimpleData>
+        <SimpleData name="Lon">-1.371945</SimpleData>
+        <SimpleData name="Bearing">274.299988</SimpleData>
+        <SimpleData name="Speed">1.160000</SimpleData>
+        <SimpleData name="UID">127</SimpleData>
+        <SimpleData name="Altitude">49.220947</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:02</SimpleData>
+        <SimpleData name="Distance">119.569894</SimpleData>
+        <SimpleData name="X">9.473212</SimpleData>
+        <SimpleData name="Y">-0.098796</SimpleData>
+        <SimpleData name="Z">1.277594</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371931,43.496464
+        -1.371945,43.496465
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="128">
+<name>128</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">128</SimpleData>
+        <SimpleData name="Lat">43.496465</SimpleData>
+        <SimpleData name="Lon">-1.371959</SimpleData>
+        <SimpleData name="Bearing">272.299988</SimpleData>
+        <SimpleData name="Speed">1.140000</SimpleData>
+        <SimpleData name="UID">128</SimpleData>
+        <SimpleData name="Altitude">49.296570</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:03</SimpleData>
+        <SimpleData name="Distance">120.734515</SimpleData>
+        <SimpleData name="X">9.453512</SimpleData>
+        <SimpleData name="Y">-0.106844</SimpleData>
+        <SimpleData name="Z">0.662803</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371945,43.496465
+        -1.371959,43.496465
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="129">
+<name>129</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">129</SimpleData>
+        <SimpleData name="Lat">43.496465</SimpleData>
+        <SimpleData name="Lon">-1.371973</SimpleData>
+        <SimpleData name="Bearing">269.200012</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">129</SimpleData>
+        <SimpleData name="Altitude">49.525452</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:04</SimpleData>
+        <SimpleData name="Distance">121.866854</SimpleData>
+        <SimpleData name="X">9.527306</SimpleData>
+        <SimpleData name="Y">-0.153267</SimpleData>
+        <SimpleData name="Z">1.053331</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371959,43.496465
+        -1.371973,43.496465
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="130">
+<name>130</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">130</SimpleData>
+        <SimpleData name="Lat">43.496465</SimpleData>
+        <SimpleData name="Lon">-1.371986</SimpleData>
+        <SimpleData name="Bearing">267.500000</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">130</SimpleData>
+        <SimpleData name="Altitude">49.607300</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:05</SimpleData>
+        <SimpleData name="Distance">122.908566</SimpleData>
+        <SimpleData name="X">9.411229</SimpleData>
+        <SimpleData name="Y">-0.271222</SimpleData>
+        <SimpleData name="Z">0.908705</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371973,43.496465
+        -1.371986,43.496465
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="132">
+<name>132</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">132</SimpleData>
+        <SimpleData name="Lat">43.496465</SimpleData>
+        <SimpleData name="Lon">-1.372009</SimpleData>
+        <SimpleData name="Bearing">267.200012</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">132</SimpleData>
+        <SimpleData name="Altitude">49.733276</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:07</SimpleData>
+        <SimpleData name="Distance">124.764370</SimpleData>
+        <SimpleData name="X">9.458885</SimpleData>
+        <SimpleData name="Y">-0.174511</SimpleData>
+        <SimpleData name="Z">1.036824</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.371986,43.496465
+        -1.372009,43.496465
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="134">
+<name>134</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">134</SimpleData>
+        <SimpleData name="Lat">43.496466</SimpleData>
+        <SimpleData name="Lon">-1.372032</SimpleData>
+        <SimpleData name="Bearing">267.299988</SimpleData>
+        <SimpleData name="Speed">0.940000</SimpleData>
+        <SimpleData name="UID">134</SimpleData>
+        <SimpleData name="Altitude">49.646729</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:09</SimpleData>
+        <SimpleData name="Distance">126.628832</SimpleData>
+        <SimpleData name="X">9.457623</SimpleData>
+        <SimpleData name="Y">-0.246241</SimpleData>
+        <SimpleData name="Z">0.762762</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372009,43.496465
+        -1.372032,43.496466
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="136">
+<name>136</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">136</SimpleData>
+        <SimpleData name="Lat">43.496470</SimpleData>
+        <SimpleData name="Lon">-1.372054</SimpleData>
+        <SimpleData name="Bearing">274.100006</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">136</SimpleData>
+        <SimpleData name="Altitude">49.991089</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:11</SimpleData>
+        <SimpleData name="Distance">128.473323</SimpleData>
+        <SimpleData name="X">9.618589</SimpleData>
+        <SimpleData name="Y">0.095792</SimpleData>
+        <SimpleData name="Z">0.714867</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372032,43.496466
+        -1.372054,43.496470
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="137">
+<name>137</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">137</SimpleData>
+        <SimpleData name="Lat">43.496472</SimpleData>
+        <SimpleData name="Lon">-1.372067</SimpleData>
+        <SimpleData name="Bearing">274.200012</SimpleData>
+        <SimpleData name="Speed">1.180000</SimpleData>
+        <SimpleData name="UID">137</SimpleData>
+        <SimpleData name="Altitude">50.128296</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:12</SimpleData>
+        <SimpleData name="Distance">129.534144</SimpleData>
+        <SimpleData name="X">9.617462</SimpleData>
+        <SimpleData name="Y">0.024416</SimpleData>
+        <SimpleData name="Z">0.877900</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372054,43.496470
+        -1.372067,43.496472
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="138">
+<name>138</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">138</SimpleData>
+        <SimpleData name="Lat">43.496474</SimpleData>
+        <SimpleData name="Lon">-1.372079</SimpleData>
+        <SimpleData name="Bearing">273.899994</SimpleData>
+        <SimpleData name="Speed">0.950000</SimpleData>
+        <SimpleData name="UID">138</SimpleData>
+        <SimpleData name="Altitude">50.571289</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:13</SimpleData>
+        <SimpleData name="Distance">130.578231</SimpleData>
+        <SimpleData name="X">9.431890</SimpleData>
+        <SimpleData name="Y">-0.462804</SimpleData>
+        <SimpleData name="Z">0.512390</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372067,43.496472
+        -1.372079,43.496474
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="140">
+<name>140</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">140</SimpleData>
+        <SimpleData name="Lat">43.496478</SimpleData>
+        <SimpleData name="Lon">-1.372100</SimpleData>
+        <SimpleData name="Bearing">273.700012</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">140</SimpleData>
+        <SimpleData name="Altitude">50.503845</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:15</SimpleData>
+        <SimpleData name="Distance">132.319453</SimpleData>
+        <SimpleData name="X">9.431703</SimpleData>
+        <SimpleData name="Y">-0.327006</SimpleData>
+        <SimpleData name="Z">0.307285</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372079,43.496474
+        -1.372100,43.496478
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="141">
+<name>141</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">141</SimpleData>
+        <SimpleData name="Lat">43.496480</SimpleData>
+        <SimpleData name="Lon">-1.372113</SimpleData>
+        <SimpleData name="Bearing">281.700012</SimpleData>
+        <SimpleData name="Speed">1.110000</SimpleData>
+        <SimpleData name="UID">141</SimpleData>
+        <SimpleData name="Altitude">50.719910</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:16</SimpleData>
+        <SimpleData name="Distance">133.376498</SimpleData>
+        <SimpleData name="X">9.371785</SimpleData>
+        <SimpleData name="Y">-0.481210</SimpleData>
+        <SimpleData name="Z">0.300522</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372100,43.496478
+        -1.372113,43.496480
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="142">
+<name>142</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">142</SimpleData>
+        <SimpleData name="Lat">43.496485</SimpleData>
+        <SimpleData name="Lon">-1.372126</SimpleData>
+        <SimpleData name="Bearing">283.000000</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">142</SimpleData>
+        <SimpleData name="Altitude">51.443237</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:17</SimpleData>
+        <SimpleData name="Distance">134.551179</SimpleData>
+        <SimpleData name="X">9.423626</SimpleData>
+        <SimpleData name="Y">-0.442144</SimpleData>
+        <SimpleData name="Z">0.518778</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372113,43.496480
+        -1.372126,43.496485
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="143">
+<name>143</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">143</SimpleData>
+        <SimpleData name="Lat">43.496490</SimpleData>
+        <SimpleData name="Lon">-1.372138</SimpleData>
+        <SimpleData name="Bearing">286.000000</SimpleData>
+        <SimpleData name="Speed">1.110000</SimpleData>
+        <SimpleData name="UID">143</SimpleData>
+        <SimpleData name="Altitude">51.599365</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:18</SimpleData>
+        <SimpleData name="Distance">135.640593</SimpleData>
+        <SimpleData name="X">9.327788</SimpleData>
+        <SimpleData name="Y">-0.557505</SimpleData>
+        <SimpleData name="Z">0.576281</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372126,43.496485
+        -1.372138,43.496490
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="144">
+<name>144</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">144</SimpleData>
+        <SimpleData name="Lat">43.496493</SimpleData>
+        <SimpleData name="Lon">-1.372150</SimpleData>
+        <SimpleData name="Bearing">282.700012</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">144</SimpleData>
+        <SimpleData name="Altitude">51.859985</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:19</SimpleData>
+        <SimpleData name="Distance">136.711392</SimpleData>
+        <SimpleData name="X">9.405246</SimpleData>
+        <SimpleData name="Y">-0.294374</SimpleData>
+        <SimpleData name="Z">0.792122</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372138,43.496490
+        -1.372150,43.496493
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="146">
+<name>146</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">146</SimpleData>
+        <SimpleData name="Lat">43.496496</SimpleData>
+        <SimpleData name="Lon">-1.372173</SimpleData>
+        <SimpleData name="Bearing">282.000000</SimpleData>
+        <SimpleData name="Speed">0.880000</SimpleData>
+        <SimpleData name="UID">146</SimpleData>
+        <SimpleData name="Altitude">51.225830</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:21</SimpleData>
+        <SimpleData name="Distance">138.572829</SimpleData>
+        <SimpleData name="X">9.378268</SimpleData>
+        <SimpleData name="Y">-0.585372</SimpleData>
+        <SimpleData name="Z">0.569248</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372150,43.496493
+        -1.372173,43.496496
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="148">
+<name>148</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">148</SimpleData>
+        <SimpleData name="Lat">43.496498</SimpleData>
+        <SimpleData name="Lon">-1.372197</SimpleData>
+        <SimpleData name="Bearing">268.399994</SimpleData>
+        <SimpleData name="Speed">0.910000</SimpleData>
+        <SimpleData name="UID">148</SimpleData>
+        <SimpleData name="Altitude">52.003906</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:23</SimpleData>
+        <SimpleData name="Distance">140.531950</SimpleData>
+        <SimpleData name="X">9.499320</SimpleData>
+        <SimpleData name="Y">-0.292258</SimpleData>
+        <SimpleData name="Z">0.360251</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372173,43.496496
+        -1.372197,43.496498
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="150">
+<name>150</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">150</SimpleData>
+        <SimpleData name="Lat">43.496501</SimpleData>
+        <SimpleData name="Lon">-1.372219</SimpleData>
+        <SimpleData name="Bearing">268.500000</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">150</SimpleData>
+        <SimpleData name="Altitude">52.297180</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:25</SimpleData>
+        <SimpleData name="Distance">142.381297</SimpleData>
+        <SimpleData name="X">9.358825</SimpleData>
+        <SimpleData name="Y">-0.551647</SimpleData>
+        <SimpleData name="Z">0.514269</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372197,43.496498
+        -1.372219,43.496501
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="151">
+<name>151</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">151</SimpleData>
+        <SimpleData name="Lat">43.496504</SimpleData>
+        <SimpleData name="Lon">-1.372232</SimpleData>
+        <SimpleData name="Bearing">276.299988</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">151</SimpleData>
+        <SimpleData name="Altitude">52.581726</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:26</SimpleData>
+        <SimpleData name="Distance">143.494820</SimpleData>
+        <SimpleData name="X">9.430387</SimpleData>
+        <SimpleData name="Y">-0.320808</SimpleData>
+        <SimpleData name="Z">0.975946</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372219,43.496501
+        -1.372232,43.496504
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="152">
+<name>152</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">152</SimpleData>
+        <SimpleData name="Lat">43.496506</SimpleData>
+        <SimpleData name="Lon">-1.372246</SimpleData>
+        <SimpleData name="Bearing">283.299988</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">152</SimpleData>
+        <SimpleData name="Altitude">52.239624</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:27</SimpleData>
+        <SimpleData name="Distance">144.622751</SimpleData>
+        <SimpleData name="X">9.278249</SimpleData>
+        <SimpleData name="Y">-0.749428</SimpleData>
+        <SimpleData name="Z">0.599542</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372232,43.496504
+        -1.372246,43.496506
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="153">
+<name>153</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">153</SimpleData>
+        <SimpleData name="Lat">43.496509</SimpleData>
+        <SimpleData name="Lon">-1.372259</SimpleData>
+        <SimpleData name="Bearing">285.799988</SimpleData>
+        <SimpleData name="Speed">1.000000</SimpleData>
+        <SimpleData name="UID">153</SimpleData>
+        <SimpleData name="Altitude">52.096863</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:28</SimpleData>
+        <SimpleData name="Distance">145.680298</SimpleData>
+        <SimpleData name="X">9.319742</SimpleData>
+        <SimpleData name="Y">-0.779359</SimpleData>
+        <SimpleData name="Z">1.111948</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372246,43.496506
+        -1.372259,43.496509
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="154">
+<name>154</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">154</SimpleData>
+        <SimpleData name="Lat">43.496512</SimpleData>
+        <SimpleData name="Lon">-1.372270</SimpleData>
+        <SimpleData name="Bearing">277.100006</SimpleData>
+        <SimpleData name="Speed">0.960000</SimpleData>
+        <SimpleData name="UID">154</SimpleData>
+        <SimpleData name="Altitude">52.069458</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:29</SimpleData>
+        <SimpleData name="Distance">146.703601</SimpleData>
+        <SimpleData name="X">9.320509</SimpleData>
+        <SimpleData name="Y">-0.483010</SimpleData>
+        <SimpleData name="Z">1.127760</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372259,43.496509
+        -1.372270,43.496512
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="155">
+<name>155</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">155</SimpleData>
+        <SimpleData name="Lat">43.496516</SimpleData>
+        <SimpleData name="Lon">-1.372282</SimpleData>
+        <SimpleData name="Bearing">293.399994</SimpleData>
+        <SimpleData name="Speed">1.080000</SimpleData>
+        <SimpleData name="UID">155</SimpleData>
+        <SimpleData name="Altitude">51.800476</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:30</SimpleData>
+        <SimpleData name="Distance">147.711333</SimpleData>
+        <SimpleData name="X">9.368780</SimpleData>
+        <SimpleData name="Y">-0.442143</SimpleData>
+        <SimpleData name="Z">0.119458</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372270,43.496512
+        -1.372282,43.496516
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="156">
+<name>156</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">156</SimpleData>
+        <SimpleData name="Lat">43.496520</SimpleData>
+        <SimpleData name="Lon">-1.372295</SimpleData>
+        <SimpleData name="Bearing">291.500000</SimpleData>
+        <SimpleData name="Speed">1.240000</SimpleData>
+        <SimpleData name="UID">156</SimpleData>
+        <SimpleData name="Altitude">51.717285</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:31</SimpleData>
+        <SimpleData name="Distance">148.900129</SimpleData>
+        <SimpleData name="X">9.552325</SimpleData>
+        <SimpleData name="Y">-0.220703</SimpleData>
+        <SimpleData name="Z">0.703492</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372282,43.496516
+        -1.372295,43.496520
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="157">
+<name>157</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">157</SimpleData>
+        <SimpleData name="Lat">43.496525</SimpleData>
+        <SimpleData name="Lon">-1.372308</SimpleData>
+        <SimpleData name="Bearing">293.100006</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">157</SimpleData>
+        <SimpleData name="Altitude">51.592102</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:32</SimpleData>
+        <SimpleData name="Distance">150.051576</SimpleData>
+        <SimpleData name="X">9.391319</SimpleData>
+        <SimpleData name="Y">-0.699841</SimpleData>
+        <SimpleData name="Z">0.796009</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372295,43.496520
+        -1.372308,43.496525
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="158">
+<name>158</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">158</SimpleData>
+        <SimpleData name="Lat">43.496530</SimpleData>
+        <SimpleData name="Lon">-1.372320</SimpleData>
+        <SimpleData name="Bearing">294.399994</SimpleData>
+        <SimpleData name="Speed">1.060000</SimpleData>
+        <SimpleData name="UID">158</SimpleData>
+        <SimpleData name="Altitude">51.378174</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:33</SimpleData>
+        <SimpleData name="Distance">151.146831</SimpleData>
+        <SimpleData name="X">9.308677</SimpleData>
+        <SimpleData name="Y">-0.892551</SimpleData>
+        <SimpleData name="Z">0.427868</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372308,43.496525
+        -1.372320,43.496530
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="159">
+<name>159</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">159</SimpleData>
+        <SimpleData name="Lat">43.496535</SimpleData>
+        <SimpleData name="Lon">-1.372331</SimpleData>
+        <SimpleData name="Bearing">294.899994</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">159</SimpleData>
+        <SimpleData name="Altitude">51.476379</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:34</SimpleData>
+        <SimpleData name="Distance">152.218296</SimpleData>
+        <SimpleData name="X">9.268857</SimpleData>
+        <SimpleData name="Y">-0.657391</SimpleData>
+        <SimpleData name="Z">1.217490</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372320,43.496530
+        -1.372331,43.496535
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="160">
+<name>160</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">160</SimpleData>
+        <SimpleData name="Lat">43.496540</SimpleData>
+        <SimpleData name="Lon">-1.372342</SimpleData>
+        <SimpleData name="Bearing">294.000000</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">160</SimpleData>
+        <SimpleData name="Altitude">51.797668</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:35</SimpleData>
+        <SimpleData name="Distance">153.317282</SimpleData>
+        <SimpleData name="X">9.326708</SimpleData>
+        <SimpleData name="Y">-0.696461</SimpleData>
+        <SimpleData name="Z">0.881281</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372331,43.496535
+        -1.372342,43.496540
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="162">
+<name>162</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">162</SimpleData>
+        <SimpleData name="Lat">43.496549</SimpleData>
+        <SimpleData name="Lon">-1.372364</SimpleData>
+        <SimpleData name="Bearing">298.600006</SimpleData>
+        <SimpleData name="Speed">0.980000</SimpleData>
+        <SimpleData name="UID">162</SimpleData>
+        <SimpleData name="Altitude">51.887390</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:37</SimpleData>
+        <SimpleData name="Distance">155.267407</SimpleData>
+        <SimpleData name="X">9.386061</SimpleData>
+        <SimpleData name="Y">-0.495862</SimpleData>
+        <SimpleData name="Z">0.599918</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372342,43.496540
+        -1.372364,43.496549
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="163">
+<name>163</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">163</SimpleData>
+        <SimpleData name="Lat">43.496554</SimpleData>
+        <SimpleData name="Lon">-1.372374</SimpleData>
+        <SimpleData name="Bearing">295.200012</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">163</SimpleData>
+        <SimpleData name="Altitude">51.783203</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:38</SimpleData>
+        <SimpleData name="Distance">156.277071</SimpleData>
+        <SimpleData name="X">9.488237</SimpleData>
+        <SimpleData name="Y">-0.146881</SimpleData>
+        <SimpleData name="Z">0.522158</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372364,43.496549
+        -1.372374,43.496554
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="164">
+<name>164</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">164</SimpleData>
+        <SimpleData name="Lat">43.496559</SimpleData>
+        <SimpleData name="Lon">-1.372385</SimpleData>
+        <SimpleData name="Bearing">289.899994</SimpleData>
+        <SimpleData name="Speed">1.080000</SimpleData>
+        <SimpleData name="UID">164</SimpleData>
+        <SimpleData name="Altitude">52.031616</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:39</SimpleData>
+        <SimpleData name="Distance">157.331187</SimpleData>
+        <SimpleData name="X">9.664794</SimpleData>
+        <SimpleData name="Y">0.179187</SimpleData>
+        <SimpleData name="Z">0.992098</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372374,43.496554
+        -1.372385,43.496559
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="166">
+<name>166</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">166</SimpleData>
+        <SimpleData name="Lat">43.496564</SimpleData>
+        <SimpleData name="Lon">-1.372407</SimpleData>
+        <SimpleData name="Bearing">281.399994</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">166</SimpleData>
+        <SimpleData name="Altitude">51.971008</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:41</SimpleData>
+        <SimpleData name="Distance">159.224481</SimpleData>
+        <SimpleData name="X">9.515222</SimpleData>
+        <SimpleData name="Y">-0.255887</SimpleData>
+        <SimpleData name="Z">0.429829</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372385,43.496559
+        -1.372407,43.496564
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="168">
+<name>168</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">168</SimpleData>
+        <SimpleData name="Lat">43.496568</SimpleData>
+        <SimpleData name="Lon">-1.372430</SimpleData>
+        <SimpleData name="Bearing">286.899994</SimpleData>
+        <SimpleData name="Speed">0.970000</SimpleData>
+        <SimpleData name="UID">168</SimpleData>
+        <SimpleData name="Altitude">51.763733</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:43</SimpleData>
+        <SimpleData name="Distance">161.087829</SimpleData>
+        <SimpleData name="X">9.437148</SimpleData>
+        <SimpleData name="Y">-0.488349</SimpleData>
+        <SimpleData name="Z">0.314047</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372407,43.496564
+        -1.372430,43.496568
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="170">
+<name>170</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">170</SimpleData>
+        <SimpleData name="Lat">43.496572</SimpleData>
+        <SimpleData name="Lon">-1.372454</SimpleData>
+        <SimpleData name="Bearing">284.299988</SimpleData>
+        <SimpleData name="Speed">1.160000</SimpleData>
+        <SimpleData name="UID">170</SimpleData>
+        <SimpleData name="Altitude">52.134705</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:45</SimpleData>
+        <SimpleData name="Distance">163.146089</SimpleData>
+        <SimpleData name="X">9.451800</SimpleData>
+        <SimpleData name="Y">-0.383918</SimpleData>
+        <SimpleData name="Z">0.158150</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372430,43.496568
+        -1.372454,43.496572
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="171">
+<name>171</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">171</SimpleData>
+        <SimpleData name="Lat">43.496574</SimpleData>
+        <SimpleData name="Lon">-1.372467</SimpleData>
+        <SimpleData name="Bearing">282.799988</SimpleData>
+        <SimpleData name="Speed">1.020000</SimpleData>
+        <SimpleData name="UID">171</SimpleData>
+        <SimpleData name="Altitude">52.171570</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:46</SimpleData>
+        <SimpleData name="Distance">164.197079</SimpleData>
+        <SimpleData name="X">9.496127</SimpleData>
+        <SimpleData name="Y">-0.485719</SimpleData>
+        <SimpleData name="Z">-0.086024</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372454,43.496572
+        -1.372467,43.496574
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="172">
+<name>172</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">172</SimpleData>
+        <SimpleData name="Lat">43.496576</SimpleData>
+        <SimpleData name="Lon">-1.372480</SimpleData>
+        <SimpleData name="Bearing">281.899994</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">172</SimpleData>
+        <SimpleData name="Altitude">52.153809</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:47</SimpleData>
+        <SimpleData name="Distance">165.268178</SimpleData>
+        <SimpleData name="X">9.599807</SimpleData>
+        <SimpleData name="Y">-0.249433</SimpleData>
+        <SimpleData name="Z">0.211867</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372467,43.496574
+        -1.372480,43.496576
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="173">
+<name>173</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">173</SimpleData>
+        <SimpleData name="Lat">43.496579</SimpleData>
+        <SimpleData name="Lon">-1.372494</SimpleData>
+        <SimpleData name="Bearing">283.100006</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">173</SimpleData>
+        <SimpleData name="Altitude">52.205322</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:48</SimpleData>
+        <SimpleData name="Distance">166.433881</SimpleData>
+        <SimpleData name="X">9.470460</SimpleData>
+        <SimpleData name="Y">-0.460169</SimpleData>
+        <SimpleData name="Z">-0.160266</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372480,43.496576
+        -1.372494,43.496579
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="174">
+<name>174</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">174</SimpleData>
+        <SimpleData name="Lat">43.496582</SimpleData>
+        <SimpleData name="Lon">-1.372508</SimpleData>
+        <SimpleData name="Bearing">281.000000</SimpleData>
+        <SimpleData name="Speed">1.060000</SimpleData>
+        <SimpleData name="UID">174</SimpleData>
+        <SimpleData name="Altitude">51.892395</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:49</SimpleData>
+        <SimpleData name="Distance">167.630757</SimpleData>
+        <SimpleData name="X">9.548108</SimpleData>
+        <SimpleData name="Y">-0.307299</SimpleData>
+        <SimpleData name="Z">0.159397</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372494,43.496579
+        -1.372508,43.496582
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="175">
+<name>175</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">175</SimpleData>
+        <SimpleData name="Lat">43.496585</SimpleData>
+        <SimpleData name="Lon">-1.372522</SimpleData>
+        <SimpleData name="Bearing">284.100006</SimpleData>
+        <SimpleData name="Speed">1.030000</SimpleData>
+        <SimpleData name="UID">175</SimpleData>
+        <SimpleData name="Altitude">51.764526</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:50</SimpleData>
+        <SimpleData name="Distance">168.769520</SimpleData>
+        <SimpleData name="X">9.519041</SimpleData>
+        <SimpleData name="Y">-0.367387</SimpleData>
+        <SimpleData name="Z">-0.134860</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372508,43.496582
+        -1.372522,43.496585
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="176">
+<name>176</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">176</SimpleData>
+        <SimpleData name="Lat">43.496587</SimpleData>
+        <SimpleData name="Lon">-1.372535</SimpleData>
+        <SimpleData name="Bearing">276.799988</SimpleData>
+        <SimpleData name="Speed">1.120000</SimpleData>
+        <SimpleData name="UID">176</SimpleData>
+        <SimpleData name="Altitude">51.543274</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:51</SimpleData>
+        <SimpleData name="Distance">169.892339</SimpleData>
+        <SimpleData name="X">9.566374</SimpleData>
+        <SimpleData name="Y">-0.211492</SimpleData>
+        <SimpleData name="Z">0.326818</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372522,43.496585
+        -1.372535,43.496587
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="177">
+<name>177</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">177</SimpleData>
+        <SimpleData name="Lat">43.496589</SimpleData>
+        <SimpleData name="Lon">-1.372549</SimpleData>
+        <SimpleData name="Bearing">280.799988</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">177</SimpleData>
+        <SimpleData name="Altitude">51.625977</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:52</SimpleData>
+        <SimpleData name="Distance">171.007557</SimpleData>
+        <SimpleData name="X">9.490868</SimpleData>
+        <SimpleData name="Y">-0.271597</SimpleData>
+        <SimpleData name="Z">0.049586</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372535,43.496587
+        -1.372549,43.496589
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="178">
+<name>178</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">178</SimpleData>
+        <SimpleData name="Lat">43.496591</SimpleData>
+        <SimpleData name="Lon">-1.372561</SimpleData>
+        <SimpleData name="Bearing">275.500000</SimpleData>
+        <SimpleData name="Speed">1.020000</SimpleData>
+        <SimpleData name="UID">178</SimpleData>
+        <SimpleData name="Altitude">51.658142</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:53</SimpleData>
+        <SimpleData name="Distance">172.050973</SimpleData>
+        <SimpleData name="X">9.416684</SimpleData>
+        <SimpleData name="Y">-0.618813</SimpleData>
+        <SimpleData name="Z">0.284310</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372549,43.496589
+        -1.372561,43.496591
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="180">
+<name>180</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">180</SimpleData>
+        <SimpleData name="Lat">43.496593</SimpleData>
+        <SimpleData name="Lon">-1.372583</SimpleData>
+        <SimpleData name="Bearing">275.399994</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">180</SimpleData>
+        <SimpleData name="Altitude">51.580261</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:55</SimpleData>
+        <SimpleData name="Distance">173.846341</SimpleData>
+        <SimpleData name="X">9.417615</SimpleData>
+        <SimpleData name="Y">-0.466936</SimpleData>
+        <SimpleData name="Z">0.600856</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372561,43.496591
+        -1.372583,43.496593
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="182">
+<name>182</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">182</SimpleData>
+        <SimpleData name="Lat">43.496593</SimpleData>
+        <SimpleData name="Lon">-1.372606</SimpleData>
+        <SimpleData name="Bearing">273.100006</SimpleData>
+        <SimpleData name="Speed">1.010000</SimpleData>
+        <SimpleData name="UID">182</SimpleData>
+        <SimpleData name="Altitude">51.419617</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:57</SimpleData>
+        <SimpleData name="Distance">175.688779</SimpleData>
+        <SimpleData name="X">9.479598</SimpleData>
+        <SimpleData name="Y">-0.384856</SimpleData>
+        <SimpleData name="Z">0.388989</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372583,43.496593
+        -1.372606,43.496593
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="184">
+<name>184</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">184</SimpleData>
+        <SimpleData name="Lat">43.496595</SimpleData>
+        <SimpleData name="Lon">-1.372631</SimpleData>
+        <SimpleData name="Bearing">276.399994</SimpleData>
+        <SimpleData name="Speed">0.930000</SimpleData>
+        <SimpleData name="UID">184</SimpleData>
+        <SimpleData name="Altitude">51.416199</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:06:59</SimpleData>
+        <SimpleData name="Distance">177.683048</SimpleData>
+        <SimpleData name="X">9.485985</SimpleData>
+        <SimpleData name="Y">-0.321371</SimpleData>
+        <SimpleData name="Z">0.533991</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372606,43.496593
+        -1.372631,43.496595
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="185">
+<name>185</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">185</SimpleData>
+        <SimpleData name="Lat">43.496596</SimpleData>
+        <SimpleData name="Lon">-1.372644</SimpleData>
+        <SimpleData name="Bearing">276.799988</SimpleData>
+        <SimpleData name="Speed">1.010000</SimpleData>
+        <SimpleData name="UID">185</SimpleData>
+        <SimpleData name="Altitude">51.371582</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:00</SimpleData>
+        <SimpleData name="Distance">178.720563</SimpleData>
+        <SimpleData name="X">9.413858</SimpleData>
+        <SimpleData name="Y">-0.495486</SimpleData>
+        <SimpleData name="Z">0.163034</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372631,43.496595
+        -1.372644,43.496596
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="186">
+<name>186</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">186</SimpleData>
+        <SimpleData name="Lat">43.496597</SimpleData>
+        <SimpleData name="Lon">-1.372656</SimpleData>
+        <SimpleData name="Bearing">275.000000</SimpleData>
+        <SimpleData name="Speed">1.060000</SimpleData>
+        <SimpleData name="UID">186</SimpleData>
+        <SimpleData name="Altitude">51.434631</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:01</SimpleData>
+        <SimpleData name="Distance">179.771841</SimpleData>
+        <SimpleData name="X">9.542706</SimpleData>
+        <SimpleData name="Y">-0.203229</SimpleData>
+        <SimpleData name="Z">0.526289</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372644,43.496596
+        -1.372656,43.496597
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="187">
+<name>187</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">187</SimpleData>
+        <SimpleData name="Lat">43.496599</SimpleData>
+        <SimpleData name="Lon">-1.372670</SimpleData>
+        <SimpleData name="Bearing">273.500000</SimpleData>
+        <SimpleData name="Speed">1.000000</SimpleData>
+        <SimpleData name="UID">187</SimpleData>
+        <SimpleData name="Altitude">51.602356</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:02</SimpleData>
+        <SimpleData name="Distance">180.877236</SimpleData>
+        <SimpleData name="X">9.452550</SimpleData>
+        <SimpleData name="Y">-0.461678</SimpleData>
+        <SimpleData name="Z">0.505253</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372656,43.496597
+        -1.372670,43.496599
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="188">
+<name>188</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">188</SimpleData>
+        <SimpleData name="Lat">43.496601</SimpleData>
+        <SimpleData name="Lon">-1.372683</SimpleData>
+        <SimpleData name="Bearing">284.600006</SimpleData>
+        <SimpleData name="Speed">1.040000</SimpleData>
+        <SimpleData name="UID">188</SimpleData>
+        <SimpleData name="Altitude">51.792053</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:03</SimpleData>
+        <SimpleData name="Distance">181.990598</SimpleData>
+        <SimpleData name="X">9.424730</SimpleData>
+        <SimpleData name="Y">-0.465547</SimpleData>
+        <SimpleData name="Z">0.187368</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372670,43.496599
+        -1.372683,43.496601
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="189">
+<name>189</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">189</SimpleData>
+        <SimpleData name="Lat">43.496604</SimpleData>
+        <SimpleData name="Lon">-1.372696</SimpleData>
+        <SimpleData name="Bearing">282.100006</SimpleData>
+        <SimpleData name="Speed">1.000000</SimpleData>
+        <SimpleData name="UID">189</SimpleData>
+        <SimpleData name="Altitude">51.960266</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:04</SimpleData>
+        <SimpleData name="Distance">183.074642</SimpleData>
+        <SimpleData name="X">9.408932</SimpleData>
+        <SimpleData name="Y">-0.529433</SimpleData>
+        <SimpleData name="Z">0.588382</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372683,43.496601
+        -1.372696,43.496604
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="190">
+<name>190</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">190</SimpleData>
+        <SimpleData name="Lat">43.496608</SimpleData>
+        <SimpleData name="Lon">-1.372708</SimpleData>
+        <SimpleData name="Bearing">284.399994</SimpleData>
+        <SimpleData name="Speed">1.000000</SimpleData>
+        <SimpleData name="UID">190</SimpleData>
+        <SimpleData name="Altitude">51.422180</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:05</SimpleData>
+        <SimpleData name="Distance">184.112315</SimpleData>
+        <SimpleData name="X">9.504429</SimpleData>
+        <SimpleData name="Y">-0.572067</SimpleData>
+        <SimpleData name="Z">0.370521</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372696,43.496604
+        -1.372708,43.496608
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="191">
+<name>191</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">191</SimpleData>
+        <SimpleData name="Lat">43.496611</SimpleData>
+        <SimpleData name="Lon">-1.372720</SimpleData>
+        <SimpleData name="Bearing">285.299988</SimpleData>
+        <SimpleData name="Speed">1.000000</SimpleData>
+        <SimpleData name="UID">191</SimpleData>
+        <SimpleData name="Altitude">51.348999</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:06</SimpleData>
+        <SimpleData name="Distance">185.175385</SimpleData>
+        <SimpleData name="X">9.473962</SimpleData>
+        <SimpleData name="Y">-0.562351</SimpleData>
+        <SimpleData name="Z">0.036064</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372708,43.496608
+        -1.372720,43.496611
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="193">
+<name>193</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">193</SimpleData>
+        <SimpleData name="Lat">43.496616</SimpleData>
+        <SimpleData name="Lon">-1.372745</SimpleData>
+        <SimpleData name="Bearing">282.399994</SimpleData>
+        <SimpleData name="Speed">1.160000</SimpleData>
+        <SimpleData name="UID">193</SimpleData>
+        <SimpleData name="Altitude">51.450378</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:08</SimpleData>
+        <SimpleData name="Distance">187.228392</SimpleData>
+        <SimpleData name="X">9.535945</SimpleData>
+        <SimpleData name="Y">-0.127722</SimpleData>
+        <SimpleData name="Z">0.332640</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372720,43.496611
+        -1.372745,43.496616
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="194">
+<name>194</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">194</SimpleData>
+        <SimpleData name="Lat">43.496619</SimpleData>
+        <SimpleData name="Lon">-1.372759</SimpleData>
+        <SimpleData name="Bearing">279.399994</SimpleData>
+        <SimpleData name="Speed">1.150000</SimpleData>
+        <SimpleData name="UID">194</SimpleData>
+        <SimpleData name="Altitude">51.495728</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:09</SimpleData>
+        <SimpleData name="Distance">188.402317</SimpleData>
+        <SimpleData name="X">9.669302</SimpleData>
+        <SimpleData name="Y">-0.020660</SimpleData>
+        <SimpleData name="Z">0.285496</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372745,43.496616
+        -1.372759,43.496619
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="195">
+<name>195</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">195</SimpleData>
+        <SimpleData name="Lat">43.496620</SimpleData>
+        <SimpleData name="Lon">-1.372772</SimpleData>
+        <SimpleData name="Bearing">276.000000</SimpleData>
+        <SimpleData name="Speed">1.070000</SimpleData>
+        <SimpleData name="UID">195</SimpleData>
+        <SimpleData name="Altitude">51.143799</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:10</SimpleData>
+        <SimpleData name="Distance">189.480902</SimpleData>
+        <SimpleData name="X">9.622345</SimpleData>
+        <SimpleData name="Y">-0.273475</SimpleData>
+        <SimpleData name="Z">0.322310</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372759,43.496619
+        -1.372772,43.496620
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="196">
+<name>196</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">196</SimpleData>
+        <SimpleData name="Lat">43.496622</SimpleData>
+        <SimpleData name="Lon">-1.372785</SimpleData>
+        <SimpleData name="Bearing">278.600006</SimpleData>
+        <SimpleData name="Speed">1.050000</SimpleData>
+        <SimpleData name="UID">196</SimpleData>
+        <SimpleData name="Altitude">51.811157</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:11</SimpleData>
+        <SimpleData name="Distance">190.544435</SimpleData>
+        <SimpleData name="X">9.463445</SimpleData>
+        <SimpleData name="Y">-0.374901</SimpleData>
+        <SimpleData name="Z">0.026673</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372772,43.496620
+        -1.372785,43.496622
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="198">
+<name>198</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">198</SimpleData>
+        <SimpleData name="Lat">43.496626</SimpleData>
+        <SimpleData name="Lon">-1.372809</SimpleData>
+        <SimpleData name="Bearing">283.399994</SimpleData>
+        <SimpleData name="Speed">1.170000</SimpleData>
+        <SimpleData name="UID">198</SimpleData>
+        <SimpleData name="Altitude">52.048523</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:13</SimpleData>
+        <SimpleData name="Distance">192.552770</SimpleData>
+        <SimpleData name="X">9.486547</SimpleData>
+        <SimpleData name="Y">-0.354429</SimpleData>
+        <SimpleData name="Z">-0.012209</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372785,43.496622
+        -1.372809,43.496626
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark id="199">
+<name>199</name>
+<description/>
+<styleUrl>#wpmRedLine</styleUrl>
+<ExtendedData>
+    <SchemaData schemaUrl="#GeoVideo">
+        <SimpleData name="FID">199</SimpleData>
+        <SimpleData name="Lat">43.496629</SimpleData>
+        <SimpleData name="Lon">-1.372821</SimpleData>
+        <SimpleData name="Bearing">280.500000</SimpleData>
+        <SimpleData name="Speed">0.980000</SimpleData>
+        <SimpleData name="UID">199</SimpleData>
+        <SimpleData name="Altitude">51.665222</SimpleData>
+        <SimpleData name="UTC_Date">19/02/2020</SimpleData>
+        <SimpleData name="UTC_Time">15:07:14</SimpleData>
+        <SimpleData name="Distance">193.582650</SimpleData>
+        <SimpleData name="X">9.420997</SimpleData>
+        <SimpleData name="Y">-0.731773</SimpleData>
+        <SimpleData name="Z">0.210364</SimpleData>
+    </SchemaData>
+</ExtendedData>
+<LineString>
+    <extrude>0</extrude>
+    <tessellate>0</tessellate>
+    <altitudeMode>clampToGround</altitudeMode>
+     <coordinates>-1.372809,43.496626
+        -1.372821,43.496629
+    </coordinates>
+</LineString>
+</Placemark>
+<Placemark>
+ <name>Video end</name>
+ <ExtendedData>
+  <Data name="ElapsedDistance">
+    <value>193.582650</value>
+  </Data>
+  <Data name="ElapsedTime">
+    <value>199.263000</value>
+  </Data>
+  <Data name="AverageSpeed">
+    <value>0.971493</value>
+  </Data>
+  <Data name="RouteMaxSpeed">
+    <value>1.240000</value>
+  </Data>
+  <Data name="RouteMaxAlt">
+    <value>52.581726</value>
+  </Data>
+ </ExtendedData>
+ <description/>
+ <styleUrl>#red-pushpin</styleUrl>
+ <Point>
+   <coordinates>-1.372821,43.496629
+  </coordinates>
+ </Point>
+</Placemark>
+</Document>
+</kml>
