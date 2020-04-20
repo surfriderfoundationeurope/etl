@@ -19,7 +19,7 @@ To get started, easiest way it so execute the end2end_workflow notebooks [here](
 
 Service Prequesite: ETL principle is a Data pipeline workflow between different source and destination. There are pre-requesite to connect to the different source and destination, typically connection string to access Blob Storage and PostGre SQL server. You also need the AI Inference service to be available, as it's a key component extracting Trashes from raw input Data.
 
-Python Prerequesite: there are a bunch of python libraries(https://github.com/surfriderfoundationeurope/campaign0/blob/master/scripts/etlworkflow.py) required, for now on, please check this [script]( to have a look at import.
+Python Prerequesite: there are a bunch of python libraries required, for now on, please check this [script](https://github.com/surfriderfoundationeurope/campaign0/blob/master/scripts/etlworkflow.py) to have a look at import.
 
 
 You can also find development notebooks in notebook folder, but be aware they are somehow deprecated. They remain available for further development and testing purpose.
