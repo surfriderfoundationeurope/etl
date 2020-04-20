@@ -3,23 +3,38 @@ import os
 import subprocess
 import requests
 
-def isAIready(url):
-    AI_ready = requests.get(url)
-    if AI_ready.status_code == 200:
-        print('AI is ready')
-        print('HTTP Status code: ',AI_ready.status_code)
-        print(AI_ready.headers)
-    else:
-        print("AI not found, an error has occured")
-        print("Server Answer: ",AI_ready)
-        print("HTTP Status Code: ",AI_ready.status_code)
-        print("HTTP Status Code: ",AI_ready.raise_for_status())
+import requests
+import subprocess
+import json
 
-''' getPrediction function sends curl request to Surfrider AI'''
-''' video name is the name of a locally downloaded video from Azure'''
-''' video name is passed as an argument to curl_request script '''
-''' curl_request script sends actual POST request to Surfrider AI'''
+def AIready(url):
+    '''
+    AIready function evaluate whether AI inference service is available
+    Input: takes the url of the AI service to evaluate availability
+    Output: returns ready status, a boolean status
+    '''
+    ready = False
+    try:
+        AI_request = requests.get(url)
+        print("HTTP Status Code: ",AI_request.status_code)
+        if AI_request.status_code == 200:
+            print("AI inference service is available")
+            ready = True
+            return ready
+        else:
+            print("HTTP Status Code: ",AI_request.status_code)
+            print("AI server is responding but there might be an issue")
+    except requests.exceptions.RequestException:
+        print("AI not found, an error has occured")
+        return ready
+
+
 def getPrediction(video_name):
+    '''
+    getPrediction sends POST request to an AI inference service, delegated to bash script subprocess
+    Input: the name of a video which is expected to be dowloaded in local /tmp before
+    Output: the prediction made by AI: a json-like format data but as a list
+    '''
     curl_request_script = ['./curl_request_param.sh',video_name]
     output = []
     request_answer = subprocess.Popen(curl_request_script, stdout=subprocess.PIPE)
@@ -30,21 +45,32 @@ def getPrediction(video_name):
     return output
 
 
-''' jsonPrediction cast a prediction from getPrediction function '''
-''' from a list prediction to a string then dictionnary with json_loads '''
 def jsonPrediction(pred):
+    ''' 
+    jsonPrediction cast a prediction from getPrediction function
+    Input: pred, the string result of the previous getPrediction function
+    Output: json_prediction, a dictionnary built from a subset of pred string
+    '''
     string_prediction = str(pred[0])[2:-3] #removing 2 x first and 3 last characters of pred
     json_prediction = json.loads(string_prediction)
     return json_prediction
 
 
-''' getTrashLabel return label from a frame_to_box'''
 def getTrashLabel(frame_2_box):
+    ''' 
+    getTrashLabel return label from a frame_to_box
+    Input: a frame_2_box dictionnary from jsonPrediction
+    Output: the value of predicted label
+    '''
     return frame_2_box['label']
 
-''' mapLabelTrashId is a switch that converts label to TrashId'''
-''' param is label that comes from AI predictions dictionnary jsonPrediction'''
+
 def mapLabel2TrashId(label):
+    ''' 
+    mapLabelTrashId is a switch that converts label to TrashId
+    Input: label that comes from getTrashLabel from jsonPrediction dictionnary 
+    Output: a TrashId, which is meaningful with respect to Trash_Type table in PostGre
+    '''
     switcher = { 
     "Fishing or Hunting":"89B44BAA-69AA-4109-891A-128E012E7E07",
     "Food Packaging":"185FEFA2-EEF2-47A8-873E-26032A4BB3C3",
@@ -60,5 +86,5 @@ def mapLabel2TrashId(label):
     "Unknown10":"BC7BB564-BE04-4B4B-9913-FF69780B93A6"
     } 
     return switcher.get(label, "nothing")
-
+    
 print("hello from aiprediction.py")
