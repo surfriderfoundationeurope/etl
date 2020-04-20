@@ -1,15 +1,14 @@
-# import for ai_ops
-import json
-import subprocess
-import requests
-from ai_ops import isAIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashId
-
-# import for blob_ops
+# import prerequesite for blob_ops
 from azure.storage.blob import ContainerClient
 from azure.storage.blob import BlobClient
 from blob_ops import blobInContainer,blobInfos,downloadBlob
-
-# import for gps_ops
+# import prerequesite for ai_ops
+import json 
+import os
+import subprocess
+import requests
+from ai_ops import AIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashId
+# import prerequesite for gps_ops
 import gpxpy
 import gpxpy.gpx
 import json
@@ -23,12 +22,10 @@ import pyproj
 from shapely.ops import transform
 from tqdm import tqdm
 from gps_ops import goproToGPX,gpsPointList,getMediaInfo,getDuration,createTime,createLatitude,createLongitude,createElevation,fillGPS,longLat2shapePoint,longLat2shapeList,geometryTransfo,gps2154
-
-# import for postgre_ops
-import psycopg2
-from postgre_ops import pgOpenConnection,pgCloseConnection,mapLabel2TrashIdPG,trashGPS,trashInsert
-# import for main
+# import prerequesite for postgre_ops
 import os
+import psycopg2
+from postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,mapLabel2TrashIdPG,trashGPS,trashInsert
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -43,29 +40,32 @@ def main():
     campaign_container_name = 'campaign0'
     blobs_campaign0 = blobInContainer(connection_string,campaign_container_name)
 
-    # get infos of blob 'goproshort-480p.mov' 
-    blob_video_name = '28022020_Boudigau_4_short.mp4'   
+    # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
+    blob_video_name = 'goproshort-480p.mov'   
     blobInfos(connection_string,campaign_container_name,blob_video_name)
 
     # download locally in /tmp blob video
-    blob_video0 = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
-    downloadBlob(blob_video0)
+    blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
+    downloadBlob(blob_video)
 
     ######## Pipeline Step 1bis: AI Trash prediction #########
     print('######## Pipeline Step 1bis: AI Trash prediction #########')
-    isAIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
-    # get predictions from AI on goproshort-480p.mov
-    prediction = getPrediction(blob_video_name)
+
+    isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+
+    if isAIready == True:
+        prediction = getPrediction(blob_video_name)
+    else:
+        print("Early exit of ETL workflow as AI service is not available")
+        exit()
 
     # cast prediction to JSON/Dictionnary format
     json_prediction = jsonPrediction(prediction)
-    json_prediction
 
     ######## Pipeline Step 1: GPX creation ########
     print('######## Pipeline Step 1: GPX creation ########')
     video_name = '28022020_Boudigau_4.MP4'
     gpx_path = goproToGPX(video_name)
-    gpx_path
 
     # GPX parsing
     gpx_file = open(gpx_path,'r',encoding='utf-8')
@@ -88,28 +88,23 @@ def main():
     video_duration_sup = int(video_duration)+1
     gpsPointsFilled = fillGPS(gpsPoints,video_duration_sup)
 
-    ######## Pipeline Step 3: GPS shapePoints ########
-    print('######## Pipeline Step 3: GPS shapePoints ########')
+    ######## Pipeline Step 3: Transform to GPS shapePoints ########
+    print('######## Pipeline Step 3: Transformation to GPS shapePoints ########')
     gpsShapePointsFilled = longLat2shapeList(gpsPointsFilled)
 
-    ######## Pipeline Step 4: 2154 geometry conversion ########
-    print('######## Pipeline Step 4: 2154 Geometry conversion ########')
+    ######## Pipeline Step 4: Transform to 2154 Geometry ########
+    print('######## Pipeline Step 4: Transformation to 2154 Geometry ########')
     gps2154PointsFilled = gps2154(gpsShapePointsFilled)
 
-    ######## Pipeline Step 5: PostGre INSERT ########
-    print('######## Pipeline Step 5: PostGre INSERT ########')
-    # Postgre connection pre-requesite
-    # Update connection string information from env variables
-    pgserver = os.getenv("PGSERVER")
-    pgdatabase = os.getenv("PGDATABASE")
-    pgusername = os.getenv("PGUSERNAME")
-    pgpassword = os.getenv("PGPWD")
-    sslmode = "require"
-
-    # Open pgConnection, create cursor
-    conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(pgserver, pgusername, pgdatabase, pgpassword, sslmode)
-    pgconnection = pgOpenConnection(conn_string)
-    cursor = pgconnection.cursor()
+    ######## Pipeline Step 5: Insert within PostGre ########
+    print('######## Pipeline Step 5: Insert within PostGre ########')
+    
+    # Get connection string information from env variables
+    pgConn_string = pgConnectionString()
+    # Open pgConnection
+    pgConnection = pgOpenConnection(pgConn_string)
+    # Create Cursor
+    pgCursor = pgConnection.cursor()
 
 
     # INSERTING all detected_trash within PostGre
@@ -119,12 +114,12 @@ def main():
             # get GPS coordinate
             trashTypeId= prediction['id']
             gpsIndexId = trashGPS(trashTypeId,gps2154PointsFilled)
-            gpsTrashTypeId = gps2154PointsFilled[gpsIndexId]
+            trashGps2154Point = gps2154PointsFilled[gpsIndexId]
             # get TrashTypeId from AI prediction
             label = getTrashLabel(prediction)
             trashType = mapLabel2TrashIdPG(label)
             # INSERT within PostGRE
-            rowID = trashInsert(gpsTrashTypeId,trashType,cursor,pgconnection)
+            rowID = trashInsert(trashGps2154Point,trashType,pgCursor,pgConnection)
             print("prediction:",prediction['id'])
             print("rowID:",rowID)
             rowID_list.append(rowID)
@@ -133,7 +128,8 @@ def main():
     print("Successfully inserted " + str(len(rowID_list)) + " Trashes within Trash table")    
 
     # Close PG connection
-    pgCloseConnection(pgconnection)
+    pgCloseConnection(pgConnection)
+
 
 # Execute main function
 if __name__ == '__main__':
