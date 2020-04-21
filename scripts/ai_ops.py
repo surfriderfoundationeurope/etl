@@ -3,9 +3,6 @@ import os
 import subprocess
 import requests
 
-import requests
-import subprocess
-import json
 
 def AIready(url):
     '''
@@ -35,10 +32,11 @@ def getPrediction(video_name):
     Input: the name of a video which is expected to be dowloaded in local /tmp before
     Output: the prediction made by AI: a json-like format data but as a list
     '''
+    print("Sending video to AI for Trash prediction")
     curl_request_script = ['./curl_request_param.sh',video_name]
     output = []
     request_answer = subprocess.Popen(curl_request_script, stdout=subprocess.PIPE)
-    i = 0
+    #i = 0
     for line in request_answer.stdout:
         print(line)
         output.append(line)
@@ -87,4 +85,4 @@ def mapLabel2TrashId(label):
     } 
     return switcher.get(label, "nothing")
     
-print("hello from aiprediction.py")
+print("Successful import of ai_ops")
