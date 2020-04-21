@@ -40,8 +40,10 @@ def main(argv):
     connection_string = os.getenv("CONN_STRING")
 
     # get list of blobs in container campaign0
-    campaign_container_name = 'campaign0'
+    campaign_container_name = argv.containername
     blobs_campaign0 = blobInContainer(connection_string,campaign_container_name)
+    print("Blobs in container:")
+    print(blobs_campaign0)
 
     # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
     blob_video_name = argv.blobname   
@@ -87,12 +89,12 @@ def main(argv):
     print("GPS file time coverage in second: ",timestampDelta.seconds)
 
     ######## Pipeline Step 2: Create gpsPointFilled ########
-    print('######## Pipeline Step 2: Create gpsPointFilled ########')
+    print('######## Pipeline Step 2: Add missing GPS points ########')
     video_duration_sup = int(video_duration)+1
     gpsPointsFilled = fillGPS(gpsPoints,video_duration_sup)
 
     ######## Pipeline Step 3: Transform to GPS shapePoints ########
-    print('######## Pipeline Step 3: Transformation to GPS shapePoints ########')
+    print('######## Pipeline Step 3: Transformation to GPS Shape Points ########')
     gpsShapePointsFilled = longLat2shapeList(gpsPointsFilled)
 
     ######## Pipeline Step 4: Transform to 2154 Geometry ########
@@ -136,13 +138,14 @@ def main(argv):
 ##### Main Execution ####
 # Defining parser
 parser = argparse.ArgumentParser()
+parser.add_argument('--containername', help='container name to get blob info from and download blob from to be processed by ETL')
 parser.add_argument('--blobname', help='blob name to be downloaded from azure blob storage campaign0 container into /tmp')
 parser.add_argument('--videoname', help='video name stored locally in /tmp to apply gpx extraction process on')
 
 # Create args parsing standard input
 args = parser.parse_args()
-if (args.blobname == None or args.videoname == None):
-    print("blobname and videoname arguments are both mandatory to execute ETL process")
+if (args.containername == None or args.blobname == None or args.videoname == None):
+    print("Please provide containername, blobname and videoname arguments as they are all mandatory to execute ETL process.")
 else:
     # Execute main function only if 
     if __name__ == '__main__':

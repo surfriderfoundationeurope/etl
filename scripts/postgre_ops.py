@@ -87,4 +87,4 @@ def trashInsert(gps2154Point,trashTypeId,cursor,connexion):
     row_id = cursor.fetchone()[0]
     return row_id
 
-print("hello from postgre.py")
+print("Successful import of postgre_ops")

@@ -197,4 +197,4 @@ def gps2154(gpsShapePointsFilled):
     return gps2154Points
 
 
-print("hello from gps.py")
+print("Successful import of gps_ops")
