@@ -3,11 +3,10 @@ from azure.storage.blob import ContainerClient
 from azure.storage.blob import BlobClient
 from blob_ops import blobInContainer,blobInfos,downloadBlob
 # import prerequesite for ai_ops
-import json 
-import os
-import subprocess
+import json
 import requests
-from ai_ops import AIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashId
+import logging
+from ai_ops import AIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashIdPG
 # import prerequesite for gps_ops
 import gpxpy
 import gpxpy.gpx
@@ -25,14 +24,20 @@ from gps_ops import goproToGPX,gpsPointList,getMediaInfo,getDuration,createTime,
 # import prerequesite for postgre_ops
 import os
 import psycopg2
-from postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,mapLabel2TrashIdPG,trashGPS,trashInsert
+from postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,trashGPS,trashInsert
 import warnings
 warnings.filterwarnings('ignore')
 
 def main():
 
-    ######## Pipeline Step0: Get Video to predict and insert#########
-    print('######## Pipeline Step0: Get Video from Azure Blob Storage #########')
+    print('############################################################')
+    print('################ Plastic Origin ETL process ################')
+    print('################  Let\'s predict some Trash  ################')
+    print('############################################################')
+    print('\n')
+
+    print('###################### Pipeline Step0 ######################')
+    print('################ Get Video from Azure Storage ##############')
     # blob storage connection string
     connection_string = os.getenv("CONN_STRING")
 
@@ -48,10 +53,11 @@ def main():
     blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
     downloadBlob(blob_video)
 
-    ######## Pipeline Step 1bis: AI Trash prediction #########
-    print('######## Pipeline Step 1bis: AI Trash prediction #########')
+    print('###################### Pipeline Step1bis ###################')
+    print('##################### AI Trash prediction ##################')
 
     isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+    logger =  logging.getLogger() #required by getPrediction()
 
     if isAIready == True:
         prediction = getPrediction(blob_video_name)
@@ -62,8 +68,8 @@ def main():
     # cast prediction to JSON/Dictionnary format
     json_prediction = jsonPrediction(prediction)
 
-    ######## Pipeline Step 1: GPX creation ########
-    print('######## Pipeline Step 1: GPX creation ########')
+    print('###################### Pipeline Step1 ######################')
+    print('######################  GPX creation  ######################')
     video_name = '28022020_Boudigau_4.MP4'
     gpx_path = goproToGPX(video_name)
 
@@ -81,24 +87,25 @@ def main():
 
     # GPS file duration
     timestampDelta = gpsPoints[len(gpsPoints)-1]['Time'] - gpsPoints[0]['Time']
-    print("GPS file time coverage in second: ",timestampDelta.seconds)
 
-    ######## Pipeline Step 2: Create gpsPointFilled ########
-    print('######## Pipeline Step 2: Create gpsPointFilled ########')
+    print("GPS file time coverage in second: ",timestampDelta.seconds)
+    print('###################### Pipeline Step2 ######################')
+    print('################## Add missing GPS points ##################')
     video_duration_sup = int(video_duration)+1
     gpsPointsFilled = fillGPS(gpsPoints,video_duration_sup)
 
-    ######## Pipeline Step 3: Transform to GPS shapePoints ########
-    print('######## Pipeline Step 3: Transformation to GPS shapePoints ########')
+    print('###################### Pipeline Step3 ######################')
+    print('############ Transformation to GPS Shape Points ############')
     gpsShapePointsFilled = longLat2shapeList(gpsPointsFilled)
 
-    ######## Pipeline Step 4: Transform to 2154 Geometry ########
-    print('######## Pipeline Step 4: Transformation to 2154 Geometry ########')
+    print('###################### Pipeline Step4 ######################')
+    print('############## Transformation to 2154 Geometry #############')
     gps2154PointsFilled = gps2154(gpsShapePointsFilled)
 
-    ######## Pipeline Step 5: Insert within PostGre ########
-    print('######## Pipeline Step 5: Insert within PostGre ########')
-    
+    print('###################### Pipeline Step5 ######################')
+    print('################### Insert within PostGre ##################')
+
+
     # Get connection string information from env variables
     pgConn_string = pgConnectionString()
     # Open pgConnection
@@ -120,8 +127,6 @@ def main():
             trashType = mapLabel2TrashIdPG(label)
             # INSERT within PostGRE
             rowID = trashInsert(trashGps2154Point,trashType,pgCursor,pgConnection)
-            print("prediction:",prediction['id'])
-            print("rowID:",rowID)
             rowID_list.append(rowID)
         except:
             print("There was an issue inserting Trash id:" + str(prediction['id']) + " within PostGre")
@@ -129,6 +134,10 @@ def main():
 
     # Close PG connection
     pgCloseConnection(pgConnection)
+
+    print('############################################################')
+    print('################   Plastic Origin ETL End   ################')
+    print('############################################################')
 
 
 # Execute main function
