@@ -59,5 +59,3 @@ def downloadBlob(blobclient):
         print("The blob you are trying to download probably does not exist within container.")
         print("Early exit of ETL process.")
         exit()
-
-print("Successful import of blob_ops")

@@ -1,3 +1,5 @@
+# Parse GPX file
+import os
 import gpxpy
 import gpxpy.gpx
 import json
@@ -28,6 +30,12 @@ def goproToGPX(video_name):
     path='/tmp/'+video_name+'.gpx'
     return path
 
+
+def goproToGPX(video_name):
+    result = os.system(f'python /tmp/gopro2gpx/gopro2gpx.py -s -vvv /tmp/{video_name} /tmp/{video_name}')
+    path='/tmp/'+video_name+'.gpx'
+    return path
+    
 
 def gpsPointList(gpxdata):
     ''' 
@@ -96,7 +104,7 @@ def createLongitude(long1,long2):
     Output: the average Longitude
     '''
     new_longitude = (long1+long2)/2
-    new_latitude = round(new_longitude,6)
+    new_longitude = round(new_longitude,6)
     return new_longitude
 
 def createElevation(elev1,elev2):
@@ -195,6 +203,3 @@ def gps2154(gpsShapePointsFilled):
         gps2154Point = {'Time':point['Time'],'the_geom':geo2154,'Elevation':point['Elevation']}
         gps2154Points.append(gps2154Point)
     return gps2154Points
-
-
-print("Successful import of gps_ops")

@@ -1,4 +1,5 @@
-import json 
+import json
+import logging 
 import os
 import subprocess
 import requests
@@ -32,14 +33,11 @@ def getPrediction(video_name):
     Input: the name of a video which is expected to be dowloaded in local /tmp before
     Output: the prediction made by AI: a json-like format data but as a list
     '''
-    print("Sending video to AI for Trash prediction")
-    curl_request_script = ['./curl_request_param.sh',video_name]
-    output = []
-    request_answer = subprocess.Popen(curl_request_script, stdout=subprocess.PIPE)
-    #i = 0
-    for line in request_answer.stdout:
-        print(line)
-        output.append(line)
+    files = {'file': (f'/tmp/{video_name}', open(f'/tmp/{video_name}', 'rb'), 'application/octet-stream')}
+    response = requests.post('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000', files=files)
+    if not response.ok:
+        logger.error(f'Request to AI failed wih reason {response.reason}.')
+    output = [response._content]
     return output
 
 
@@ -61,10 +59,30 @@ def getTrashLabel(frame_2_box):
     Output: the value of predicted label
     '''
     return frame_2_box['label']
+    
+
+def mapLabel2TrashIdPG(label):
+    '''
+    mapLabel2TrashIdPG function is a different mapping between a predicted label by AI and TrashId as defined within TrashType table
+    Input: a label predicted by AI
+    Output: a TrashId as defined in TrashType table
+    '''
+    switcher = { 
+        "others":"1", #"autre dechet" in PG Data Model mapped to IA "others" label
+        "dechet agricole":"2",
+        "bottles":"3", #"bouteille boisson" in PG Data Model mapped to IA "bottles" label
+        "fragments":"4",#"industriel ou construction in PG Data Model mapped to IA "fragments" label
+        "peche et chasse":"5",
+        "emballage alimentaire":"6",
+        "objet vie courante":"7",
+        "autres dechets +10":"8"
+    } 
+    return switcher.get(label, "nothing")
 
 
 def mapLabel2TrashId(label):
     ''' 
+    NOTICE: this switcher function is DEPRECATED as it initially standed for SQL Trash Table scheme
     mapLabelTrashId is a switch that converts label to TrashId
     Input: label that comes from getTrashLabel from jsonPrediction dictionnary 
     Output: a TrashId, which is meaningful with respect to Trash_Type table in PostGre
@@ -84,5 +102,3 @@ def mapLabel2TrashId(label):
     "Unknown10":"BC7BB564-BE04-4B4B-9913-FF69780B93A6"
     } 
     return switcher.get(label, "nothing")
-    
-print("Successful import of ai_ops")

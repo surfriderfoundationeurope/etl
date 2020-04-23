@@ -42,25 +42,6 @@ def pgCloseConnection(connection):
         print("PG connection could not close successfully")
 
 
-def mapLabel2TrashIdPG(label):
-    '''
-    mapLabel2TrashIdPG function is a different mapping between a predicted label by AI and TrashId as defined within TrashType table
-    Input: a label predicted by AI
-    Output: a TrashId as defined in TrashType table
-    '''
-    switcher = { 
-        "others":"1", #"autre dechet" in PG Data Model mapped to IA "others" label
-        "dechet agricole":"2",
-        "bottles":"3", #"bouteille boisson" in PG Data Model mapped to IA "bottles" label
-        "fragments":"4",#"industriel ou construction in PG Data Model mapped to IA "fragments" label
-        "peche et chasse":"5",
-        "emballage alimentaire":"6",
-        "objet vie courante":"7",
-        "autres dechets +10":"8"
-    } 
-    return switcher.get(label, "nothing")
-
-
 def trashGPS(trashId,gps2154Points):
     '''
     trashGPS is a dummy helper function that allows to associate a GPS point to a trashId
@@ -82,9 +63,7 @@ def trashInsert(gps2154Point,trashTypeId,cursor,connexion):
     point = gps2154Point['the_geom'].wkt
     elevation = gps2154Point['Elevation']
     timestamp = gps2154Point['Time']
-    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time ) VALUES (DEFAULT, 'ff7c7426-d8f5-4173-9b2a-129f01f720f1',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (point,elevation,trashTypeId,'icetea',timestamp))
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time ) VALUES (DEFAULT, '1faaee65-1edb-45ab-bdd4-15268fccd301',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (point,elevation,trashTypeId,'icetea',timestamp))
     connexion.commit()
     row_id = cursor.fetchone()[0]
     return row_id
-
-print("Successful import of postgre_ops")
