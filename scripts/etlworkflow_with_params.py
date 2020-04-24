@@ -29,7 +29,7 @@ from .postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,m
 import warnings
 warnings.filterwarnings('ignore')
 
-def main():
+def process(container_name, file_path):
 
     ######## Pipeline Step0: Get Video to predict and insert#########
     print('######## Pipeline Step0: Get Video from Azure Blob Storage #########')
@@ -37,11 +37,11 @@ def main():
     connection_string = os.getenv("CONN_STRING")
 
     # get list of blobs in container campaign0
-    campaign_container_name = 'campaign0'
-    blobs_campaign0 = blobInContainer(connection_string,campaign_container_name)
+    campaign_container_name = container_name
+    blobs_campaign0 = blobInContainer(connection_string, campaign_container_name)
 
     # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
-    blob_video_name = 'goproshort-480p.mov'   
+    blob_video_name = file_path
     blobInfos(connection_string,campaign_container_name,blob_video_name)
 
     # download locally in /tmp blob video
@@ -65,12 +65,8 @@ def main():
     ######## Pipeline Step 1: GPX creation ########
     print('######## Pipeline Step 1: GPX creation ########')
     video_name = '28022020_Boudigau_4.MP4'
-    gpx_path = goproToGPX(video_name)
-
-    # GPX parsing
-    gpx_file = open(gpx_path,'r',encoding='utf-8')
-    gpx_data = gpxpy.parse(gpx_file) # data from parsed gpx file
-
+    gpx_data = gpxpy.parse(goproToGPX(video_name))
+    
     # GPS Points
     gpsPoints = gpsPointList(gpx_data)
 
@@ -133,4 +129,4 @@ def main():
 
 # Execute main function
 if __name__ == '__main__':
-    main()
+    process("campaign0", "goproshort-480p.mov")
