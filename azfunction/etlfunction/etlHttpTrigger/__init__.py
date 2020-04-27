@@ -159,4 +159,4 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
              status_code=400
         )
 
-#?name=surfrider&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4
+#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4
