@@ -2,7 +2,6 @@ import json
 import logging 
 import requests
 
-
 def AIready(url):
     '''
     AIready function evaluate whether AI inference service is available
