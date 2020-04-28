@@ -27,8 +27,11 @@ import psycopg2
 from postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,trashGPS,trashInsert
 import warnings
 warnings.filterwarnings('ignore')
+# import argparse to pass parameters to main function
+import argparse
 
-def main():
+#### Main definition ####
+def main(argv):
 
     print('############################################################')
     print('################ Plastic Origin ETL process ################')
@@ -42,11 +45,13 @@ def main():
     connection_string = os.getenv("CONN_STRING")
 
     # get list of blobs in container campaign0
-    campaign_container_name = 'campaign0'
+    campaign_container_name = argv.containername
     blobs_campaign0 = blobInContainer(connection_string,campaign_container_name)
+    print("Blobs in container:")
+    print(blobs_campaign0)
 
     # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
-    blob_video_name = 'goproshort-480p.mov'   
+    blob_video_name = argv.blobname   
     blobInfos(connection_string,campaign_container_name,blob_video_name)
 
     # download locally in /tmp blob video
@@ -56,11 +61,11 @@ def main():
     print('###################### Pipeline Step1bis ###################')
     print('##################### AI Trash prediction ##################')
 
-    isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+    isAIready = AIready(f'{argv.aiurl}:5000')
     logger =  logging.getLogger() #required by getPrediction()
 
     if isAIready == True:
-        prediction = getPrediction(blob_video_name)
+        prediction = getPrediction(blob_video_name,argv.aiurl)
     else:
         print("Early exit of ETL workflow as AI service is not available")
         exit()
@@ -70,8 +75,12 @@ def main():
 
     print('###################### Pipeline Step1 ######################')
     print('######################  GPX creation  ######################')
-    video_name = '28022020_Boudigau_4.MP4'
+    video_name = argv.videoname
+    before = datetime.now()
     gpx_path = goproToGPX(video_name)
+    after = datetime.now()
+    delta = after - before
+    print(delta)
 
     # GPX parsing
     gpx_file = open(gpx_path,'r',encoding='utf-8')
@@ -87,8 +96,8 @@ def main():
 
     # GPS file duration
     timestampDelta = gpsPoints[len(gpsPoints)-1]['Time'] - gpsPoints[0]['Time']
-
     print("GPS file time coverage in second: ",timestampDelta.seconds)
+
     print('###################### Pipeline Step2 ######################')
     print('################## Add missing GPS points ##################')
     video_duration_sup = int(video_duration)+1
@@ -104,8 +113,7 @@ def main():
 
     print('###################### Pipeline Step5 ######################')
     print('################### Insert within PostGre ##################')
-
-
+    
     # Get connection string information from env variables
     pgConn_string = pgConnectionString()
     # Open pgConnection
@@ -139,7 +147,18 @@ def main():
     print('################   Plastic Origin ETL End   ################')
     print('############################################################')
 
+##### Main Execution ####
+# Defining parser
+parser = argparse.ArgumentParser()
+parser.add_argument('-c','--containername',required=True, help='container name to get blob info from and download blob from to be processed by ETL')
+parser.add_argument('-b','--blobname', required=True, help='blob name to be downloaded from azure blob storage campaign0 container into /tmp')
+parser.add_argument('-v','--videoname', required=True,help='video name stored locally in /tmp to apply gpx extraction process on')
+parser.add_argument('-a','--aiurl', required=True,help='url endpoint where AI inference service can be reached')
 
-# Execute main function
+
+# Create args parsing standard input
+args = parser.parse_args()
+
+# Run main
 if __name__ == '__main__':
-    main()
+        main(args)
