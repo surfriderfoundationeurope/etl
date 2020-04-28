@@ -25,14 +25,14 @@ def AIready(url):
         return ready
 
 
-def getPrediction(video_name):
+def getPrediction(video_name,url):
     '''
     getPrediction sends POST request to an AI inference service, delegated to bash script subprocess
     Input: the name of a video which is expected to be dowloaded in local /tmp before
     Output: the prediction made by AI: a json-like format data but as a list
     '''
     files = {'file': (f'/tmp/{video_name}', open(f'/tmp/{video_name}', 'rb'), 'application/octet-stream')}
-    response = requests.post('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000', files=files)
+    response = requests.post(f'{url}:5000', files=files)
     if not response.ok:
         logger.error(f'Request to AI failed wih reason {response.reason}.')
     output = [response._content]

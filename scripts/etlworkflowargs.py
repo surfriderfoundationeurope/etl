@@ -61,11 +61,11 @@ def main(argv):
     print('###################### Pipeline Step1bis ###################')
     print('##################### AI Trash prediction ##################')
 
-    isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+    isAIready = AIready(f'{argv.aiurl}:5000')
     logger =  logging.getLogger() #required by getPrediction()
 
     if isAIready == True:
-        prediction = getPrediction(blob_video_name)
+        prediction = getPrediction(blob_video_name,argv.aiurl)
     else:
         print("Early exit of ETL workflow as AI service is not available")
         exit()
@@ -153,6 +153,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-c','--containername',required=True, help='container name to get blob info from and download blob from to be processed by ETL')
 parser.add_argument('-b','--blobname', required=True, help='blob name to be downloaded from azure blob storage campaign0 container into /tmp')
 parser.add_argument('-v','--videoname', required=True,help='video name stored locally in /tmp to apply gpx extraction process on')
+parser.add_argument('-a','--aiurl', required=True,help='url endpoint where AI inference service can be reached')
+
 
 # Create args parsing standard input
 args = parser.parse_args()
