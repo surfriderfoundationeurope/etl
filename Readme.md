@@ -40,7 +40,7 @@ Script with Parameters:
 This [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflowargs.py) takes containername, blobname and videoname parameters. It's intended for production usage where the ETL would run again multiple videos within different containers in Azure Blob Storage.
 
 ```bash
-python etlworkflowargs.py --containername campaign0 --blobname 28022020_Boudigau_4_short_480.mov --videoname 28022020_Boudigau_4.MP4
+python etlworkflowargs.py --containername <CONTAINERNAME> --blobname <BLOBNAME> --videoname <VIDEO.MP4> --aiurl <http://AIAPIURL>
 ```
 
 Like for get started script, it's expected dowloading the file 28022020_Boudigau_4.MP4 locally to /tmp folder.
