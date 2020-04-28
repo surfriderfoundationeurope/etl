@@ -37,8 +37,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     containername = req.params.get('containername')
     blobname = req.params.get('blobname')
     videoname = req.params.get('videoname')
+    aiurl = req.params.get('aiurl')
 
-    if containername and blobname and videoname:
+    if containername and blobname and videoname and aiurl:
         print('############################################################')
         print('################ Plastic Origin ETL process ################')
         print('################  Let\'s predict some Trash  ################')
@@ -67,10 +68,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         print('###################### Pipeline Step1bis ###################')
         print('##################### AI Trash prediction ##################')
 
-        isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+        isAIready = AIready(f'{aiurl}:5000')
 
         if isAIready == True:
-            prediction = getPrediction(blob_video_name)
+            prediction = getPrediction(blob_video_name,aiurl)
         else:
             print("Early exit of ETL workflow as AI service is not available")
             exit()
@@ -155,8 +156,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     else:
         return func.HttpResponse(
-             "Please pass a container name and blob name and video name",
+             "Please pass a container name and blob name and video name and aiurl",
              status_code=400
         )
 
-#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4
+#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl='aiapiplastico-dev.westeurope.cloudapp.azure.com'
