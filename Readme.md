@@ -58,7 +58,7 @@ This will run the ETL workflow as a local API using Azure function utilities.
 You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with:
 
 ```bash
-http://localhost:7071/api/etlHttpTrigger?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4
+http://localhost:7071/api/etlHttpTrigger?containername=<CONTAINERNAME>&blobname=<BLOBNAME>&videoname=<VIDEONAME>&aiurl=<http://AIURL>
 ```
 
 Please note you still need the function to be running within a python environment with ETL pre-requesite, as well as the large local video file.
