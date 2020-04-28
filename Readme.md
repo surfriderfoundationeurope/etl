@@ -26,3 +26,39 @@ You can also find development notebooks in notebook folder, but be aware they ar
 
 ### Scripts
 There is work in-progress [here](https://github.com/surfriderfoundationeurope/etl/tree/master/scripts) to build the script architecture that will allow then deploy the ETL in production. Typically, we target to deploy the ETL process on top of Azure Function to support a serverless deployement architecture, or conversly to leverage open souce solution like Apache Airflow or Docker container to make the ETL portable, scalable and event-triggered.
+
+Get Started Script:
+To get started executing the full ETL workflow, you can run the following [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflow.py) with no argument:
+
+```bash
+python etlworkflow.py
+```
+
+This script will use a remote video file in blob storage, but requires you to have downloaded before the file 28022020_Boudigau_4.MP4 with full Data (2.5GB) including GPS in your local /tmp folder.
+
+Script with Parameters:
+This [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflowargs.py) takes containername, blobname and videoname parameters. It's intended for production usage where the ETL would run again multiple videos within different containers in Azure Blob Storage.
+
+```bash
+python etlworkflowargs.py --containername <CONTAINERNAME> --blobname <BLOBNAME> --videoname <VIDEO.MP4> --aiurl <http://AIAPIURL>
+```
+
+Like for get started script, it's expected dowloading the file 28022020_Boudigau_4.MP4 locally to /tmp folder.
+For production, this requirement will be removed. Only blob name will remain mandatory.
+
+### Azure Function
+After you installed [Azure function for Python pre-requesite](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function-azure-cli?pivots=programming-language-python&tabs=bash%2Cbrowser) on your local machine, you can run the ETL workflow as a local Azure function. 
+First go to azfunction folder, then:
+
+```bash
+func start etlHttpTrigger/
+```
+
+This will run the ETL workflow as a local API using Azure function utilities.
+You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with:
+
+```bash
+http://localhost:7071/api/etlHttpTrigger?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4
+```
+
+Please note you still need the function to be running within a python environment with ETL pre-requesite, as well as the large local video file.
