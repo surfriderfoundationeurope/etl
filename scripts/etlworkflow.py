@@ -46,7 +46,7 @@ def main():
     blobs_campaign0 = blobInContainer(connection_string,campaign_container_name)
 
     # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
-    blob_video_name = 'goproshort-480p.mov'   
+    blob_video_name = '28022020_Boudigau_4_short_480.mov'   
     blobInfos(connection_string,campaign_container_name,blob_video_name)
 
     # download locally in /tmp blob video
@@ -56,11 +56,11 @@ def main():
     print('###################### Pipeline Step1bis ###################')
     print('##################### AI Trash prediction ##################')
 
-    isAIready = AIready('http://aiapisurfrider.northeurope.cloudapp.azure.com:5000')
+    isAIready = AIready('http://aiapiplastico-dev.westeurope.cloudapp.azure.com:5000')
     logger =  logging.getLogger() #required by getPrediction()
 
     if isAIready == True:
-        prediction = getPrediction(blob_video_name)
+        prediction = getPrediction(blob_video_name,'http://aiapiplastico-dev.westeurope.cloudapp.azure.com')
     else:
         print("Early exit of ETL workflow as AI service is not available")
         exit()
