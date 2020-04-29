@@ -16,6 +16,25 @@ Overiew of ETL process architecture to insert Trash
 
 ### ETL Get started Notebook
 To get started, easiest way it so execute the end2end_workflow notebooks [here](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/end2end_workflow.ipynb). This notebook allows to go trough the main steps of the ETL pipeline and understand the different building block: Azure Blob Operation, AI Operation, GPS operation, PostGre SQL operation.
+Setup environment: You have the choice between virtual env or conda env: 
+- conda env 
+```terminal
+cd scripts
+conda env create -f  environment.yml 
+conda activate etl-env
+```
+- virtual env
+```terminal
+cd scripts
+python3 -m venv etl-env 
+source xq-bi-venv/bin/activate
+pip install -r requirements 
+```
+
+Then, to launch `jupyter` : 
+```terminal
+jupyter notebook 
+```
 
 Service Prequesite: ETL principle is a Data pipeline workflow between different source and destination. There are pre-requesite to connect to the different source and destination, typically connection string to access Blob Storage and PostGre SQL server. You also need the AI Inference service to be available, as it's a key component extracting Trashes from raw input Data.
 

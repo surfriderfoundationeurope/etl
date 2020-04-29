@@ -1,0 +1,11 @@
+azure
+azure-functions
+azure-storage-blob
+gopro2gpx==0.1
+shapely
+psycopg2
+pyproj
+gpxpy
+requests
+tqdm
+jupyter
