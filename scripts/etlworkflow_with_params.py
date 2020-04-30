@@ -1,135 +1,146 @@
+import logging
 import os
-import warnings
 
-import gpxpy
-import gpxpy.gpx
 from azure.storage.blob import BlobClient
+from dotenv import load_dotenv
 from tqdm import tqdm
 
-from .ai_ops import ai_ready, get_predicted_trashs, mapLabel2TrashIdPG
-from .blob_ops import list_container_blob_names, download_blob
-from .gps_ops import (
-    goproToGPX,
-    gpx_to_gps,
+from utils.ai_ops import ai_ready, get_predicted_trashs, mapLabel2TrashIdPG
+from utils.blob_ops import download_blob
+from utils.dsp import uniform_sampling
+from utils.gps_ops import (
+    extract_gpx_from_gopro,
     get_media_duration,
-    fillGPS,
-    points_to_shape,
-    points_to_2154,
+    add_geom_to_gps_data,
+    gpx_to_gps
 )
-from .postgre_ops import (
-    get_db_connection_string,
+from utils.postgre_ops import (
     open_db_connection,
-    close_db_connection,
     trashGPS,
     insert_trash_to_db,
 )
 
-warnings.filterwarnings("ignore")
+logger = logging.getLogger()
+# load env variable from file .env
+load_dotenv()
+blob_conn_string = os.getenv("CONN_STRING")
+ai_url = os.getenv("AI_URL")
+
+# warnings.filterwarnings("ignore")
 
 
-def process(container_name, blob_video_name):
-    ######## Pipeline Step0: Get Video to predict and insert#########
-    print("######## Pipeline Step0: Get Video from Azure Blob Storage #########")
-    # blob storage connection string
-    connection_string = os.getenv("CONN_STRING")
+media_name = 'hero6.mp4'  # "28022020_Boudigau_4.MP4" #'hero6.mp4'
+local_path = '/Users/raph/Documents/SurfriderFoundation/data/samples/gopro/'  # "../goprosamples"
 
-    # get list of blobs in container campaign0
-    campaign_container_name = container_name
-    blobs_campaign0 = list_container_blob_names(connection_string, campaign_container_name)
 
-    # get infos of blob 'goproshort-480p.mov' '28022020_Boudigau_4_short.mp4'
-    # blob_video_name = file_path
-    # get_blob_infos(connection_string, campaign_container_name, blob_video_name)
+def etl(container_name: str = None, blob_name: str = None, media_name: str = None, local_path: str = None):
+    """
 
-    # download locally in /tmp blob video
-    blob_client = BlobClient.from_connection_string(
-        conn_str=connection_string,
-        container_name=campaign_container_name,
-        blob_name=blob_video_name,
-    )
-    download_blob(blob_client)
+    Parameters
+    ----------
+    container_name
+    blob_name
+    media_name
+    local_path: if `local_path` is given, ignore container_name and `blob_name`
 
-    ######## Pipeline Step 1bis: AI Trash prediction #########
-    print("######## Pipeline Step 1bis: AI Trash prediction #########")
+    Returns
+    -------
 
-    isAIready = ai_ready("http://aiapisurfrider.northeurope.cloudapp.azure.com:5000")
+    """
+    if local_path is None:
+        # Get media from azure blob storage
+        logger.info("[Extract] Get Video from Azure Blob Storage")
+        # Download locally it locally
+        blob_client = BlobClient.from_connection_string(
+            conn_str=blob_conn_string,
+            container_name=container_name,
+            blob_name=blob_name,
+        )
+        # todo/question: should we check that the media has not yet been downloaded ? (eg. with a checksum if path exists)
+        media_path = download_blob(blob_client=blob_client, local_path='/tmp')
 
-    if isAIready:
-        predicted_trashs = get_predicted_trashs(blob_video_name)
     else:
-        print("Early exit of ETL workflow as AI service is not available")
-        exit()
+        logger.info("[Extract] Get Video from Local Storage")
+        media_path = os.path.join(local_path, media_name)
+        # check that the file exists, else return
+        if not os.path.exists(media_path):
+            logger.error(f'Cannot find media {media_path} in local storage. ')
+            return
+    # AI Trash prediction
+    logger.info("[Transform][0] Get AI trashs prediction")
 
-    ######## Pipeline Step 1: GPX creation ########
-    print("######## Pipeline Step 1: GPX creation ########")
-    video_name = "28022020_Boudigau_4.MP4"
-    gpx_data = gpxpy.parse(goproToGPX(video_name))
+    if ai_ready(ai_url):
+        predicted_trashs = get_predicted_trashs(media_path=media_path, ai_url=ai_url)
+    else:
+        logger.error("Early exit of ETL workflow as AI service is not available")
+        # return
+    # Handle spatial coordinates
+    logger.info("[Transform][1] Get media spatial coordinates")
+    # Extract GPX data from media and creates a .GPX file
+    # todo: here is where we should handle different input format (binary, separate...)
+    gpx_path = extract_gpx_from_gopro(media_path=media_path, format="GPX", binary=False)
 
-    # GPS Points
-    gpsPoints = gpx_to_gps(gpx_data)
+    # GPS data
+    gps_data = gpx_to_gps(gpx_path)
 
     # Video duration
-    print("\n")
-    video_duration = get_media_duration("/tmp/" + video_name)
-    print("Video duration in second from metadata:", video_duration)
+    # todo: check the paths (see todo in `download_blob` Q-> download video one by one, or ?
+    video_duration = get_media_duration(media_path)
+    logger.debug(f" \n Video duration in second from metadata: {video_duration}")
 
     # GPS file duration
-    timestampDelta = gpsPoints[len(gpsPoints) - 1]["Time"] - gpsPoints[0]["Time"]
-    print("GPS file time coverage in second: ", timestampDelta.seconds)
+    # todo: check that video_duration and gps_duration are closed
+    # gps_duration = (gps_data[-1]['time'] - gps_data[0]['time']).total_seconds()
+    gps_duration = (gps_data.index[-1] - gps_data.index[0]).total_seconds()
+    logger.debug(f"GPS file time coverage in second: {gps_duration}")
 
-    ######## Pipeline Step 2: Create gpsPointFilled ########
-    print("######## Pipeline Step 2: Create gpsPointFilled ########")
-    video_duration_sup = int(video_duration) + 1
-    gpsPointsFilled = fillGPS(gpsPoints, video_duration_sup)
+    delta = abs(gps_duration - video_duration)
+    if delta > 2:  # more than 2 seconds of difference between video and gps duration
+        logger.warning(f'{delta} seconds of difference between video and gps duration !')
+    # todo get video start recording timestamp to eventually pad the GPS data at beginning/end
 
-    ######## Pipeline Step 3: Transform to GPS shapePoints ########
-    print("######## Pipeline Step 3: Transformation to GPS shapePoints ########")
-    gpsShapePointsFilled = points_to_shape(gpsPointsFilled)
+    logger.debug("Resampling GPS data")
+    gps_data = uniform_sampling(gps_data, sampling_rate=1,
+                                interpolation_kind='linear')  # todo @clement, what rate do we want ?
 
-    ######## Pipeline Step 4: Transform to 2154 Geometry ########
-    print("######## Pipeline Step 4: Transformation to 2154 Geometry ########")
-    gps2154PointsFilled = points_to_2154(gpsShapePointsFilled)
+    logger.debug("Transform GPS coordinates in geometry")
+    add_geom_to_gps_data(gps_data, source_epsg=4326, target_epsg=2154)
 
-    ######## Pipeline Step 5: Insert within PostGre ########
-    print("######## Pipeline Step 5: Insert within PostGre ########")
+    # Insert within PostGre
+    logger.info("[Load] Insert trash and coordinates to PostGre database")
 
-    # Get connection string information from env variables
-    pgConn_string = get_db_connection_string()
     # Open pgConnection
-    pgConnection = open_db_connection(pgConn_string)
+    db_connection = open_db_connection()
     # Create Cursor
-    pgCursor = pgConnection.cursor()
+    db_cursor = db_connection.cursor()
 
     # INSERTING all detected_trash within PostGre
     list_row_id = []
-    for predicted_trash in tqdm(predicted_trashs["detected_trash"]):
+    for predicted_trash in tqdm(predicted_trashs):
         try:
-            # get GPS coordinate
-            trash_id = predicted_trash["id"]
-            trash_gps_index = trashGPS(trash_id, gps2154PointsFilled)
-            trashGps2154Point = gps2154PointsFilled[trash_gps_index]
-            # get TrashTypeId from AI prediction
-            label = predicted_trash.get('label')
-            trashType = mapLabel2TrashIdPG(label)
+
+            trash_id = predicted_trash.get('id')
+            trash_label = predicted_trash.get('label')
+            trash_type = mapLabel2TrashIdPG(trash_label)  # Todo: get rid of this ?
+
+            trash_gps_index = trashGPS(trash_id, gps_data)  # Todo: adapt that to new DataFrame format
+            trash_coordinates = gps_data.iloc[trash_gps_index].geom
+
             # INSERT within PostGRE
-            row_id = insert_trash_to_db(trashGps2154Point, trashType, pgCursor, pgConnection)
-            print("prediction:", predicted_trash["id"])
-            print("rowID:", row_id)
+            row_id = insert_trash_to_db(trash_coordinates, trash_type, db_cursor, db_connection)
+            logger.debug(f"prediction: {trash_id} \n"
+                         f"row id: {row_id}")
             list_row_id.append(row_id)
-        except:
-            print(
-                "There was an issue inserting Trash id:"
-                + str(predicted_trash["id"])
-                + " within PostGre"
-            )
-    print(
-        "Successfully inserted " + str(len(list_row_id)) + " Trashes within Trash table"
+        except Exception as e:
+            logger.warning(f"There was an issue inserting trash with id {trash_id} within Postgre: {e}")
+    logger.info(
+        f"Successfully inserted {len(list_row_id)} trashes within trash table"
     )
 
     # Close PG connection
-    close_db_connection(pgConnection)
+    db_connection.close()
 
 
 # Execute main function
 if __name__ == "__main__":
-    process("campaign0", "goproshort-480p.mov")
+    etl(media_name=media_name, local_path=local_path)
