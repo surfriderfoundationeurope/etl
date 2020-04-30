@@ -12,9 +12,11 @@ dependencies:
   - requests
   - tqdm
   - jupyter
+  - pandas
   - pip
   - pip :
     - azure
     - azure-storage-blob
     - gopro2gpx==0.1
+    - moviepy
 

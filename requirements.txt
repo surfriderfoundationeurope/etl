@@ -9,3 +9,5 @@ gpxpy
 requests
 tqdm
 jupyter
+pandas
+moviepy
