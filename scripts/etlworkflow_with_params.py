@@ -56,7 +56,7 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
             container_name=container_name,
             blob_name=blob_name,
         )
-        # todo/question: should we check that the media has not yet been downloaded ? (eg. with a checksum if path exists)
+        # Todo/question: should we check that the media has not yet been downloaded ? (eg. with a checksum if path exists)
         media_path = download_blob(blob_client=blob_client, local_path='/tmp')
 
     else:
@@ -76,20 +76,27 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
         # return
     # Handle spatial coordinates
     logger.info("[Transform][1] Get media spatial coordinates")
-    # Extract GPX data from media and creates a .GPX file
-    # todo: here is where we should handle different input format (binary, separate...)
-    gpx_path = extract_gpx_from_gopro(media_path=media_path, format="GPX", binary=False)
+    # Check if there's a GPX or XML data file with same name than the media
+    base_path = os.path.splitext(media_path)[0]
+    gpx_path = base_path + '.gpx'
+    if os.path.exists(gpx_path):
+        logger.debug('Found GPX file attached to the given media. ')
+    else:
+        logger.debug('Extracting GPX from Go-Pro file ')
+        # Extract GPX data from media and creates a .GPX file
+        # Todo: here is where we should handle different input format (binary, separate...)
+        gpx_path = extract_gpx_from_gopro(media_path=media_path, format="GPX", binary=False)
 
     # GPS data
     gps_data = gpx_to_gps(gpx_path)
 
     # Video duration
-    # todo: check the paths (see todo in `download_blob` Q-> download video one by one, or ?
+    # Todo: check the paths (see todo in `download_blob` Q-> download video one by one, or ?
     video_duration = get_media_duration(media_path)
     logger.debug(f" \n Video duration in second from metadata: {video_duration}")
 
     # GPS file duration
-    # todo: check that video_duration and gps_duration are closed
+    # Todo: check that video_duration and gps_duration are closed
     # gps_duration = (gps_data[-1]['time'] - gps_data[0]['time']).total_seconds()
     gps_duration = (gps_data.index[-1] - gps_data.index[0]).total_seconds()
     logger.debug(f"GPS file time coverage in second: {gps_duration}")
@@ -97,11 +104,11 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
     delta = abs(gps_duration - video_duration)
     if delta > 2:  # more than 2 seconds of difference between video and gps duration
         logger.warning(f'{delta} seconds of difference between video and gps duration !')
-    # todo get video start recording timestamp to eventually pad the GPS data at beginning/end
+    # Todo get video start recording timestamp to eventually pad the GPS data at beginning/end
 
     logger.debug("Resampling GPS data")
     gps_data = uniform_sampling(gps_data, sampling_rate=1,
-                                interpolation_kind='linear')  # todo @clement, what rate do we want ?
+                                interpolation_kind='linear')  # Todo @clement, what rate do we want ?
 
     logger.debug("Transform GPS coordinates in geometry")
     add_geom_to_gps_data(gps_data, source_epsg=4326, target_epsg=2154)
