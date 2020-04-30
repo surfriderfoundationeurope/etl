@@ -8,15 +8,12 @@ from gopro2gpx.main import extract
 from gpxpy import parse as gpxpy_parse
 from gpxpy.gpx import GPX
 from moviepy.editor import VideoFileClip
-from pymediainfo import MediaInfo
 from shapely.geometry import Point
 from shapely.ops import transform
 
 from .exceptions import ETLError
 
 logger = logging.getLogger()
-
-
 
 
 def extract_gpx_from_gopro(media_path: str, *, format: str = "GPX", binary: bool = False) -> str:
@@ -93,25 +90,6 @@ def gpx_to_gps(gpx_path: str = None, gpx_data: GPX = None) -> pd.DataFrame:
     if not gps_data.index.is_monotonic:
         gps_data.sort_index(inplace=True)
     return gps_data
-
-
-def get_media_info(media_path: str) -> dict:
-    """ Extract metadata info about a media file
-
-    Parameters
-    ----------
-    media_path: Path to media
-
-    Returns
-    -------
-    info: dict with all media metadata
-
-    """
-
-    media_info = MediaInfo.parse(media_path)
-    track_0 = media_info.tracks[0]
-    info_track_0 = track_0.__dict__
-    return info_track_0
 
 
 def get_media_duration(media_path: str) -> float:
