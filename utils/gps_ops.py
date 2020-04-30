@@ -30,10 +30,12 @@ def extract_gpx_from_gopro(media_path: str, *, format: str = "GPX", binary: bool
     gpx_path: path of coordinates created file
     """
     # todo: should we infer whether or not input file is binary?
-    gpx_path = f'{media_path}.{format.lower()}'
+
+    output_file = os.path.splitext(media_path)[0] # get rid of suffix
+    gpx_path = f'{output_file}.{format.lower()}'
 
     try:
-        extract(input_file=media_path, output_file=media_path, format=format, binary=binary, verbose=False,
+        extract(input_file=media_path, output_file=output_file, format=format, binary=binary, verbose=False,
                 skip=True)  # keep skip to false to be able to catch errors
     except Exception as e:
         raise ETLError(f'Could not extract GPX because \n {e}')
@@ -70,6 +72,7 @@ def gpx_to_gps(gpx_path: str = None, gpx_data: GPX = None) -> pd.DataFrame:
 
 
     """
+    # Todo: check that it works for image GPX (no time I guess)
     if gpx_data is None:
         with open(gpx_path, 'r') as gpx_file:
             gpx_data = gpxpy_parse(gpx_file)
