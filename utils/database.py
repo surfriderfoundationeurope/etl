@@ -43,24 +43,11 @@ def open_db_connection(conn_string: str = None) -> object:
         conn_string = get_db_connection_string()
     try:
         conn = psycopg2.connect(conn_string)
+        assert conn is not None  # indeed if the connection can't be established, `psycopg2.connect` returns None
         logger.debug("Connection established")
         return conn
     except psycopg2.OperationalError as err:
         logger.error(f"Connection failed: {err}")
-
-
-def close_db_connection(connection: object):
-    """ Closes a connection to a PG server
-
-    Parameters
-    ----------
-    connection: PostGre connection object
-    """
-    try:
-        connection.close()
-        logger.debug("PG connection closed")
-    except Exception as e:
-        logger.error(f"PG connection could not close successfully: {e}")
 
 
 def trashGPS(trashId, gps2154Points):
@@ -70,6 +57,7 @@ def trashGPS(trashId, gps2154Points):
     Input: a trashId from AI prediction dictionnary
     Output: a list of GPS Point in 2154 geometry
     """
+    # Todo/question: correct this one
     length = len(gps2154Points) + 1
     gpsIndex = trashId % length
     return gpsIndex
