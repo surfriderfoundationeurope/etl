@@ -23,7 +23,7 @@ def get_db_connection_string() -> str:
     return conn_string
 
 
-def open_db_connection(conn_string) -> object:
+def open_db_connection(conn_string: str = None) -> object:
     """Create a new connection to PostGre server
 
     Parameters
@@ -34,6 +34,8 @@ def open_db_connection(conn_string) -> object:
     -------
     conn: new connection
     """
+    if conn_string is None:
+        conn_string = get_db_connection_string()
     try:
         conn = psycopg2.connect(conn_string)
         logger.debug("Connection established")

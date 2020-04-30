@@ -31,7 +31,7 @@ def ai_ready(url: str) -> bool:
         return False
 
 
-def get_predicted_trashs(media_path: str, url: str) -> dict:
+def get_predicted_trashs(media_path: str, ai_url: str) -> list:
     """ Post a media to AI and waits for its response
 
     Parameters
@@ -41,7 +41,7 @@ def get_predicted_trashs(media_path: str, url: str) -> dict:
 
     Returns
     -------
-    AI response
+    List of trashs detected by AI
     """
 
     files = {
@@ -51,7 +51,7 @@ def get_predicted_trashs(media_path: str, url: str) -> dict:
             "application/octet-stream",
         )
     }
-    response = requests.post(url, files=files)
+    response = requests.post(ai_url, files=files)
     if not response.ok:
         logger.error(f"Request to AI failed wih reason {response.reason}.")
     json_response = response._content
@@ -59,7 +59,8 @@ def get_predicted_trashs(media_path: str, url: str) -> dict:
         prediction = json.loads(json_response)
     except json.decoder.JSONDecodeError:
         raise AIError('Could not deserialize AI response')
-    return prediction
+    detected_trashs = prediction.get('detected_trash')
+    return detected_trashs
 
 
 def mapLabel2TrashIdPG(label):

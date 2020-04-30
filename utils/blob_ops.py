@@ -61,17 +61,17 @@ def download_blob(blob_client: BlobClient, local_path: str = '/tmp') -> str:
 
     Returns
     -------
-    blob_directory: directory where blob content is downloaded
+    download_dirctory: directory where blob content is downloaded
     """
-
+    # todo: should we specify video name as well ?
     if not os.path.exists(local_path):
         os.mkdir(local_path)
 
     blob_name = blob_client.blob_name
-    blob_directory = os.path.join(local_path, blob_name)
-    with open(blob_directory, "wb") as blob_folder:
+    download_dirctory = os.path.join(local_path, blob_name)
+    with open(download_dirctory, "wb") as blob_folder:
         blob_data = blob_client.download_blob()
         blob_data.readinto(blob_folder)
     logger.debug(f'Blob {blob_name} has been successfully downloaded. \n '
-                 f'Path to local storage : {blob_directory}')
-    return blob_directory
+                 f'Path to local storage : {download_dirctory}')
+    return download_dirctory
