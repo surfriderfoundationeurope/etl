@@ -5,26 +5,26 @@ from azure.storage.blob import BlobClient
 from dotenv import load_dotenv
 from tqdm import tqdm
 
-from utils.ai_ops import ai_ready, get_predicted_trashs, mapLabel2TrashIdPG
-from utils.blob_ops import download_blob
-from utils.dsp import uniform_sampling
-from utils.gps_ops import (
+from etl.utils.ai import ai_ready, get_predicted_trashs, mapLabel2TrashIdPG
+from etl.utils.blob import download_blob
+from etl.utils.database import (
+    open_db_connection,
+    trashGPS,
+    insert_trash_to_db,
+)
+from etl.utils.dsp import uniform_sampling
+from etl.utils.exceptions import ETLError
+from etl.utils.gps import (
     extract_gpx_from_gopro,
     get_media_duration,
     add_geom_to_gps_data,
     gpx_to_gps
-)
-from utils.postgre_ops import (
-    open_db_connection,
-    trashGPS,
-    insert_trash_to_db,
 )
 
 logger = logging.getLogger()
 # load env variable from file .env
 load_dotenv()
 blob_conn_string = os.getenv("CONN_STRING")
-ai_url = os.getenv("AI_URL")
 
 # warnings.filterwarnings("ignore")
 
@@ -33,7 +33,8 @@ media_name = 'hero6.mp4'  # "28022020_Boudigau_4.MP4" #'hero6.mp4'
 local_path = '/Users/raph/Documents/SurfriderFoundation/data/samples/gopro/'  # "../goprosamples"
 
 
-def etl(container_name: str = None, blob_name: str = None, media_name: str = None, local_path: str = None):
+def run_etl(container_name: str = None, blob_name: str = None, media_name: str = None, data_dir: str = None,
+            temp_dir: str = '/tmp', data_source: str = 'azure', ai_url: str = None):
     """
 
     Parameters
@@ -41,13 +42,17 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
     container_name
     blob_name
     media_name
-    local_path: if `local_path` is given, ignore container_name and `blob_name`
+    data_dir: if `data_dir` is given, ignore container_name and `blob_name`
+    temp_dir:
 
     Returns
     -------
 
     """
-    if local_path is None:
+    if ai_url is None:
+        ai_url = os.getenv("AI_URL")
+
+    if data_source == 'azure':
         # Get media from azure blob storage
         logger.info("[Extract] Get Video from Azure Blob Storage")
         # Download locally it locally
@@ -57,15 +62,18 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
             blob_name=blob_name,
         )
         # Todo/question: should we check that the media has not yet been downloaded ? (eg. with a checksum if path exists)
-        media_path = download_blob(blob_client=blob_client, local_path='/tmp')
+        media_path = download_blob(blob_client=blob_client, local_path=temp_dir)
 
-    else:
+    elif data_source == 'local':
+        if data_dir is None:
+            raise ValueError('`data_dir` is required when mode `data_source` is local')
         logger.info("[Extract] Get Video from Local Storage")
-        media_path = os.path.join(local_path, media_name)
+        media_path = os.path.join(data_dir, media_name)
         # check that the file exists, else return
         if not os.path.exists(media_path):
-            logger.error(f'Cannot find media {media_path} in local storage. ')
-            return
+            raise ETLError(f'Cannot find media {media_path} in local storage. ')
+    else:
+        raise ValueError(f'Unkonwn data source {data_source}')
     # AI Trash prediction
     logger.info("[Transform][0] Get AI trashs prediction")
 
@@ -150,4 +158,4 @@ def etl(container_name: str = None, blob_name: str = None, media_name: str = Non
 
 # Execute main function
 if __name__ == "__main__":
-    etl(media_name=media_name, local_path=local_path)
+    run_etl(media_name=media_name, data_dir=local_path)

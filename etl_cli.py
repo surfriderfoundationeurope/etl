@@ -1,15 +1,13 @@
 import click
 
-from scripts.etl import run_etl
-from . import __version__
+from etl.run_etl import run_etl
+from etl import __version__
 
 
 @click.command()
-@click.option('--log-level',
-              type=click.Choice(['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']),
-              required=False, default=None, help='Python logging level (for the console).')
-@click.option('--colored-logs', is_flag=True, default=False,
-              help='Put colors on the logs')
+# @click.option('--log-level',
+#               type=click.Choice(['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']),
+#               required=False, default=None, help='Python logging level (for the console).')
 @click.option('--container', type=str,
               required=False, help='Name of Azure container to download the data from.')
 @click.option('--blob', type=str,
@@ -44,7 +42,7 @@ def cli(container, blob, media, temp_dir, data_dir, data_source, ai_url):
     )
 
 
-@cli.command()
+@click.command()
 def version():
     """Print version and exit"""
     click.echo(f'ETL version {__version__}.')
