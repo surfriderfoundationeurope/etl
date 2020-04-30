@@ -12,12 +12,11 @@ from pymediainfo import MediaInfo
 from shapely.geometry import Point
 from shapely.ops import transform
 
+from .exceptions import ETLError
+
 logger = logging.getLogger()
 
 
-class GPSError(Exception):
-    """Base exception for all AI-related exceptions"""
-    pass
 
 
 def extract_gpx_from_gopro(media_path: str, *, format: str = "GPX", binary: bool = False) -> str:
@@ -40,11 +39,11 @@ def extract_gpx_from_gopro(media_path: str, *, format: str = "GPX", binary: bool
         extract(input_file=media_path, output_file=media_path, format=format, binary=binary, verbose=False,
                 skip=True)  # keep skip to false to be able to catch errors
     except Exception as e:
-        raise GPSError(f'Could not extract GPX because \n {e}')
+        raise ETLError(f'Could not extract GPX because \n {e}')
     # Note: since the above function sometime fails silently, we cannot catch any Exception.
     # So we check if a GPX file could indeed be created, if not we raise an error.
     if not os.path.exists(gpx_path):
-        raise GPSError(f'Could not extract GPX from file {media_path}')
+        raise ETLError(f'Could not extract GPX from file {media_path}')
     return gpx_path
 
 
@@ -136,7 +135,7 @@ def get_media_duration(media_path: str) -> float:
     return clip.duration
 
 
-def pyproj_transform(gps_row, source_epsg: int = 4326, target_epsg: int = 2154) -> tuple:
+def pyproj_transform(gps_row, source_epsg: int = 4326, target_epsg: int = 2154) -> str:
     """ Applies geometrical transformation to a row of GPS coordinate
 
     Parameters
@@ -147,7 +146,7 @@ def pyproj_transform(gps_row, source_epsg: int = 4326, target_epsg: int = 2154) 
 
     Returns
     -------
-    geo_target: tuple with geom Point (x, y, z)
+    geo_target: string like 'Point (x, y, z)'
 
     """
     project = partial(
@@ -157,7 +156,7 @@ def pyproj_transform(gps_row, source_epsg: int = 4326, target_epsg: int = 2154) 
     )  # destination coordinate system
 
     geo_source = Point(gps_row.longitude, gps_row.latitude)
-    geo_target = transform(project, geo_source)
+    geo_target = transform(project, geo_source).wkt
     return geo_target
 
 

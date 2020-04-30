@@ -6,6 +6,8 @@ from azure.core.exceptions import HttpResponseError
 from azure.storage.blob import BlobClient
 from azure.storage.blob import ContainerClient
 
+from .exceptions import ETLError
+
 logger = logging.getLogger()
 
 
