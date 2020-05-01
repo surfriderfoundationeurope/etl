@@ -42,14 +42,14 @@ def run_etl(
 
     Parameters
     ----------
-    container_name
-    blob_name
-    media_name
-    data_dir: if `data_dir` is given, ignore container_name and `blob_name`
-    temp_dir:
-
-    Returns
-    -------
+    container_name: (Optional) Name of azure container. Required if data_source='azure''
+    blob_name: (Optional) Name of azure blob storage. Required if data_source='azure''
+    media_name: Name of media (with suffix .mp4, .mov, .jpg or .gpx)
+    data_dir: (Optional) Local directory where media are stored. Required if data_source='local''
+    temp_dir: (Optional) Local directory used to download data from azure storage. Default to '/tmp'
+    data_source: If 'azure', media will be downloaded from azure blob storage. If 'local', media are already stored in your disk.
+    target_storage: If 'postgre', prediction data will be insert in Post-gre database. If 'local', output is saved in a csv locally.
+    ai_url: (Optional) URL to AI API . If None, will be set from env variable.
 
     """
 
