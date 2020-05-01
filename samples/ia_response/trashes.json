@@ -1,0 +1,175 @@
+{
+  "detected_trash": [
+    {
+      "frame_to_box": {
+        "2": [
+          0.43,
+          0.44,
+          0.49,
+          0.5
+        ]
+      },
+      "id": 0,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "3": [
+          0.4,
+          0.44,
+          0.46,
+          0.49
+        ]
+      },
+      "id": 1,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "4": [
+          0.32,
+          0.45,
+          0.38,
+          0.46
+        ]
+      },
+      "id": 2,
+      "label": "others"
+    },
+    {
+      "frame_to_box": {
+        "4": [
+          0.32,
+          0.45,
+          0.38,
+          0.46
+        ]
+      },
+      "id": 3,
+      "label": "bottles"
+    },
+    {
+      "frame_to_box": {
+        "9": [
+          0.25,
+          0.43,
+          0.29,
+          0.49
+        ]
+      },
+      "id": 4,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "10": [
+          0.22,
+          0.41,
+          0.26,
+          0.48
+        ]
+      },
+      "id": 5,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "11": [
+          0.2,
+          0.43,
+          0.23,
+          0.48
+        ]
+      },
+      "id": 6,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "12": [
+          0.18,
+          0.42,
+          0.21,
+          0.48
+        ]
+      },
+      "id": 7,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "20": [
+          0.18,
+          0.12,
+          0.19,
+          0.14
+        ]
+      },
+      "id": 8,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "22": [
+          0.53,
+          0.44,
+          0.59,
+          0.47
+        ]
+      },
+      "id": 9,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "22": [
+          0.53,
+          0.44,
+          0.59,
+          0.47
+        ]
+      },
+      "id": 10,
+      "label": "bottles"
+    },
+    {
+      "frame_to_box": {
+        "23": [
+          1.14,
+          0.51,
+          1.15,
+          0.54
+        ]
+      },
+      "id": 11,
+      "label": "fragments"
+    },
+    {
+      "frame_to_box": {
+        "24": [
+          0.49,
+          0.44,
+          0.55,
+          0.46
+        ]
+      },
+      "id": 12,
+      "label": "bottles"
+    },
+    {
+      "frame_to_box": {
+        "24": [
+          0.49,
+          0.44,
+          0.56,
+          0.46
+        ]
+      },
+      "id": 13,
+      "label": "others"
+    }
+  ],
+  "fps": 4,
+  "video_id": "vid1-480p.mov",
+  "video_length": 25
+}
