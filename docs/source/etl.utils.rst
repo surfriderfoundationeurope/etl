@@ -1,16 +1,15 @@
-etl.utils.ai package
-====================
+etl.utils package
+-----------------
 
+etl.utils.ai module
+====================
 .. automodule:: etl.utils.ai
    :members:
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
 etl.utils.blob module
----------------------
+=====================
 
 .. automodule:: etl.utils.blob
    :members:
@@ -18,15 +17,14 @@ etl.utils.blob module
    :show-inheritance:
 
 etl.utils.database module
---------------------------
-
+=========================
 .. automodule:: etl.utils.database
    :members:
    :undoc-members:
    :show-inheritance:
 
 etl.utils.dsp module
----------------------
+====================
 
 .. automodule:: etl.utils.dsp
    :members:
@@ -34,7 +32,7 @@ etl.utils.dsp module
    :show-inheritance:
 
 etl.utils.exceptions module
----------------------------
+===========================
 
 .. automodule:: etl.utils.exceptions
    :members:
@@ -42,7 +40,7 @@ etl.utils.exceptions module
    :show-inheritance:
 
 etl.utils.gps module
----------------------
+=====================
 
 .. automodule:: etl.utils.gps
    :members:
@@ -50,7 +48,7 @@ etl.utils.gps module
    :show-inheritance:
 
 etl.utils.media module
------------------------
+=======================
 
 .. automodule:: etl.utils.media
    :members:
