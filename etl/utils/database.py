@@ -20,7 +20,7 @@ def get_db_connection_string() -> str:
     pgpassword = os.getenv("PGPWD")
 
     if None in [pgserver, pgdatabase, pgusername, pgpassword]:
-        raise ETLError('Could not find Postgre variable in environment. ')
+        raise ETLError("Could not find Postgre variable in environment. ")
     sslmode = "require"
     conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(
         pgserver, pgusername, pgdatabase, pgpassword, sslmode
@@ -43,7 +43,9 @@ def open_db_connection(conn_string: str = None) -> object:
         conn_string = get_db_connection_string()
     try:
         conn = psycopg2.connect(conn_string)
-        assert conn is not None  # indeed if the connection can't be established, `psycopg2.connect` returns None
+        assert (
+            conn is not None
+        )  # indeed if the connection can't be established, `psycopg2.connect` returns None
         logger.debug("Connection established")
         return conn
     except psycopg2.OperationalError as err:
@@ -63,7 +65,7 @@ def trashGPS(trashId, gps2154Points):
     return gpsIndex
 
 
-def insert_trash_to_db(gps_row, trash_ref: str, cursor: object, connexion: object) -> str:
+def insert_trash_to_db(trash_time, trash, cursor: object, connexion: object) -> str:
     """ Insert a trash in database
     
     Parameters
@@ -77,12 +79,29 @@ def insert_trash_to_db(gps_row, trash_ref: str, cursor: object, connexion: objec
     -------
     row_id: id of row within Trash Table of the Trash which has just been inserted
     """
-    timestamp = gps_row.name
+
+    trash_id = trash.get("id")
+    trash_label = trash.get("label")
+    trash_geom = trash.get("geom")
+    trash_box = trash.get("box")
+    trash_frame = trash.get("frame")
+    trash_longitude = trash.get("longitude")
+    trash_latitude = trash.get("latitude")
+    trash_elevation = trash.get("elevation")
+
     # Todo/Question: id, id_ref_campaign_fk seems to be missing
+    # Todo/Question;: should we insert some other data ?
+    #  I suggest:
+    #   - media_source,
+    #   - media_id, trash_box, trash_frame : to be able to use the media image as input of TrashRoulette and eventually retrain the AI
+    #   - trash_latitude, trash_longitude: just in case the transformation went wrong (+ I'm not sure it's bijective)
+
+    # Todo/Question what is 'icetea' ?
+    # Todo/Question: this function should expect a db description to be able to adapt to migrations & versions.
     cursor.execute(
         "INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time ) "
         "VALUES (DEFAULT, '1faaee65-1edb-45ab-bdd4-15268fccd301',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;",
-        (gps_row.geom, gps_row.elevation, trash_ref, "icetea", timestamp),
+        (trash_geom, trash_elevation, trash_label, "icetea", trash_time),
     )
     connexion.commit()
     row_id = cursor.fetchone()[0]

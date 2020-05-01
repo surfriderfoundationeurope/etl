@@ -17,15 +17,19 @@ def safe_blob(func):
         try:
             return func(*args, **kwargs)
         except ValueError:
-            logger.warning('Could not connect to blob storage. '
-                           'Connection string is either blank or malformed.'
-                           'Early exit of ETL process !')
+            logger.warning(
+                "Could not connect to blob storage. "
+                "Connection string is either blank or malformed."
+                "Early exit of ETL process !"
+            )
             exit()
 
         except HttpResponseError as e:
-            logger.warning('Could not List blob, the container probably does not exist. '
-                           f'Details : {e} '
-                           'Early exit of ETL process !')
+            logger.warning(
+                "Could not List blob, the container probably does not exist. "
+                f"Details : {e} "
+                "Early exit of ETL process !"
+            )
             exit()
 
     return wrapper
@@ -53,7 +57,7 @@ def list_container_blob_names(conn_str: str, container_name: str) -> list:
 
 
 @safe_blob
-def download_blob(blob_client: BlobClient, local_path: str = '/tmp') -> str:
+def download_blob(blob_client: BlobClient, local_path: str = "/tmp") -> str:
     """ Download Blob from Azure to local file system
 
     Parameters
@@ -74,6 +78,8 @@ def download_blob(blob_client: BlobClient, local_path: str = '/tmp') -> str:
     with open(download_dirctory, "wb") as blob_folder:
         blob_data = blob_client.download_blob()
         blob_data.readinto(blob_folder)
-    logger.debug(f'Blob {blob_name} has been successfully downloaded. \n '
-                 f'Path to local storage : {download_dirctory}')
+    logger.debug(
+        f"Blob {blob_name} has been successfully downloaded. \n "
+        f"Path to local storage : {download_dirctory}"
+    )
     return download_dirctory
