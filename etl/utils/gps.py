@@ -8,7 +8,6 @@ import pyproj
 from gopro2gpx.main import extract
 from gpxpy import parse as gpxpy_parse
 from gpxpy.gpx import GPX
-from moviepy.editor import VideoFileClip
 from shapely.geometry import Point
 from shapely.ops import transform
 
@@ -18,7 +17,7 @@ logger = logging.getLogger()
 
 
 def extract_gpx_from_gopro(
-    media_path: str, *, format: str = "GPX", binary: bool = False
+        media_path: str, *, format: str = "GPX", binary: bool = False
 ) -> str:
     """ Extract gpx data from a Go-Pro file
 
@@ -73,6 +72,7 @@ def open_gpx_file(gpx_path: str) -> GPX:
 
 def gpx_tracks_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
     """ Convert GPX tracks to GPS
+
     Parameters
     ----------
     gpx_data:  GPX object that returns data from a parsed gpx file.
@@ -81,17 +81,16 @@ def gpx_tracks_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
     -------
     gps_data: dataframe where index are time and columns are latitude, longitude, elevation
 
-    Examples:
-    --------
-    > gps_data = gpx_to_gps('../gpssamples/hero6.gpx')
-    > gps_data
+    Examples
+    ---------
+    >>> gps_data = gpx_to_gps('../../data/osm_tracker/sample.gpx')
+    >>> gps_data
                                    latitude   longitude    elevation
         2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228
         2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199
         2018-01-24 19:28:00+00:00  33.126544 -117.327143    -18.183
         2018-01-24 19:28:01+00:00  33.126554 -117.327130    -18.172
         2018-01-24 19:28:02+00:00  33.126563 -117.327118    -18.162
-        ...                         ...         ...         ...
 
 
     """
@@ -120,18 +119,19 @@ def gpx_tracks_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
 
 def gpx_waypoints_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
     """ Convert GPX waypoints to GPS
+
     Parameters
     ----------
     gpx_data:  GPX object that returns data from a parsed gpx file.
 
     Returns
     -------
-    gps_data:  dataframe where index are time and columns are latitude, longitude, trash_label
+    gps_data:  DataFrame where index are time and columns are latitude, longitude, trash_label
 
-    Examples:
-    --------
-    > gps_data = gpx_to_gps('../gpssamples/hero6.gpx')
-    > gps_data
+    Examples
+    ---------
+    >>> gps_data = gpx_to_gps('../../data/smartphone_video/sample.gpx')
+    >>> gps_data
                                    longitude   latitude         trash_label
         time
         2019-04-01 12:24:28+00:00   0.097059  43.155730        Autre dechet
@@ -139,7 +139,6 @@ def gpx_waypoints_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
         2019-04-01 12:24:46+00:00   0.097036  43.155988        Autre dechet
         2019-04-01 12:24:46+00:00   0.097036  43.155988   Bouteille boisson
         2019-04-01 12:25:04+00:00   0.096994  43.156326  Autres dechets +10
-        ...                         ...         ...             ...
 
     """
 
@@ -158,29 +157,8 @@ def gpx_waypoints_to_gps(gpx_data: GPX = None) -> pd.DataFrame:
     return gps_data
 
 
-def get_media_duration(media_path: str) -> float:
-    """ Extract duration from a media file
-
-    Parameters
-    ----------
-    media_path: Path to media
-
-    Returns
-    -------
-    duration: duration of the media
-
-    Notes:
-    ------
-    Taken from here:
-    https://www.reddit.com/r/moviepy/comments/2bsnrq/is_it_possible_to_get_the_length_of_a_video/
-
-    """
-    clip = VideoFileClip(media_path)
-    return clip.duration
-
-
 def pyproj_transform(
-    longitude: float, latitude: float, source_epsg: int = 4326, target_epsg: int = 2154
+        longitude: float, latitude: float, source_epsg: int = 4326, target_epsg: int = 2154
 ) -> str:
     """ Applies geometrical transformation to a row of GPS coordinate
 
@@ -215,15 +193,15 @@ def add_geom_to_gps_data(gps_data: pd.DataFrame, **kwargs):
 
     Examples
     --------
-    > gps_data
+    >>> gps_data
                                    latitude   longitude  elevation
         2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228
         2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199
         2018-01-24 19:28:12+00:00  33.126616 -117.325690    -18.440
         2018-01-24 19:28:13+00:00  33.126540 -117.327072    -19.161
         2018-01-24 19:28:14+00:00  33.126539 -117.327218    -18.472
-    > add_geom_to_gps_data(gps_data)
-    > gps_data
+    >>> add_geom_to_gps_data(gps_data)
+    >>> gps_data
                                                    geom
         2018-01-24 19:27:58+00:00  33.126515  ...  POINT (-6843671.309553764 12301224.24713064)
         2018-01-24 19:27:59+00:00  33.126543  ...  POINT (-6843668.109889416 12301222.98998321)

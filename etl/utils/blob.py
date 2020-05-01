@@ -12,6 +12,17 @@ logger = logging.getLogger()
 
 
 def safe_blob(func):
+    """ Decorator with blob exceptions
+
+    Parameters
+    ----------
+    func: function to decorate
+
+    Returns
+    -------
+    func: function called with decorator exceptions
+
+    """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         try:
@@ -67,7 +78,8 @@ def download_blob(blob_client: BlobClient, local_path: str = "/tmp") -> str:
 
     Returns
     -------
-    download_dirctory: directory where blob content is downloaded
+    download_directory: directory where blob content is downloaded
+
     """
     # todo: should we specify video name as well ?
     if not os.path.exists(local_path):

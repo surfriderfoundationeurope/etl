@@ -5,7 +5,6 @@ from scipy.interpolate import interp1d
 def custom_sampling(
         data: pd.DataFrame, output_index: pd.Index, interpolation_kind: str = "linear"):
     """ Interpolate data to infer values on custom sampling
-
     Parameters
     ----------
     data: DataFrame with scalar values
@@ -18,8 +17,7 @@ def custom_sampling(
 
     Examples
     --------
-    > data
-
+    >>> data
                               longitude   latitude  elevation
         time
         2018-01-24 19:27:58 -117.327168  33.126515    -17.228
@@ -33,7 +31,7 @@ def custom_sampling(
         2018-01-24 19:28:18 -117.327263  33.126566    -19.362
         2018-01-24 19:28:19 -117.327270  33.126579    -19.731
         2018-01-24 19:28:20 -117.327282  33.126588    -19.876
-    > output_index
+    >>> output_index
         DatetimeIndex([   '2018-01-24 19:27:58.500000',
                           '2018-01-24 19:27:58.750000128',
                           '2018-01-24 19:27:59',
@@ -50,8 +48,7 @@ def custom_sampling(
                           '2018-01-24 19:28:04'],
         dtype='datetime64[ns]',
         freq=None)
-    > output_data
-
+    >>> custom_sampling(data, output_index, interpolation_kind='linear')
                                       longitude   latitude  elevation
         2018-01-24 19:27:58.500000000 -117.327168  33.126515 -17.228000
         2018-01-24 19:27:58.750000128 -117.327164  33.126522 -17.470750
@@ -92,6 +89,7 @@ def uniform_sampling(data: pd.DataFrame, sampling_rate: float, interpolation_kin
     nanosecond  are not supported. For example, 3Hz is not supported because its
     period is 333333333.333 nanoseconds. Another example: 4096Hz is not
     supported because its period is 244140.625 nanoseconds.
+
     Parameters
     ----------
     data: pd.DataFrame

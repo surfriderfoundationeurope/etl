@@ -7,6 +7,7 @@ import requests
 
 logger = logging.getLogger()
 
+
 class AIError(Exception):
     """Base exception for all AI-related exceptions"""
 
@@ -50,9 +51,9 @@ def get_ai_prediction(media_path: str, ai_url: str) -> (pd.DataFrame, dict):
                     'detected__trash', 'fps', 'video_id', 'video_length'
                      todo: check how it is like for images
 
-    Examples:
+    Examples
     ---------
-    > ai_prediction
+    >>> ai_prediction
         {'detected_trash': [
                         {'frame_to_box': {'2': [0.43, 0.44, 0.49, 0.5]},
                            'id': 0,
@@ -84,7 +85,7 @@ def get_ai_prediction(media_path: str, ai_url: str) -> (pd.DataFrame, dict):
 
 
 def prediction_to_dataframe(
-    ai_prediction: dict, start: pd.Timestamp, duration: float = None
+        ai_prediction: dict, start: pd.Timestamp, duration: float = None
 ):
     """Convert AI dict prediction to DataFrame with eventually timestamps index (if `start` is given)
 
@@ -98,19 +99,35 @@ def prediction_to_dataframe(
     detected_trashes: DataFrame with each row is a detected trash with columns ['frame', 'box', 'id', 'label']
                       and index are inferred timestamp
 
-    Examples:
-    ---------
-    > detected_trashes
-                                           id      label                      box  frame
-            2018-01-01 00:00:01.435708800   0  fragments  [0.43, 0.44, 0.49, 0.5]      2
-            2018-01-01 00:00:01.435708801   1  fragments  [0.4, 0.44, 0.46, 0.49]      3
-            2018-01-01 00:00:01.435708801   2     others  [0.32, 0.45, 0.38, 0.46      4
-            2018-01-01 00:00:01.435708801   3    bottles  [0.32, 0.45, 0.38, 0.46      4
-            2018-01-01 00:00:01.435708803   4  fragments  [0.25, 0.43, 0.29, 0.49      9
-            2018-01-01 00:00:01.435708804   5  fragments  [0.22, 0.41, 0.26, 0.48     10
-            2018-01-01 00:00:01.435708804   6  fragments  [0.2, 0.43, 0.23, 0.48]     11
-            2018-01-01 00:00:01.435708805   7  fragments  [0.18, 0.42, 0.21, 0.48     12
-                            ...                ...                 ...
+    Examples
+    --------
+    >>> ai_prediction
+            {'detected_trash': [
+                    {'frame_to_box': {'2': [0.43, 0.44, 0.49, 0.5]},
+                       'id': 0,
+                       'label': 'fragments'},
+                    {'frame_to_box': {'3': [0.4, 0.44, 0.46, 0.49]},
+                       'id': 1,
+                       'label': 'fragments'},
+                    ...
+                    {'frame_to_box': {'24': [0.49, 0.44, 0.56, 0.46]},
+                       'id': 13,
+                       'label': 'others'}],
+     'fps': 4,
+     'video_id': 'vid1-480p.mov',
+     'video_length': 25
+     }
+    >>> prediction_to_dataframe(ai_prediction, start=pd.Timestamp('2018-01-01 10:10:23'))
+                                       id      label                      box  frame
+        2018-01-01 00:00:01.435708800   0  fragments  [0.43, 0.44, 0.49, 0.5]      2
+        2018-01-01 00:00:01.435708801   1  fragments  [0.4, 0.44, 0.46, 0.49]      3
+        2018-01-01 00:00:01.435708801   2     others  [0.32, 0.45, 0.38, 0.46      4
+        2018-01-01 00:00:01.435708801   3    bottles  [0.32, 0.45, 0.38, 0.46      4
+        2018-01-01 00:00:01.435708803   4  fragments  [0.25, 0.43, 0.29, 0.49      9
+        2018-01-01 00:00:01.435708804   5  fragments  [0.22, 0.41, 0.26, 0.48     10
+        2018-01-01 00:00:01.435708804   6  fragments  [0.2, 0.43, 0.23, 0.48]     11
+        2018-01-01 00:00:01.435708805   7  fragments  [0.18, 0.42, 0.21, 0.48     12
+                        ...                ...                 ...
 
     """
     # convert list of dict to DataFrame
@@ -142,11 +159,11 @@ def prediction_to_dataframe(
 
 
 def infer_trashes_timestamps(
-    detected_trashes: pd.DataFrame,
-    start: pd.Timestamp,
-    fps: int,
-    num_frames: int = None,
-    duration: float = None,
+        detected_trashes: pd.DataFrame,
+        start: pd.Timestamp,
+        fps: int,
+        num_frames: int = None,
+        duration: float = None,
 ):
     """ Retrieve trashes timestamps given start reference, fps and frame index of the trash
 
@@ -158,18 +175,17 @@ def infer_trashes_timestamps(
     num_frames: number of frames (given by AI)
     duration: video duration (if None, this is inferred from fps and num_frames)
 
-    Examples:
+    Examples
     ---------
-    > detected_trashes
+    >>> detected_trashes
             id      label                      box  frame
         0    0  fragments  [0.43, 0.44, 0.49, 0.5]      2
         1    1  fragments  [0.4, 0.44, 0.46, 0.49]      3
         2    2     others  [0.32, 0.45, 0.38, 0.46      4
         3    3    bottles  [0.32, 0.45, 0.38, 0.46      4
                     ...             ...
-
-    > infer_trashes_timestamps(detected_trashes_input, start=pd.Timestamp('2018-01-01 10:10:23'), fps: 4, num_frames: 25)
-    > detected_trashes
+    >>> detected_trashes = infer_trashes_timestamps(detected_trashes_input, start=pd.Timestamp('2018-01-01 10:10:23'), fps: 4, num_frames: 25)
+    >>> detected_trashes
                                        id      label                      box  frame
         1970-01-01 00:00:01.514801423   0  fragments  [0.43, 0.44, 0.49, 0.5]      2
         1970-01-01 00:00:01.514801424   1  fragments  [0.4, 0.44, 0.46, 0.49]      3

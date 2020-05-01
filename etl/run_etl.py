@@ -139,7 +139,7 @@ def run_etl(
             # todo: remove these lines, for devel purpose (fake IA answer)
             import json
 
-            with open("samples/ia_response/trashes.json") as f:
+            with open("data/ia_response/trashes.json") as f:
                 ai_prediction = json.load(f)
         trashes_data = prediction_to_dataframe(ai_prediction, start=gps_data.index[0])
         gps_data = custom_sampling(

@@ -2,6 +2,8 @@ import os
 import psycopg2
 import logging
 
+import pandas as pd
+
 from .exceptions import ETLError
 
 logger = logging.getLogger()
@@ -65,19 +67,35 @@ def trashGPS(trashId, gps2154Points):
     return gpsIndex
 
 
-def insert_trash_to_db(trash_time, trash, cursor: object, connexion: object) -> str:
+def insert_trash_to_db(trash_time: pd.Timestamp, trash: pd.Series, cursor: object, connexion: object) -> str:
     """ Insert a trash in database
     
     Parameters
     ----------
     gps_row: Row of GPS data with column 'elevation' and 'geom'
     trash_ref: id of detected trash
-    cursor: postgre cursor to exeecute
+    cursor: postgre cursor to execute
     connexion: PostGre connection object
 
     Returns
     -------
     row_id: id of row within Trash Table of the Trash which has just been inserted
+
+    Examples
+    ---------
+    >>> trash
+        longitude                                        -117.327
+        latitude                                          33.1265
+        elevation                                         -17.228
+        id                                                      0
+        label                                           fragments
+        box                               [0.43, 0.44, 0.49, 0.5]
+        frame                                                   2
+        geom         POINT (-6843671.309553764 12301224.24713064)
+        Name:           2018-01-24 19:27:58.500000, dtype: object
+    >>> trash_time
+        Timestamp('2018-01-24 19:27:58.500000')
+
     """
 
     trash_id = trash.get("id")
