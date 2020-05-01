@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>etl.utils.gps &mdash; Surfrider ETL 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Surfrider ETL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../general_documentation.html">Project Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ETL script</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../etl.html">ETL package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Surfrider ETL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>etl.utils.gps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for etl.utils.gps</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pyproj</span>
+<span class="kn">from</span> <span class="nn">gopro2gpx.main</span> <span class="kn">import</span> <span class="n">extract</span>
+<span class="kn">from</span> <span class="nn">gpxpy</span> <span class="kn">import</span> <span class="n">parse</span> <span class="k">as</span> <span class="n">gpxpy_parse</span>
+<span class="kn">from</span> <span class="nn">gpxpy.gpx</span> <span class="kn">import</span> <span class="n">GPX</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">shapely.ops</span> <span class="kn">import</span> <span class="n">transform</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ETLError</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="extract_gpx_from_gopro"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.extract_gpx_from_gopro">[docs]</a><span class="k">def</span> <span class="nf">extract_gpx_from_gopro</span><span class="p">(</span>
+        <span class="n">media_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;GPX&quot;</span><span class="p">,</span> <span class="n">binary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Extract gpx data from a Go-Pro file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    media_path: path to Go-Pro media</span>
+<span class="sd">    format: output format for spatial coordinates</span>
+<span class="sd">    binary: whether media is binary</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gpx_path: path of coordinates created file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># todo: should we infer whether or not input file is binary?</span>
+
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">media_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># get rid of suffix</span>
+    <span class="n">gpx_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">extract</span><span class="p">(</span>
+            <span class="n">input_file</span><span class="o">=</span><span class="n">media_path</span><span class="p">,</span>
+            <span class="n">output_file</span><span class="o">=</span><span class="n">output_file</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span>
+            <span class="n">binary</span><span class="o">=</span><span class="n">binary</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">skip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>  <span class="c1"># keep skip to false to be able to catch errors</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ETLError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract GPX because </span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Note: since the above function sometime fails silently, we cannot catch any Exception.</span>
+    <span class="c1"># So we check if a GPX file could indeed be created, if not we raise an error.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gpx_path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">ETLError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract GPX from file </span><span class="si">{</span><span class="n">media_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gpx_path</span></div>
+
+
+<div class="viewcode-block" id="open_gpx_file"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.open_gpx_file">[docs]</a><span class="k">def</span> <span class="nf">open_gpx_file</span><span class="p">(</span><span class="n">gpx_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GPX</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Open and parse a gpx file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gpx_path: path to a GPX file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    GPX data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">gpx_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">gpx_file</span><span class="p">:</span>
+        <span class="n">gpx_data</span> <span class="o">=</span> <span class="n">gpxpy_parse</span><span class="p">(</span><span class="n">gpx_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gpx_data</span></div>
+
+
+<div class="viewcode-block" id="gpx_tracks_to_gps"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.gpx_tracks_to_gps">[docs]</a><span class="k">def</span> <span class="nf">gpx_tracks_to_gps</span><span class="p">(</span><span class="n">gpx_data</span><span class="p">:</span> <span class="n">GPX</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Convert GPX tracks to GPS</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gpx_data:  GPX object that returns data from a parsed gpx file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gps_data: dataframe where index are time and columns are latitude, longitude, elevation</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ---------</span>
+<span class="sd">    &gt;&gt;&gt; gps_data = gpx_to_gps(&#39;../../data/osm_tracker/sample.gpx&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; gps_data</span>
+<span class="sd">                                   latitude   longitude    elevation</span>
+<span class="sd">        2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228</span>
+<span class="sd">        2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199</span>
+<span class="sd">        2018-01-24 19:28:00+00:00  33.126544 -117.327143    -18.183</span>
+<span class="sd">        2018-01-24 19:28:01+00:00  33.126554 -117.327130    -18.172</span>
+<span class="sd">        2018-01-24 19:28:02+00:00  33.126563 -117.327118    -18.162</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Todo: check that it works for image GPX (no time I guess)</span>
+
+    <span class="n">gps_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">gpx_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">track</span><span class="o">.</span><span class="n">segments</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">:</span>
+                <span class="c1"># todo: check performance of pandas on big files</span>
+                <span class="n">gps_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">elevation</span><span class="p">]</span>
+                <span class="p">)</span>
+
+    <span class="n">gps_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">gps_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;elevation&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">gps_data</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+    <span class="c1"># remove tz for compatibility purpose with AI timestamp</span>
+    <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_convert</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">gps_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_monotonic</span><span class="p">:</span>
+        <span class="n">gps_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gps_data</span></div>
+
+
+<div class="viewcode-block" id="gpx_waypoints_to_gps"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.gpx_waypoints_to_gps">[docs]</a><span class="k">def</span> <span class="nf">gpx_waypoints_to_gps</span><span class="p">(</span><span class="n">gpx_data</span><span class="p">:</span> <span class="n">GPX</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Convert GPX waypoints to GPS</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gpx_data:  GPX object that returns data from a parsed gpx file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    gps_data:  DataFrame where index are time and columns are latitude, longitude, trash_label</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    ---------</span>
+<span class="sd">    &gt;&gt;&gt; gps_data = gpx_to_gps(&#39;../../data/smartphone_video/sample.gpx&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; gps_data</span>
+<span class="sd">                                   longitude   latitude         trash_label</span>
+<span class="sd">        time</span>
+<span class="sd">        2019-04-01 12:24:28+00:00   0.097059  43.155730        Autre dechet</span>
+<span class="sd">        2019-04-01 12:24:46+00:00   0.097036  43.155988        Autre dechet</span>
+<span class="sd">        2019-04-01 12:24:46+00:00   0.097036  43.155988        Autre dechet</span>
+<span class="sd">        2019-04-01 12:24:46+00:00   0.097036  43.155988   Bouteille boisson</span>
+<span class="sd">        2019-04-01 12:25:04+00:00   0.096994  43.156326  Autres dechets +10</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">gps_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">waypoint</span> <span class="ow">in</span> <span class="n">gpx_data</span><span class="o">.</span><span class="n">waypoints</span><span class="p">:</span>
+        <span class="n">gps_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">waypoint</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">waypoint</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="n">gps_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">gps_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">gps_data</span><span class="o">.</span><span class="n">time</span>
+    <span class="n">gps_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gps_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_monotonic</span><span class="p">:</span>
+        <span class="n">gps_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">gps_data</span></div>
+
+
+<div class="viewcode-block" id="pyproj_transform"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.pyproj_transform">[docs]</a><span class="k">def</span> <span class="nf">pyproj_transform</span><span class="p">(</span>
+        <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">source_epsg</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4326</span><span class="p">,</span> <span class="n">target_epsg</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2154</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Applies geometrical transformation to a row of GPS coordinate</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    longitude: longitude coordinate</span>
+<span class="sd">    latitude: latitude coordinate</span>
+<span class="sd">    source_epsg: projection source</span>
+<span class="sd">    target_epsg: projection target</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    geo_target: string like &#39;Point (x, y, z)&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">pyproj</span><span class="o">.</span><span class="n">transform</span><span class="p">,</span>
+        <span class="n">pyproj</span><span class="o">.</span><span class="n">Proj</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;epsg:</span><span class="si">{</span><span class="n">source_epsg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>  <span class="c1"># source coordinate system</span>
+        <span class="n">pyproj</span><span class="o">.</span><span class="n">Proj</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;epsg:</span><span class="si">{</span><span class="n">target_epsg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="p">)</span>  <span class="c1"># destination coordinate system</span>
+    <span class="n">geo_source</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">)</span>
+    <span class="n">geo_target</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">geo_source</span><span class="p">)</span><span class="o">.</span><span class="n">wkt</span>
+    <span class="k">return</span> <span class="n">geo_target</span></div>
+
+
+<div class="viewcode-block" id="add_geom_to_gps_data"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.gps.add_geom_to_gps_data">[docs]</a><span class="k">def</span> <span class="nf">add_geom_to_gps_data</span><span class="p">(</span><span class="n">gps_data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Add projection to a given geometry to a GPS list of points</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gps_data: list of dict  with gps point containing Longitude and Latitude</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; gps_data</span>
+<span class="sd">                                   latitude   longitude  elevation</span>
+<span class="sd">        2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228</span>
+<span class="sd">        2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199</span>
+<span class="sd">        2018-01-24 19:28:12+00:00  33.126616 -117.325690    -18.440</span>
+<span class="sd">        2018-01-24 19:28:13+00:00  33.126540 -117.327072    -19.161</span>
+<span class="sd">        2018-01-24 19:28:14+00:00  33.126539 -117.327218    -18.472</span>
+<span class="sd">    &gt;&gt;&gt; add_geom_to_gps_data(gps_data)</span>
+<span class="sd">    &gt;&gt;&gt; gps_data</span>
+<span class="sd">                                                   geom</span>
+<span class="sd">        2018-01-24 19:27:58+00:00  33.126515  ...  POINT (-6843671.309553764 12301224.24713064)</span>
+<span class="sd">        2018-01-24 19:27:59+00:00  33.126543  ...  POINT (-6843668.109889416 12301222.98998321)</span>
+<span class="sd">        2018-01-24 19:28:12+00:00  33.126616  ...  POINT (-6843653.244167816 12301083.64126886)</span>
+<span class="sd">        2018-01-24 19:28:13+00:00  33.126540  ...  POINT (-6843668.018846542 12301215.23885827)</span>
+<span class="sd">        2018-01-24 19:28:14+00:00  33.126539  ...  POINT (-6843668.778535692 12301229.22991498)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># apply along axis the transformation from (lat, long) to geompoint(x, y, z)</span>
+    <span class="n">gps_data</span><span class="p">[</span><span class="s2">&quot;geom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">gps_row</span><span class="p">:</span> <span class="n">pyproj_transform</span><span class="p">(</span><span class="o">*</span><span class="n">gps_row</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">arr</span><span class="o">=</span><span class="n">gps_data</span><span class="p">[[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">]],</span>
+    <span class="p">)</span></div>
+    <span class="c1"># NB: order 2 in speed comparison between numpy and pandas.</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Clément Leroux, Raphaël Courivaud, Raphaëlle Bertrand-Lalo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

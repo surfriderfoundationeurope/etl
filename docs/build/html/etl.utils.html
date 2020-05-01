@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>etl.utils.ai package &mdash; Surfrider ETL 0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ETL package" href="etl.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Surfrider ETL
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="general_documentation.html">Project Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ETL script</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="etl.html">ETL package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="etl.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">etl.utils.ai package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.blob">etl.utils.blob module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.database">etl.utils.database module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.dsp">etl.utils.dsp module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.exceptions">etl.utils.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.gps">etl.utils.gps module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-etl.utils.media">etl.utils.media module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="etl.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etl.html#iguazu-cache-validators-module">iguazu.cache_validators module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Surfrider ETL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="etl.html">ETL package</a> &raquo;</li>
+        
+      <li>etl.utils.ai package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/etl.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-etl.utils.ai">
+<span id="etl-utils-ai-package"></span><h1>etl.utils.ai package<a class="headerlink" href="#module-etl.utils.ai" title="Permalink to this headline">¶</a></h1>
+<dl class="py exception">
+<dt id="etl.utils.ai.AIError">
+<em class="property">exception </em><code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">AIError</code><a class="reference internal" href="_modules/etl/utils/ai.html#AIError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.AIError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Base exception for all AI-related exceptions</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.ai.ai_ready">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">ai_ready</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#ai_ready"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.ai_ready" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate whether AI inference service is available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>address of to AI API</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>ready</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>AI Status: True if AI is ready, else False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.ai.get_ai_prediction">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">get_ai_prediction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_path</span></em>, <em class="sig-param"><span class="n">ai_url</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#get_ai_prediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.get_ai_prediction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a media to AI and waits for its response and deserialize</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>media_path</strong> (<em>Path to video</em><em> or </em><em>image in a local storage</em>) – </p></li>
+<li><p><strong>url</strong> (<em>AI API address</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><strong>ai_prediction</strong> –</p>
+<dl class="simple">
+<dt>‘detected__trash’, ‘fps’, ‘video_id’, ‘video_length’</dt><dd><p>todo: check how it is like for images</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>response from AI API as a dict with keys</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ai_prediction</span>
+<span class="go">    {&#39;detected_trash&#39;: [</span>
+<span class="go">                    {&#39;frame_to_box&#39;: {&#39;2&#39;: [0.43, 0.44, 0.49, 0.5]},</span>
+<span class="go">                       &#39;id&#39;: 0,</span>
+<span class="go">                       &#39;label&#39;: &#39;fragments&#39;},</span>
+<span class="go">                    {&#39;frame_to_box&#39;: {&#39;3&#39;: [0.4, 0.44, 0.46, 0.49]},</span>
+<span class="go">                       &#39;id&#39;: 1,</span>
+<span class="go">                       &#39;label&#39;: &#39;fragments&#39;},</span>
+<span class="go">                    ...</span>
+<span class="go">                    {&#39;frame_to_box&#39;: {&#39;24&#39;: [0.49, 0.44, 0.56, 0.46]},</span>
+<span class="go">                       &#39;id&#39;: 13,</span>
+<span class="go">                       &#39;label&#39;: &#39;others&#39;}],</span>
+<span class="go">     &#39;fps&#39;: 4,</span>
+<span class="go">     &#39;video_id&#39;: &#39;vid1-480p.mov&#39;,</span>
+<span class="go">     &#39;video_length&#39;: 25</span>
+<span class="go">     }</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.ai.infer_trashes_timestamps">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">infer_trashes_timestamps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">detected_trashes</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">fps</span></em>, <em class="sig-param"><span class="n">num_frames</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#infer_trashes_timestamps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.infer_trashes_timestamps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve trashes timestamps given start reference, fps and frame index of the trash</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detected_trashes</strong> (<em>DataFrame with 'frame' in columns</em>) – </p></li>
+<li><p><strong>start</strong> (<em>Timestamp corresponding to beginning of media</em>) – </p></li>
+<li><p><strong>fps</strong> (<em>number of frame per second</em><em> (</em><em>given by AI</em><em>)</em>) – </p></li>
+<li><p><strong>num_frames</strong> (<em>number of frames</em><em> (</em><em>given by AI</em><em>)</em>) – </p></li>
+<li><p><strong>duration</strong> (<em>video duration</em><em> (</em><em>if None</em><em>, </em><em>this is inferred from fps and num_frames</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">detected_trashes</span>
+<span class="go">        id      label                      box  frame</span>
+<span class="go">    0    0  fragments  [0.43, 0.44, 0.49, 0.5]      2</span>
+<span class="go">    1    1  fragments  [0.4, 0.44, 0.46, 0.49]      3</span>
+<span class="go">    2    2     others  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">    3    3    bottles  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">                ...             ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">detected_trashes</span> <span class="o">=</span> <span class="n">infer_trashes_timestamps</span><span class="p">(</span><span class="n">detected_trashes_input</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2018-01-01 10:10:23&#39;</span><span class="p">),</span> <span class="n">fps</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="n">num_frames</span><span class="p">:</span> <span class="mi">25</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">detected_trashes</span>
+<span class="go">                                   id      label                      box  frame</span>
+<span class="go">    1970-01-01 00:00:01.514801423   0  fragments  [0.43, 0.44, 0.49, 0.5]      2</span>
+<span class="go">    1970-01-01 00:00:01.514801424   1  fragments  [0.4, 0.44, 0.46, 0.49]      3</span>
+<span class="go">    1970-01-01 00:00:01.514801424   2     others  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">    1970-01-01 00:00:01.514801424   3    bottles  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">                          ...             ...           ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.ai.prediction_to_dataframe">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">prediction_to_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ai_prediction</span></em>, <em class="sig-param"><span class="n">start</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#prediction_to_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.prediction_to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert AI dict prediction to DataFrame with eventually timestamps index (if <cite>start</cite> is given)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ai_prediction</strong> (<em>Dict with keys 'fps'</em><em>, </em><em>'video-id'</em><em>, </em><em>'video_length'</em>) – </p></li>
+<li><p><strong>url</strong> (<em>AI API address</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>detected_trashes</strong> – and index are inferred timestamp</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame with each row is a detected trash with columns [‘frame’, ‘box’, ‘id’, ‘label’]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ai_prediction</span>
+<span class="go">        {&#39;detected_trash&#39;: [</span>
+<span class="go">                {&#39;frame_to_box&#39;: {&#39;2&#39;: [0.43, 0.44, 0.49, 0.5]},</span>
+<span class="go">                   &#39;id&#39;: 0,</span>
+<span class="go">                   &#39;label&#39;: &#39;fragments&#39;},</span>
+<span class="go">                {&#39;frame_to_box&#39;: {&#39;3&#39;: [0.4, 0.44, 0.46, 0.49]},</span>
+<span class="go">                   &#39;id&#39;: 1,</span>
+<span class="go">                   &#39;label&#39;: &#39;fragments&#39;},</span>
+<span class="go">                ...</span>
+<span class="go">                {&#39;frame_to_box&#39;: {&#39;24&#39;: [0.49, 0.44, 0.56, 0.46]},</span>
+<span class="go">                   &#39;id&#39;: 13,</span>
+<span class="go">                   &#39;label&#39;: &#39;others&#39;}],</span>
+<span class="go"> &#39;fps&#39;: 4,</span>
+<span class="go"> &#39;video_id&#39;: &#39;vid1-480p.mov&#39;,</span>
+<span class="go"> &#39;video_length&#39;: 25</span>
+<span class="go"> }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prediction_to_dataframe</span><span class="p">(</span><span class="n">ai_prediction</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2018-01-01 10:10:23&#39;</span><span class="p">))</span>
+<span class="go">                                   id      label                      box  frame</span>
+<span class="go">    2018-01-01 00:00:01.435708800   0  fragments  [0.43, 0.44, 0.49, 0.5]      2</span>
+<span class="go">    2018-01-01 00:00:01.435708801   1  fragments  [0.4, 0.44, 0.46, 0.49]      3</span>
+<span class="go">    2018-01-01 00:00:01.435708801   2     others  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">    2018-01-01 00:00:01.435708801   3    bottles  [0.32, 0.45, 0.38, 0.46      4</span>
+<span class="go">    2018-01-01 00:00:01.435708803   4  fragments  [0.25, 0.43, 0.29, 0.49      9</span>
+<span class="go">    2018-01-01 00:00:01.435708804   5  fragments  [0.22, 0.41, 0.26, 0.48     10</span>
+<span class="go">    2018-01-01 00:00:01.435708804   6  fragments  [0.2, 0.43, 0.23, 0.48]     11</span>
+<span class="go">    2018-01-01 00:00:01.435708805   7  fragments  [0.18, 0.42, 0.21, 0.48     12</span>
+<span class="go">                    ...                ...                 ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-etl.utils.blob">
+<span id="etl-utils-blob-module"></span><h2>etl.utils.blob module<a class="headerlink" href="#module-etl.utils.blob" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="etl.utils.blob.download_blob">
+<code class="sig-prename descclassname">etl.utils.blob.</code><code class="sig-name descname">download_blob</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blob_client</span></em>, <em class="sig-param"><span class="n">local_path</span><span class="o">=</span><span class="default_value">'/tmp'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/blob.html#download_blob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.blob.download_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download Blob from Azure to local file system</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blob_client</strong> (<em>Azure client to interact with a specific blob</em>) – </p></li>
+<li><p><strong>local_path</strong> (<em>Local path to download the blob in</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>download_directory</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>directory where blob content is downloaded</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.blob.list_container_blob_names">
+<code class="sig-prename descclassname">etl.utils.blob.</code><code class="sig-name descname">list_container_blob_names</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">conn_str</span></em>, <em class="sig-param"><span class="n">container_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/blob.html#list_container_blob_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.blob.list_container_blob_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>List blob names in a given container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conn_str</strong> (<em>A connection string to an Azure Storage account.</em>) – </p></li>
+<li><p><strong>container_name</strong> (<em>The container name for the blob.</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>blob_names</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of blob names in the container</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.blob.safe_blob">
+<code class="sig-prename descclassname">etl.utils.blob.</code><code class="sig-name descname">safe_blob</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/blob.html#safe_blob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.blob.safe_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator with blob exceptions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>function to decorate</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>func</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function called with decorator exceptions</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-etl.utils.database">
+<span id="etl-utils-database-module"></span><h2>etl.utils.database module<a class="headerlink" href="#module-etl.utils.database" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="etl.utils.database.get_db_connection_string">
+<code class="sig-prename descclassname">etl.utils.database.</code><code class="sig-name descname">get_db_connection_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/database.html#get_db_connection_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.database.get_db_connection_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute connection string to connect to PostGre server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>conn_string</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Connection string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.database.insert_trash_to_db">
+<code class="sig-prename descclassname">etl.utils.database.</code><code class="sig-name descname">insert_trash_to_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">trash_time</span></em>, <em class="sig-param"><span class="n">trash</span></em>, <em class="sig-param"><span class="n">cursor</span></em>, <em class="sig-param"><span class="n">connexion</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/database.html#insert_trash_to_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.database.insert_trash_to_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a trash in database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gps_row</strong> (<em>Row of GPS data with column 'elevation' and 'geom'</em>) – </p></li>
+<li><p><strong>trash_ref</strong> (<em>id of detected trash</em>) – </p></li>
+<li><p><strong>cursor</strong> (<em>postgre cursor to execute</em>) – </p></li>
+<li><p><strong>connexion</strong> (<em>PostGre connection object</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>row_id</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>id of row within Trash Table of the Trash which has just been inserted</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trash</span>
+<span class="go">    longitude                                        -117.327</span>
+<span class="go">    latitude                                          33.1265</span>
+<span class="go">    elevation                                         -17.228</span>
+<span class="go">    id                                                      0</span>
+<span class="go">    label                                           fragments</span>
+<span class="go">    box                               [0.43, 0.44, 0.49, 0.5]</span>
+<span class="go">    frame                                                   2</span>
+<span class="go">    geom         POINT (-6843671.309553764 12301224.24713064)</span>
+<span class="go">    Name:           2018-01-24 19:27:58.500000, dtype: object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trash_time</span>
+<span class="go">    Timestamp(&#39;2018-01-24 19:27:58.500000&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.database.open_db_connection">
+<code class="sig-prename descclassname">etl.utils.database.</code><code class="sig-name descname">open_db_connection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">conn_string</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/database.html#open_db_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.database.open_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new connection to PostGre server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>conn_string</strong> (<em>connection string</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>conn</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>new connection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.database.trashGPS">
+<code class="sig-prename descclassname">etl.utils.database.</code><code class="sig-name descname">trashGPS</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">trashId</span></em>, <em class="sig-param"><span class="n">gps2154Points</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/database.html#trashGPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.database.trashGPS" title="Permalink to this definition">¶</a></dt>
+<dd><p>trashGPS is a dummy helper function that allows to associate a GPS point to a trashId
+This function is expected to be replaced by another one, taking real trash index in video to map correct GPS point.
+Input: a trashId from AI prediction dictionnary
+Output: a list of GPS Point in 2154 geometry</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-etl.utils.dsp">
+<span id="etl-utils-dsp-module"></span><h2>etl.utils.dsp module<a class="headerlink" href="#module-etl.utils.dsp" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="etl.utils.dsp.custom_sampling">
+<code class="sig-prename descclassname">etl.utils.dsp.</code><code class="sig-name descname">custom_sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">output_index</span></em>, <em class="sig-param"><span class="n">interpolation_kind</span><span class="o">=</span><span class="default_value">'linear'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/dsp.html#custom_sampling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.dsp.custom_sampling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate data to infer values on custom sampling
+:type data: <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>
+:param data:
+:type data: DataFrame with scalar values
+:param ouptut_index:
+:type ouptut_index: Desired time index on which to estimate values
+:type interpolation_kind: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+:param interpolation_kind:
+:type interpolation_kind: Interpolation method. See interp1d documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>output_data</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame with index <cite>output_index</cite> and interpolated data</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">                          longitude   latitude  elevation</span>
+<span class="go">    time</span>
+<span class="go">    2018-01-24 19:27:58 -117.327168  33.126515    -17.228</span>
+<span class="go">    2018-01-24 19:27:59 -117.327153  33.126543    -18.199</span>
+<span class="go">    2018-01-24 19:28:12 -117.325690  33.126616    -18.440</span>
+<span class="go">    2018-01-24 19:28:13 -117.327072  33.126540    -19.161</span>
+<span class="go">    2018-01-24 19:28:14 -117.327218  33.126539    -18.472</span>
+<span class="go">    2018-01-24 19:28:15 -117.327250  33.126544    -18.429</span>
+<span class="go">    2018-01-24 19:28:16 -117.327248  33.126550    -18.678</span>
+<span class="go">    2018-01-24 19:28:17 -117.327258  33.126558    -19.163</span>
+<span class="go">    2018-01-24 19:28:18 -117.327263  33.126566    -19.362</span>
+<span class="go">    2018-01-24 19:28:19 -117.327270  33.126579    -19.731</span>
+<span class="go">    2018-01-24 19:28:20 -117.327282  33.126588    -19.876</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_index</span>
+<span class="go">    DatetimeIndex([   &#39;2018-01-24 19:27:58.500000&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:27:58.750000128&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:27:59&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:27:59&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:00.249999872&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:00.500000&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:00.750000128&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:01&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:03&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:03.500000&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:03.500000&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:03.750000128&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:04&#39;,</span>
+<span class="go">                      &#39;2018-01-24 19:28:04&#39;],</span>
+<span class="go">    dtype=&#39;datetime64[ns]&#39;,</span>
+<span class="go">    freq=None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">custom_sampling</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">output_index</span><span class="p">,</span> <span class="n">interpolation_kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="go">                                  longitude   latitude  elevation</span>
+<span class="go">    2018-01-24 19:27:58.500000000 -117.327168  33.126515 -17.228000</span>
+<span class="go">    2018-01-24 19:27:58.750000128 -117.327164  33.126522 -17.470750</span>
+<span class="go">    2018-01-24 19:27:59.000000000 -117.327160  33.126529 -17.713500</span>
+<span class="go">    2018-01-24 19:27:59.000000000 -117.327160  33.126529 -17.713500</span>
+<span class="go">    2018-01-24 19:28:00.249999872 -117.327069  33.126547 -18.212904</span>
+<span class="go">    2018-01-24 19:28:00.500000000 -117.327040  33.126548 -18.217538</span>
+<span class="go">    2018-01-24 19:28:00.750000128 -117.327012  33.126550 -18.222173</span>
+<span class="go">    2018-01-24 19:28:01.000000000 -117.326984  33.126551 -18.226808</span>
+<span class="go">    2018-01-24 19:28:03.000000000 -117.326759  33.126562 -18.263885</span>
+<span class="go">    2018-01-24 19:28:03.500000000 -117.326703  33.126565 -18.273154</span>
+<span class="go">    2018-01-24 19:28:03.500000000 -117.326703  33.126565 -18.273154</span>
+<span class="go">    2018-01-24 19:28:03.750000128 -117.326675  33.126566 -18.277788</span>
+<span class="go">    2018-01-24 19:28:04.000000000 -117.326647  33.126568 -18.282423</span>
+<span class="go">    2018-01-24 19:28:04.000000000 -117.326647  33.126568 -18.282423</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.dsp.uniform_sampling">
+<code class="sig-prename descclassname">etl.utils.dsp.</code><code class="sig-name descname">uniform_sampling</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">sampling_rate</span></em>, <em class="sig-param"><span class="n">interpolation_kind</span><span class="o">=</span><span class="default_value">'zero'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/dsp.html#uniform_sampling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.dsp.uniform_sampling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resample a signal to a uniform sampling rate
+Uses a zero order interpolator (aka sample-and-hold) to estimate the value
+of the signal on the exact timestamps that correspond to a uniform sampling
+rate.
+Sampling frequencies whose period cannot be represented as a integer
+nanosecond  are not supported. For example, 3Hz is not supported because its
+period is 333333333.333 nanoseconds. Another example: 4096Hz is not
+supported because its period is 244140.625 nanoseconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – Input dataframe. All columns must be numeric. It must have a
+datetime-like index.</p></li>
+<li><p><strong>sampling_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Target sampling rate in Hertz.</p></li>
+<li><p><strong>interpolation_kind</strong> (<em>str | int | None</em>) – If None, no interpolation is performed, ie. timestamps of the input data
+are ignored.
+Else, it specifies the kind of interpolation as a string or an int
+(see documentation of scipy.interpolate.interp1d)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new dataframe with the same columns as the input but the index will
+change to accomodate a uniform sampling.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas.util.testing</span> <span class="k">as</span> <span class="nn">tm</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span>  <span class="n">tm</span><span class="o">.</span><span class="n">makeTimeDataFrame</span><span class="p">(</span><span class="n">freq</span><span class="o">=</span><span class="s1">&#39;S&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>  <span class="c1"># Create a 1Hz dataframe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">                     A         B         C         D</span>
+<span class="go">2000-01-01 00:00:00 -0.739572 -0.191162  1.023474  1.663371</span>
+<span class="go">2000-01-01 00:00:01  1.183841 -0.631689  0.412752  1.488323</span>
+<span class="go">2000-01-01 00:00:02  1.683318  2.237185  0.726931 -0.914066</span>
+<span class="go">2000-01-01 00:00:03  0.948706 -1.087019 -0.685658  0.710647</span>
+<span class="go">2000-01-01 00:00:04  1.177724  0.510797 -0.707243 -0.790019</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uniform_sampling</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Resample to 4Hz</span>
+<span class="go">                                A         B         C         D</span>
+<span class="go">2000-01-01 00:00:00.000 -0.739572 -0.191162  1.023474  1.663371</span>
+<span class="go">2000-01-01 00:00:00.250 -0.739572 -0.191162  1.023474  1.663371</span>
+<span class="go">2000-01-01 00:00:00.500 -0.739572 -0.191162  1.023474  1.663371</span>
+<span class="go">2000-01-01 00:00:00.750 -0.739572 -0.191162  1.023474  1.663371</span>
+<span class="go">2000-01-01 00:00:01.000  1.183841 -0.631689  0.412752  1.488323</span>
+<span class="go">2000-01-01 00:00:01.250  1.183841 -0.631689  0.412752  1.488323</span>
+<span class="go">2000-01-01 00:00:01.500  1.183841 -0.631689  0.412752  1.488323</span>
+<span class="go">2000-01-01 00:00:01.750  1.183841 -0.631689  0.412752  1.488323</span>
+<span class="go">2000-01-01 00:00:02.000  1.683318  2.237185  0.726931 -0.914066</span>
+<span class="go">2000-01-01 00:00:02.250  1.683318  2.237185  0.726931 -0.914066</span>
+<span class="go">2000-01-01 00:00:02.500  1.683318  2.237185  0.726931 -0.914066</span>
+<span class="go">2000-01-01 00:00:02.750  1.683318  2.237185  0.726931 -0.914066</span>
+<span class="go">2000-01-01 00:00:03.000  0.948706 -1.087019 -0.685658  0.710647</span>
+<span class="go">2000-01-01 00:00:03.250  0.948706 -1.087019 -0.685658  0.710647</span>
+<span class="go">2000-01-01 00:00:03.500  0.948706 -1.087019 -0.685658  0.710647</span>
+<span class="go">2000-01-01 00:00:03.750  0.948706 -1.087019 -0.685658  0.710647</span>
+<span class="go">2000-01-01 00:00:04.000  1.177724  0.510797 -0.707243 -0.790019</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-etl.utils.exceptions">
+<span id="etl-utils-exceptions-module"></span><h2>etl.utils.exceptions module<a class="headerlink" href="#module-etl.utils.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="etl.utils.exceptions.ETLError">
+<em class="property">exception </em><code class="sig-prename descclassname">etl.utils.exceptions.</code><code class="sig-name descname">ETLError</code><a class="reference internal" href="_modules/etl/utils/exceptions.html#ETLError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.exceptions.ETLError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Base exception for all ETL-related exceptions</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-etl.utils.gps">
+<span id="etl-utils-gps-module"></span><h2>etl.utils.gps module<a class="headerlink" href="#module-etl.utils.gps" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="etl.utils.gps.add_geom_to_gps_data">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">add_geom_to_gps_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gps_data</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#add_geom_to_gps_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.add_geom_to_gps_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add projection to a given geometry to a GPS list of points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gps_data</strong> (<em>list of dict  with gps point containing Longitude and Latitude</em>) – </p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span>
+<span class="go">                               latitude   longitude  elevation</span>
+<span class="go">    2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228</span>
+<span class="go">    2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199</span>
+<span class="go">    2018-01-24 19:28:12+00:00  33.126616 -117.325690    -18.440</span>
+<span class="go">    2018-01-24 19:28:13+00:00  33.126540 -117.327072    -19.161</span>
+<span class="go">    2018-01-24 19:28:14+00:00  33.126539 -117.327218    -18.472</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_geom_to_gps_data</span><span class="p">(</span><span class="n">gps_data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span>
+<span class="go">                                               geom</span>
+<span class="go">    2018-01-24 19:27:58+00:00  33.126515  ...  POINT (-6843671.309553764 12301224.24713064)</span>
+<span class="go">    2018-01-24 19:27:59+00:00  33.126543  ...  POINT (-6843668.109889416 12301222.98998321)</span>
+<span class="go">    2018-01-24 19:28:12+00:00  33.126616  ...  POINT (-6843653.244167816 12301083.64126886)</span>
+<span class="go">    2018-01-24 19:28:13+00:00  33.126540  ...  POINT (-6843668.018846542 12301215.23885827)</span>
+<span class="go">    2018-01-24 19:28:14+00:00  33.126539  ...  POINT (-6843668.778535692 12301229.22991498)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.gps.extract_gpx_from_gopro">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">extract_gpx_from_gopro</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_path</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'GPX'</span></em>, <em class="sig-param"><span class="n">binary</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#extract_gpx_from_gopro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.extract_gpx_from_gopro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract gpx data from a Go-Pro file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>media_path</strong> (<em>path to Go-Pro media</em>) – </p></li>
+<li><p><strong>format</strong> (<em>output format for spatial coordinates</em>) – </p></li>
+<li><p><strong>binary</strong> (<em>whether media is binary</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gpx_path</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>path of coordinates created file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.gps.gpx_tracks_to_gps">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">gpx_tracks_to_gps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gpx_data</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#gpx_tracks_to_gps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.gpx_tracks_to_gps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert GPX tracks to GPS</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gpx_data</strong> (<em>GPX object that returns data from a parsed gpx file.</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gps_data</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dataframe where index are time and columns are latitude, longitude, elevation</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span> <span class="o">=</span> <span class="n">gpx_to_gps</span><span class="p">(</span><span class="s1">&#39;../../data/osm_tracker/sample.gpx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span>
+<span class="go">                               latitude   longitude    elevation</span>
+<span class="go">    2018-01-24 19:27:58+00:00  33.126515 -117.327168    -17.228</span>
+<span class="go">    2018-01-24 19:27:59+00:00  33.126543 -117.327153    -18.199</span>
+<span class="go">    2018-01-24 19:28:00+00:00  33.126544 -117.327143    -18.183</span>
+<span class="go">    2018-01-24 19:28:01+00:00  33.126554 -117.327130    -18.172</span>
+<span class="go">    2018-01-24 19:28:02+00:00  33.126563 -117.327118    -18.162</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.gps.gpx_waypoints_to_gps">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">gpx_waypoints_to_gps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gpx_data</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#gpx_waypoints_to_gps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.gpx_waypoints_to_gps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert GPX waypoints to GPS</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gpx_data</strong> (<em>GPX object that returns data from a parsed gpx file.</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>gps_data</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame where index are time and columns are latitude, longitude, trash_label</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span> <span class="o">=</span> <span class="n">gpx_to_gps</span><span class="p">(</span><span class="s1">&#39;../../data/smartphone_video/sample.gpx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gps_data</span>
+<span class="go">                               longitude   latitude         trash_label</span>
+<span class="go">    time</span>
+<span class="go">    2019-04-01 12:24:28+00:00   0.097059  43.155730        Autre dechet</span>
+<span class="go">    2019-04-01 12:24:46+00:00   0.097036  43.155988        Autre dechet</span>
+<span class="go">    2019-04-01 12:24:46+00:00   0.097036  43.155988        Autre dechet</span>
+<span class="go">    2019-04-01 12:24:46+00:00   0.097036  43.155988   Bouteille boisson</span>
+<span class="go">    2019-04-01 12:25:04+00:00   0.096994  43.156326  Autres dechets +10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.gps.open_gpx_file">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">open_gpx_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gpx_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#open_gpx_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.open_gpx_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open and parse a gpx file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>gpx_path</strong> (<em>path to a GPX file</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GPX data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.gps.pyproj_transform">
+<code class="sig-prename descclassname">etl.utils.gps.</code><code class="sig-name descname">pyproj_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">longitude</span></em>, <em class="sig-param"><span class="n">latitude</span></em>, <em class="sig-param"><span class="n">source_epsg</span><span class="o">=</span><span class="default_value">4326</span></em>, <em class="sig-param"><span class="n">target_epsg</span><span class="o">=</span><span class="default_value">2154</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/gps.html#pyproj_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.gps.pyproj_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies geometrical transformation to a row of GPS coordinate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>longitude</strong> (<em>longitude coordinate</em>) – </p></li>
+<li><p><strong>latitude</strong> (<em>latitude coordinate</em>) – </p></li>
+<li><p><strong>source_epsg</strong> (<em>projection source</em>) – </p></li>
+<li><p><strong>target_epsg</strong> (<em>projection target</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>geo_target</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string like ‘Point (x, y, z)’</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-etl.utils.media">
+<span id="etl-utils-media-module"></span><h2>etl.utils.media module<a class="headerlink" href="#module-etl.utils.media" title="Permalink to this headline">¶</a></h2>
+<p>Functions related to media</p>
+<dl class="py function">
+<dt id="etl.utils.media.get_media_duration">
+<code class="sig-prename descclassname">etl.utils.media.</code><code class="sig-name descname">get_media_duration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/media.html#get_media_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.media.get_media_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract duration from a media file
+Taken from <a class="reference external" href="https://www.reddit.com/r/moviepy/comments/2bsnrq/is_it_possible_to_get_the_length_of_a_video/">here</a>
+:type media_path: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>
+:param media_path:
+:type media_path: Path to media</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>duration</strong></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>duration of the media</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.media.infer_media_source">
+<code class="sig-prename descclassname">etl.utils.media.</code><code class="sig-name descname">infer_media_source</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/media.html#infer_media_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.media.infer_media_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guess media acquisition source from extension and existing files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>media_path</strong> (<em>path to media</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>media_source</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Source of media: ‘gopro’, ‘smartphone_photo’, ‘smartphone_video’ or ‘osm_tracker’</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="etl.html" class="btn btn-neutral float-left" title="ETL package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Clément Leroux, Raphaël Courivaud, Raphaëlle Bertrand-Lalo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
