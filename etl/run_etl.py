@@ -15,13 +15,12 @@ from etl.utils.dsp import custom_sampling
 from etl.utils.exceptions import ETLError
 from etl.utils.gps import (
     extract_gpx_from_gopro,
-    get_media_duration,
     add_geom_to_gps_data,
     gpx_tracks_to_gps,
     open_gpx_file,
     gpx_waypoints_to_gps,
 )
-from etl.utils.media import infer_media_source
+from etl.utils.media import infer_media_source, get_media_duration
 
 logger = logging.getLogger()
 # load env variable from file .env
@@ -136,7 +135,7 @@ def run_etl(
             ai_prediction = get_ai_prediction(media_path=media_path, ai_url=ai_url)
         else:
             logger.error("Early exit of ETL workflow as AI service is not available")
-            # todo: remove these lines, for devel purpose (fake IA answer)
+            # todo: remove these lines, for wip_devel purpose (fake IA answer)
             import json
 
             with open("data/ia_response/trashes.json") as f:
