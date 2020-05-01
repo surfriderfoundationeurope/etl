@@ -149,9 +149,9 @@ in directory `temp-dir`, looking like:
    :header-rows: 4
 
 - Example to test locally:
-    - On GoPro data: `python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/gopro/ --target-storage local`
-    - On OSM Tracker file:`python etl_cli.py --data-source local --media sample.gpx  --data-dir  data/osm_tracker/ --target-storage local`
-    - On Smartphone video: `python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/osm_tracker/ --target-storage local`
+    - On GoPro data: ``python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/gopro/ --target-storage local``
+    - On OSM Tracker file: ``python etl_cli.py --data-source local --media sample.gpx  --data-dir  data/osm_tracker/ --target-storage local``
+    - On Smartphone video: ``python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/osm_tracker/ --target-storage local``
     - On Smartphone photo: not yet
 
 
