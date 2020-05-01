@@ -14,7 +14,7 @@ from etl import __version__
               required=False, help='Name of Azure blob storage.')
 @click.option('--media', type=str,
               required=False, help='Name of media to download the data from.')
-@click.option('--temp-dir', type=click.Path(file_okay=False, dir_okay=True, exists=True), default=None,
+@click.option('--temp-dir', type=click.Path(file_okay=False, dir_okay=True, exists=True), default='/tmp',
               required=False, help='Path to data directory to download the data.')
 @click.option('--data-dir', type=click.Path(file_okay=False, dir_okay=True, exists=True), default=None,
               required=False, help='Path to data directory to download the data. '
@@ -22,9 +22,13 @@ from etl import __version__
                                    '(No download from Azure) ')
 @click.option('--data-source', type=click.Choice(['local', 'azure']), default='azure',
               required=False, help='Source of data.')
+@click.option('--target-storage', type=click.Choice(['local', 'postgre']), default='postgre',
+              required=False, help='Target to store the ETL output.'
+                                   ' If "local", will save in csv, '
+                                   ' if "postgre", will insert each trash in Postgre database. ')
 @click.option('--ai-url', type=str,
               required=False, help='URL of AI. If not given, will be set from ENV.')
-def cli(container, blob, media, temp_dir, data_dir, data_source, ai_url):
+def cli(container, blob, media, temp_dir, data_dir, data_source, ai_url, target_storage):
     """Run the ETL
 
     Use command `python etl_cli.py --help` to get a list of the options .
@@ -38,6 +42,7 @@ def cli(container, blob, media, temp_dir, data_dir, data_source, ai_url):
         temp_dir=temp_dir,
         data_dir=data_dir,
         data_source=data_source,
+        target_storage=target_storage,
         ai_url=ai_url
     )
 

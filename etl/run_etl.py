@@ -35,6 +35,7 @@ def run_etl(
         data_dir: str = None,
         temp_dir: str = "/tmp",
         data_source: str = "azure",
+        target_storage: str = "postgre",
         ai_url: str = None,
 ):
     """ ETL: Extract trash and their associated coordinates from a media and insert it to a database
@@ -51,6 +52,11 @@ def run_etl(
     -------
 
     """
+
+    # Sanity check: to fail as early as possible
+    if target_storage == 'postgre':
+        # Open pgConnection
+        db_connection = open_db_connection()
 
     if ai_url is None:
         ai_url = os.getenv("AI_URL")
@@ -137,7 +143,6 @@ def run_etl(
             logger.error("Early exit of ETL workflow as AI service is not available")
             # todo: remove these lines, for wip_devel purpose (fake IA answer)
             import json
-
             with open("data/ia_response/trashes.json") as f:
                 ai_prediction = json.load(f)
         trashes_data = prediction_to_dataframe(ai_prediction, start=gps_data.index[0])
@@ -154,25 +159,32 @@ def run_etl(
     # Insert within PostGre
     logger.info("[Load] Insert trash and coordinates to PostGre database")
 
-    # Open pgConnection
-    db_connection = open_db_connection()
-    # Create Cursor
-    db_cursor = db_connection.cursor()
+    if target_storage == 'local':
+        output_csv = os.path.join(temp_dir, 'etl_output.csv')
+        data.to_csv(output_csv)
+        # dump result in csv
+        logger.info(f"Successfully saved {len(data)} trashes in csv {output_csv}")
 
-    # INSERTING all detected_trash within PostGre
-    list_row_id = []
-    for trash_time, trash in data.iterrows():
-        try:
-            # INSERT within PostGre database
-            row_id = insert_trash_to_db(trash_time, trash, db_cursor, db_connection)
-            logger.debug(f"prediction: {trash} \n" f"row id: {row_id}")
-            list_row_id.append(row_id)
-        except Exception as e:
-            logger.warning(
-                f"There was an issue inserting trash {trash} within Postgre: {e}"
-            )
-    logger.info(f"Successfully inserted {len(list_row_id)} trashes within trash table")
+    elif target_storage == 'postgre':
+        # Create Cursor
+        db_cursor = db_connection.cursor()
 
-    # Close PG connection
-    db_connection.close()
+        # INSERTING all detected_trash within PostGre
+        list_row_id = []
+        for trash_time, trash in data.iterrows():
+            try:
+                # INSERT within PostGre database
+                row_id = insert_trash_to_db(trash_time, trash, db_cursor, db_connection)
+                logger.debug(f"prediction: {trash} \n" f"row id: {row_id}")
+                list_row_id.append(row_id)
+            except Exception as e:
+                logger.warning(
+                    f"There was an issue inserting trash {trash} within Postgre: {e}"
+                )
+        logger.info(f"Successfully inserted {len(list_row_id)} trashes within trash table")
+
+        # Close PG connection
+        db_connection.close()
+    else:
+        raise ValueError(f'target_storage should be postgre or local, got {target_storage} instead. ')
     logger.info('ETL ran successfully !')
