@@ -75,8 +75,6 @@ def custom_sampling(
     f_interp = interp1d(t_input, values.T, kind=interpolation_kind)
     values = f_interp(t_output).T
     output_data = pd.DataFrame(values, columns=data.columns, index=output_index)
-    import pdb;
-    pdb.set_trace()
     return output_data
 
 

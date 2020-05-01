@@ -148,6 +148,27 @@ in directory `temp-dir`, looking like:
    :file: etl_output.csv
    :header-rows: 4
 
+- Example to test locally:
+    - On GoPro data
+
+    .. code-block:: console
+        source etl-env-venv/bin/activate
+        python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/gopro/ --target-storage local
+
+    - On OSM Tracker file
+
+    .. code-block:: console
+        source etl-env-venv/bin/activate
+        python etl_cli.py --data-source local --media sample.gpx  --data-dir  data/osm_tracker/ --target-storage local
+
+    - On Smartphone video
+
+    .. code-block:: console
+        source etl-env-venv/bin/activate
+        python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/osm_tracker/ --target-storage local
+
+
+
 In poduction
 -------------
 Coming soon, where to get the subscription info & co.
