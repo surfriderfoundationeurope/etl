@@ -150,9 +150,7 @@ in directory `temp-dir`, looking like:
 
 - Example to test locally:
     - On GoPro data
-.. code-block:: console
-    source etl-env-venv/bin/activate
-    python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/gopro/ --target-storage local
+    ```python etl_cli.py --data-source local --media sample.mp4  --data-dir  data/gopro/ --target-storage local```
     - On OSM Tracker file
 .. code-block:: console
     source etl-env-venv/bin/activate
