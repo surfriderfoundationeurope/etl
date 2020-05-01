@@ -82,9 +82,10 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../general_documentation.html">Project Overview</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
+<p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ETL script</span></p>
 <ul>
@@ -229,8 +230,6 @@
     <span class="n">f_interp</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">t_input</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">interpolation_kind</span><span class="p">)</span>
     <span class="n">values</span> <span class="o">=</span> <span class="n">f_interp</span><span class="p">(</span><span class="n">t_output</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="n">output_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">output_index</span><span class="p">)</span>
-    <span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span>
-    <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">output_data</span></div>
 
 
@@ -243,7 +242,7 @@
 <span class="sd">    nanosecond  are not supported. For example, 3Hz is not supported because its</span>
 <span class="sd">    period is 333333333.333 nanoseconds. Another example: 4096Hz is not</span>
 <span class="sd">    supported because its period is 244140.625 nanoseconds.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    data: pd.DataFrame</span>

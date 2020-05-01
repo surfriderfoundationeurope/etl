@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ETL package" href="etl.html" />
+    <link rel="next" title="Usage" href="usage.html" />
     <link rel="prev" title="Project Overview" href="general_documentation.html" /> 
 </head>
 
@@ -84,10 +84,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="general_documentation.html">Project Overview</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
+<p class="caption"><span class="caption-text">Getting started</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dev">Dev</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup-environment">1. Setup environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#launch-cli">2. Launch CLI</a></li>
@@ -96,6 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#prod-azure-deployment">Prod: Azure deployment</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ETL script</span></p>
 <ul>
@@ -177,7 +179,36 @@
 </div>
 </div></blockquote>
 </li>
+<li><dl class="simple">
+<dt>Copy file <cite>example.env</cite>, rename in <cite>.env</cite> and</dt><dd><p>set environment variables</p>
+</dd>
+</dl>
+</li>
 </ul>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>This environment variable is required if you work in data-mode ‘azure’ :</p>
+<dl class="std envvar">
+<dt id="envvar-CON_STRING">
+<code class="sig-name descname">CON_STRING</code><a class="headerlink" href="#envvar-CON_STRING" title="Permalink to this definition">¶</a></dt>
+<dd><p>To connect to Azure Blob Storage</p>
+</dd></dl>
+
+<p>This environment variable is required if you need to call the AI :</p>
+<dl class="std envvar">
+<dt id="envvar-AI_URL">
+<code class="sig-name descname">AI_URL</code><a class="headerlink" href="#envvar-AI_URL" title="Permalink to this definition">¶</a></dt>
+<dd><p>URL to AI API</p>
+</dd></dl>
+
+<p>These environment variables is required if you need to insert trash to db :</p>
+<dl class="std envvar">
+<dt id="envvar-PGSERVER-PGDATABASE-PGDATABASE-PGUSERNAME-PGPWD">
+<span id="envvar-PGSERVER, PGDATABASE, PGDATABASE, PGUSERNAME, PGPWD"></span><code class="sig-name descname">PGSERVER, PGDATABASE, PGDATABASE, PGUSERNAME, PGPWD</code><a class="headerlink" href="#envvar-PGSERVER-PGDATABASE-PGDATABASE-PGUSERNAME-PGPWD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Info and identifier of PG database</p>
+</dd></dl>
+
 </div>
 <div class="section" id="dev">
 <h2>Dev<a class="headerlink" href="#dev" title="Permalink to this headline">¶</a></h2>
@@ -228,7 +259,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="etl.html" class="btn btn-neutral float-right" title="ETL package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="general_documentation.html" class="btn btn-neutral float-left" title="Project Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

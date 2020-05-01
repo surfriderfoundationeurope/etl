@@ -10,6 +10,31 @@ Prerequisites
    .. code-block:: console
 
       $ git clone https://github.com/surfriderfoundationeurope/etl
+- Copy file `example.env`, rename in `.env` and
+   set environment variables
+
+
+Environment variables
+=====================
+
+This environment variable is required if you work in data-mode 'azure' :
+
+.. envvar:: CON_STRING
+
+  To connect to Azure Blob Storage
+
+This environment variable is required if you need to call the AI :
+
+.. envvar:: AI_URL
+
+  URL to AI API
+
+These environment variables is required if you need to insert trash to db :
+
+.. envvar:: PGSERVER, PGDATABASE, PGDATABASE, PGUSERNAME, PGPWD
+
+  Info and identifier of PG database
+
 
 Dev
 ===

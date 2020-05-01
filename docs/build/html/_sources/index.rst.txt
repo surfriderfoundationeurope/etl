@@ -26,10 +26,11 @@ within rivers.
    general_documentation
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Installation
+   :maxdepth: 2
+   :caption: Getting started
 
    installation
+   usage
 
 
 .. toctree::
