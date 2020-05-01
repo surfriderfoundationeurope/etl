@@ -27,7 +27,7 @@ conda activate etl-env
 ```terminal
 cd scripts
 python3 -m venv etl-env 
-source xq-bi-venv/bin/activate
+source etl-env-venv/bin/activate
 pip install -r requirements 
 ```
 
