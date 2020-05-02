@@ -46,7 +46,7 @@ def open_db_connection(conn_string: str = None) -> object:
     try:
         conn = psycopg2.connect(conn_string)
         assert (
-            conn is not None
+                conn is not None
         )  # indeed if the connection can't be established, `psycopg2.connect` returns None
         logger.debug("Connection established")
         return conn
@@ -67,7 +67,9 @@ def trashGPS(trashId, gps2154Points):
     return gpsIndex
 
 
-def insert_trash_to_db(trash_time: pd.Timestamp, trash: pd.Series, cursor: object, connexion: object) -> str:
+def insert_trash_to_db(
+        trash_time: pd.Timestamp, trash: pd.Series, cursor: object, connexion: object
+) -> str:
     """ Insert a trash in database
     
     Parameters
@@ -103,6 +105,7 @@ def insert_trash_to_db(trash_time: pd.Timestamp, trash: pd.Series, cursor: objec
     trash_geom = trash.get("geom")
     trash_box = trash.get("box")
     trash_frame = trash.get("frame")
+    num_frames = trash.get("num_frames")
     trash_longitude = trash.get("longitude")
     trash_latitude = trash.get("latitude")
     trash_elevation = trash.get("elevation")

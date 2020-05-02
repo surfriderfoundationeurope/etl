@@ -135,17 +135,13 @@ def prediction_to_dataframe(
     # interpret 'frame_to_box' as frame and box separately,
     # eg:  {'2': [0.43, 0.44, 0.49, 0.5]} means 'on frame 2,
     # there's a trash in box with coordinates [0.43, 0.44, 0.49, 0.5]
-    detected_trashes.loc[:, "box"] = np.apply_along_axis(
-        lambda frame_to_box: str(list(frame_to_box[0].values())[0]),
-        axis=1,
-        arr=detected_trashes[["frame_to_box"]].values,
-    )
-    detected_trashes.loc[:, "frame"] = np.apply_along_axis(
-        lambda frame_to_box: int(list(frame_to_box[0].keys())[0]),
-        axis=1,
-        arr=detected_trashes[["frame_to_box"]].values,
-    )
-    detected_trashes.drop("frame_to_box", axis=1, inplace=True)
+
+    # Todo: decide between approximate_frame_to_box_v1 and approximate_frame_to_box_v2
+    detected_trashes = (detected_trashes[['id', 'label']]
+                        .merge(detected_trashes.frame_to_box
+                               .apply(lambda s: pd.Series(approximate_frame_to_box_v2(s))),
+                               left_index=True,
+                               right_index=True))
 
     if start is not None:
         infer_trashes_timestamps(
@@ -206,3 +202,68 @@ def infer_trashes_timestamps(
         lambda frame: index[frame], axis=0, arr=detected_trashes["frame"].values
     )
     detected_trashes.index = timestamps
+
+
+def approximate_frame_to_box_v1(frame_to_box: dict) -> (int, list, int):
+    """ Approximate principal frame as the middle one (in term of timing))
+
+    Parameters
+    ----------
+    frame_to_box: Dict corresponding to frames where a trash has been detected.
+        Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.
+
+    Returns
+    -------
+    dict with keys:
+        frame: Frame of reference
+        box: Box of reference
+        num_frames: Number of frame on which the trash has been detected
+
+    Examples
+    --------
+    >>> frame_to_box =  { '2': [0.43, 0.44, 0.49, 0.5],
+                          '3': [0.42, 0.42, 0.48, 0.4],
+                          '4': [0.42, 0.78, 0.30, 0.90],
+                          '20': [0.20, 0.30, 0.70, 0.80]}
+    >>> approximate_frame_to_box_v1(frame_to_box)
+            {'frame': 3, 'box': [0.42, 0.42, 0.48, 0.4], 'num_frames': 4}
+    """
+    num_frames = len(frame_to_box)
+    frames = np.array([int(frame) for frame in frame_to_box.keys()])
+    boxes = [box for box in frame_to_box.values()]
+    ref_index = np.argmin(np.abs(frames - np.median(frames)))  # consider index closest from median amongst frames
+    return {'frame': frames[ref_index], 'box': boxes[ref_index], 'num_frames': num_frames}
+
+
+def approximate_frame_to_box_v2(frame_to_box: dict) -> (int, list, int):
+    """ Approximate principal frame as the one where trash box is the largest
+
+    Parameters
+    ----------
+    frame_to_box: Dict corresponding to frames where a trash has been detected.
+        Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.
+
+    Returns
+    -------
+    dict with keys:
+        frame: Frame of reference
+        box: Box of reference
+        num_frames: Number of frame on which the trash has been detected
+
+    Examples
+    --------
+    >>> frame_to_box = { '2': [0.43, 0.44, 0.49, 0.5],   # box area: 0.0001
+                         '3': [0.42, 0.42, 0.48, 0.4],   # box area: 0.0000
+                         '4': [0.42, 0.78, 0.30, 0.90],  # box area: 0.2160
+                         '20': [0.20, 0.30, 0.70, 0.80]} # box area: 0.0100
+    >>> approximate_frame_to_box_v2(frame_to_box)
+         {'frame': 4, 'box': [0.42, 0.78, 0.3, 0.9], 'num_frames': 4}
+
+    """
+    num_frames = len(frame_to_box)
+    frames = [int(frame) for frame in frame_to_box.keys()]
+    boxes = [box for box in frame_to_box.values()]
+    box_area = lambda box: np.abs(box[1] - box[0]) * np.abs(box[3] - box[2])
+    boxes_sizes = [box_area(box) for box in boxes]
+    ref_index = np.argmax(boxes_sizes)  # consider largest box
+    return {'frame': frames[ref_index], 'box': boxes[ref_index], 'num_frames': num_frames}
