@@ -290,17 +290,13 @@
     <span class="c1"># interpret &#39;frame_to_box&#39; as frame and box separately,</span>
     <span class="c1"># eg:  {&#39;2&#39;: [0.43, 0.44, 0.49, 0.5]} means &#39;on frame 2,</span>
     <span class="c1"># there&#39;s a trash in box with coordinates [0.43, 0.44, 0.49, 0.5]</span>
-    <span class="n">detected_trashes</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;box&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">frame_to_box</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">arr</span><span class="o">=</span><span class="n">detected_trashes</span><span class="p">[[</span><span class="s2">&quot;frame_to_box&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">detected_trashes</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">frame_to_box</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">arr</span><span class="o">=</span><span class="n">detected_trashes</span><span class="p">[[</span><span class="s2">&quot;frame_to_box&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">detected_trashes</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;frame_to_box&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Todo: decide between approximate_frame_to_box_v1 and approximate_frame_to_box_v2</span>
+    <span class="n">detected_trashes</span> <span class="o">=</span> <span class="p">(</span><span class="n">detected_trashes</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">]]</span>
+                        <span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">detected_trashes</span><span class="o">.</span><span class="n">frame_to_box</span>
+                               <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">approximate_frame_to_box_v2</span><span class="p">(</span><span class="n">s</span><span class="p">))),</span>
+                               <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">infer_trashes_timestamps</span><span class="p">(</span>
@@ -361,6 +357,71 @@
         <span class="k">lambda</span> <span class="n">frame</span><span class="p">:</span> <span class="n">index</span><span class="p">[</span><span class="n">frame</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">detected_trashes</span><span class="p">[</span><span class="s2">&quot;frame&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="p">)</span>
     <span class="n">detected_trashes</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">timestamps</span></div>
+
+
+<div class="viewcode-block" id="approximate_frame_to_box_v1"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.ai.approximate_frame_to_box_v1">[docs]</a><span class="k">def</span> <span class="nf">approximate_frame_to_box_v1</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Approximate principal frame as the middle one (in term of timing))</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    frame_to_box: Dict corresponding to frames where a trash has been detected.</span>
+<span class="sd">        Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict with keys:</span>
+<span class="sd">        frame: Frame of reference</span>
+<span class="sd">        box: Box of reference</span>
+<span class="sd">        num_frames: Number of frame on which the trash has been detected</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; frame_to_box =  { &#39;2&#39;: [0.43, 0.44, 0.49, 0.5],</span>
+<span class="sd">                          &#39;3&#39;: [0.42, 0.42, 0.48, 0.4],</span>
+<span class="sd">                          &#39;4&#39;: [0.42, 0.78, 0.30, 0.90],</span>
+<span class="sd">                          &#39;20&#39;: [0.20, 0.30, 0.70, 0.80]}</span>
+<span class="sd">    &gt;&gt;&gt; approximate_frame_to_box_v1(frame_to_box)</span>
+<span class="sd">            {&#39;frame&#39;: 3, &#39;box&#39;: [0.42, 0.42, 0.48, 0.4], &#39;num_frames&#39;: 4}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frame_to_box</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">box</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">frame_to_box</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">frames</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">frames</span><span class="p">)))</span>  <span class="c1"># consider index closest from median amongst frames</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frames</span><span class="p">[</span><span class="n">ref_index</span><span class="p">],</span> <span class="s1">&#39;box&#39;</span><span class="p">:</span> <span class="n">boxes</span><span class="p">[</span><span class="n">ref_index</span><span class="p">],</span> <span class="s1">&#39;num_frames&#39;</span><span class="p">:</span> <span class="n">num_frames</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="approximate_frame_to_box_v2"><a class="viewcode-back" href="../../../etl.utils.html#etl.utils.ai.approximate_frame_to_box_v2">[docs]</a><span class="k">def</span> <span class="nf">approximate_frame_to_box_v2</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Approximate principal frame as the one where trash box is the largest</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    frame_to_box: Dict corresponding to frames where a trash has been detected.</span>
+<span class="sd">        Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict with keys:</span>
+<span class="sd">        frame: Frame of reference</span>
+<span class="sd">        box: Box of reference</span>
+<span class="sd">        num_frames: Number of frame on which the trash has been detected</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; frame_to_box = { &#39;2&#39;: [0.43, 0.44, 0.49, 0.5],   # box area: 0.0001</span>
+<span class="sd">                         &#39;3&#39;: [0.42, 0.42, 0.48, 0.4],   # box area: 0.0000</span>
+<span class="sd">                         &#39;4&#39;: [0.42, 0.78, 0.30, 0.90],  # box area: 0.2160</span>
+<span class="sd">                         &#39;20&#39;: [0.20, 0.30, 0.70, 0.80]} # box area: 0.0100</span>
+<span class="sd">    &gt;&gt;&gt; approximate_frame_to_box_v2(frame_to_box)</span>
+<span class="sd">         {&#39;frame&#39;: 4, &#39;box&#39;: [0.42, 0.78, 0.3, 0.9], &#39;num_frames&#39;: 4}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frame_to_box</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">box</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">frame_to_box</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">box_area</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">box</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">boxes_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">box_area</span><span class="p">(</span><span class="n">box</span><span class="p">)</span> <span class="k">for</span> <span class="n">box</span> <span class="ow">in</span> <span class="n">boxes</span><span class="p">]</span>
+    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">boxes_sizes</span><span class="p">)</span>  <span class="c1"># consider largest box</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;frame&#39;</span><span class="p">:</span> <span class="n">frames</span><span class="p">[</span><span class="n">ref_index</span><span class="p">],</span> <span class="s1">&#39;box&#39;</span><span class="p">:</span> <span class="n">boxes</span><span class="p">[</span><span class="n">ref_index</span><span class="p">],</span> <span class="s1">&#39;num_frames&#39;</span><span class="p">:</span> <span class="n">num_frames</span><span class="p">}</span></div>
 </pre></div>
 
            </div>

@@ -203,6 +203,62 @@
 </dd></dl>
 
 <dl class="py function">
+<dt id="etl.utils.ai.approximate_frame_to_box_v1">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">approximate_frame_to_box_v1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">frame_to_box</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#approximate_frame_to_box_v1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.approximate_frame_to_box_v1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Approximate principal frame as the middle one (in term of timing))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frame_to_box</strong> (<em>Dict corresponding to frames where a trash has been detected.</em>) – Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frame: Frame of reference
+box: Box of reference
+num_frames: Number of frame on which the trash has been detected</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame_to_box</span> <span class="o">=</span>  <span class="p">{</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+<span class="go">                      &#39;3&#39;: [0.42, 0.42, 0.48, 0.4],</span>
+<span class="go">                      &#39;4&#39;: [0.42, 0.78, 0.30, 0.90],</span>
+<span class="go">                      &#39;20&#39;: [0.20, 0.30, 0.70, 0.80]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">approximate_frame_to_box_v1</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">)</span>
+<span class="go">        {&#39;frame&#39;: 3, &#39;box&#39;: [0.42, 0.42, 0.48, 0.4], &#39;num_frames&#39;: 4}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="etl.utils.ai.approximate_frame_to_box_v2">
+<code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">approximate_frame_to_box_v2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">frame_to_box</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#approximate_frame_to_box_v2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.approximate_frame_to_box_v2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Approximate principal frame as the one where trash box is the largest</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frame_to_box</strong> (<em>Dict corresponding to frames where a trash has been detected.</em>) – Keys refer to the index of the frame and values are 4d array corresponding to the box boundaries.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>frame: Frame of reference
+box: Box of reference
+num_frames: Number of frame on which the trash has been detected</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">frame_to_box</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.43</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>   <span class="c1"># box area: 0.0001</span>
+<span class="go">                     &#39;3&#39;: [0.42, 0.42, 0.48, 0.4],   # box area: 0.0000</span>
+<span class="go">                     &#39;4&#39;: [0.42, 0.78, 0.30, 0.90],  # box area: 0.2160</span>
+<span class="go">                     &#39;20&#39;: [0.20, 0.30, 0.70, 0.80]} # box area: 0.0100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">approximate_frame_to_box_v2</span><span class="p">(</span><span class="n">frame_to_box</span><span class="p">)</span>
+<span class="go">     {&#39;frame&#39;: 4, &#39;box&#39;: [0.42, 0.78, 0.3, 0.9], &#39;num_frames&#39;: 4}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
 <dt id="etl.utils.ai.get_ai_prediction">
 <code class="sig-prename descclassname">etl.utils.ai.</code><code class="sig-name descname">get_ai_prediction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_path</span></em>, <em class="sig-param"><span class="n">ai_url</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/etl/utils/ai.html#get_ai_prediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#etl.utils.ai.get_ai_prediction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Post a media to AI and waits for its response and deserialize</p>
