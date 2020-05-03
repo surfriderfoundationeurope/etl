@@ -8,8 +8,8 @@ Launch CLI
 Once your environment `etl-env` is activate:
    .. code-block:: console
 
-      >>> python etl_cli.py --help
-           Usage: etl_cli.py [OPTIONS]
+      >>> etl --help
+           Usage: etl [OPTIONS]
 
               Run the ETL
 

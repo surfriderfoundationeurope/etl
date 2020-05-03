@@ -14,6 +14,55 @@ Prerequisites
    set environment variables
 
 
+Guidelines
+==========
+
+Install this package by adding the following line to your
+``environment.yaml`` file as follows:
+
+.. code-block:: yaml
+
+    name: ...
+    dependencies:
+    - pip
+    - pip:
+        - git+ssh://git@github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl
+        # or
+        - git+https://github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl
+
+where ``vX.Y.Z`` is the exact version number that you need.
+
+If you want to develop on Surfrider ETL *at the same time* that you are
+developing some other project, clone this repository and install it on
+development mode:
+
+.. code-block:: console
+
+    $ git clone git+ssh://git@github.com/surfriderfoundationeurope/etl.git
+    $ cd etl
+    $ pip install -e .
+
+Note that this *development mode* is not recommended for reproducible analyses
+because you might end up with a locally modified version that is not available
+to other people.
+
+How to create virtual/conda env ?
+---------------------------------
+You have the choice between virtual env or conda env:
+
+- conda env
+   .. code-block:: console
+
+      $ conda env create -f  environment.yml
+      $ conda activate etl-env
+
+- virtual env
+   .. code-block:: console
+
+      $ python3 -m venv etl-env
+      $ source etl-env/bin/activate
+      $ pip install -r requirements.txt
+
 Environment variables
 =====================
 
@@ -36,34 +85,10 @@ These environment variables is required if you need to insert trash to db :
   Info and identifier of PG database
 
 
-Dev
-===
-
-1. Setup environment
----------------------
-
-You have the choice between virtual env or conda env:
-
-- conda env
+Prod: Docker / Azure deployment
+===============================
    .. code-block:: console
 
-      $ conda env create -f  environment.yml
-      $ conda activate etl-env
+      $ docker build .
 
-- virtual env
-   .. code-block:: console
-
-      $ python3 -m venv etl-env
-      $ source etl-env-venv/bin/activate
-      $ pip install -r requirements
-
-2. Launch CLI
---------------
-Once your environment is activate:
-   .. code-block:: console
-
-      $ python etl_cli.py --help
-
-Prod: Azure deployment
-======================
 Coming soon: How to deploy ?

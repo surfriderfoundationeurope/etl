@@ -23,7 +23,7 @@ Four main source of data:
   - Smartphone 1080p 24 ou 30 img/s + GPS in a separate GPX file
   - Smartphone picture + GPS data
   - OSM Tracker data: GPX file containing way-points with labeled trash and their coordinates
-
+See samples of those in folder /data.
 
 Useful resources
 ================

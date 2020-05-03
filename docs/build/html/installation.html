@@ -88,13 +88,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dev">Dev</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setup-environment">1. Setup environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#launch-cli">2. Launch CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#guidelines">Guidelines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-create-virtual-conda-env">How to create virtual/conda env ?</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#prod-azure-deployment">Prod: Azure deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prod-docker-azure-deployment">Prod: Docker / Azure deployment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -186,6 +185,55 @@
 </li>
 </ul>
 </div>
+<div class="section" id="guidelines">
+<h2>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Install this package by adding the following line to your
+<code class="docutils literal notranslate"><span class="pre">environment.yaml</span></code> file as follows:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="p p-Indicator">-</span> <span class="nt">pip</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">git+ssh://git@github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl</span>
+    <span class="c1"># or</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">git+https://github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> is the exact version number that you need.</p>
+<p>If you want to develop on Surfrider ETL <em>at the same time</em> that you are
+developing some other project, clone this repository and install it on
+development mode:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone git+ssh://git@github.com/surfriderfoundationeurope/etl.git
+<span class="gp">$</span> <span class="nb">cd</span> etl
+<span class="gp">$</span> pip install -e .
+</pre></div>
+</div>
+<p>Note that this <em>development mode</em> is not recommended for reproducible analyses
+because you might end up with a locally modified version that is not available
+to other people.</p>
+<div class="section" id="how-to-create-virtual-conda-env">
+<h3>How to create virtual/conda env ?<a class="headerlink" href="#how-to-create-virtual-conda-env" title="Permalink to this headline">¶</a></h3>
+<p>You have the choice between virtual env or conda env:</p>
+<ul>
+<li><dl>
+<dt>conda env</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> conda env create -f  environment.yml
+<span class="gp">$</span> conda activate etl-env
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>virtual env</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 -m venv etl-env
+<span class="gp">$</span> <span class="nb">source</span> etl-env/bin/activate
+<span class="gp">$</span> pip install -r requirements.txt
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="environment-variables">
 <h2>Environment variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
 <p>This environment variable is required if you work in data-mode ‘azure’ :</p>
@@ -210,43 +258,13 @@
 </dd></dl>
 
 </div>
-<div class="section" id="dev">
-<h2>Dev<a class="headerlink" href="#dev" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="setup-environment">
-<h3>1. Setup environment<a class="headerlink" href="#setup-environment" title="Permalink to this headline">¶</a></h3>
-<p>You have the choice between virtual env or conda env:</p>
-<ul>
-<li><dl>
-<dt>conda env</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> conda env create -f  environment.yml
-<span class="gp">$</span> conda activate etl-env
+<div class="section" id="prod-docker-azure-deployment">
+<h2>Prod: Docker / Azure deployment<a class="headerlink" href="#prod-docker-azure-deployment" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker build .
 </pre></div>
 </div>
-</dd>
-</dl>
-</li>
-<li><dl>
-<dt>virtual env</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python3 -m venv etl-env
-<span class="gp">$</span> <span class="nb">source</span> etl-env-venv/bin/activate
-<span class="gp">$</span> pip install -r requirements
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="launch-cli">
-<h3>2. Launch CLI<a class="headerlink" href="#launch-cli" title="Permalink to this headline">¶</a></h3>
-<dl>
-<dt>Once your environment is activate:</dt><dd><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python etl_cli.py --help
-</pre></div>
-</div>
-</dd>
-</dl>
-</div>
-</div>
-<div class="section" id="prod-azure-deployment">
-<h2>Prod: Azure deployment<a class="headerlink" href="#prod-azure-deployment" title="Permalink to this headline">¶</a></h2>
+</div></blockquote>
 <p>Coming soon: How to deploy ?</p>
 </div>
 </div>
