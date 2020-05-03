@@ -186,6 +186,11 @@ Work In Progress
 
 Docker
 ------
+First, generate a github private SSH key that you store in /conf.
+
+  .. code-block:: console
+      $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
    .. code-block:: console
 
       $ docker build .
