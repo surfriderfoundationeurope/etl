@@ -43,7 +43,7 @@ setup_args = dict(
     author=author_names,
     author_email=author_emails,
     install_requires=dependencies,
-    python_requires='>=3.7,<4.0',
+    python_requires='>=3.6,<3.8',
     zip_safe=False,
     entry_points={
         'console_scripts': [

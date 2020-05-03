@@ -4,7 +4,7 @@ channels:
   - conda-forge
 dependencies:
   # Python dependencies
-  - python>=3.6,<3.7
+  - python>=3.6,<3.8
   - shapely
   - psycopg2
   - pyproj
