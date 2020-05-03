@@ -1,3 +1,5 @@
 .vscode
 *.pyc
 /scripts/.env
+/etl.egg-info/
+/data/gopro/sample.gpx
