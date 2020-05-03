@@ -13,10 +13,12 @@ dependencies:
   - tqdm
   - jupyter
   - pandas
+  - click
+  - python-dotenv
+  - scipy
   - pip
   - pip :
     - azure
-    - azure-storage-blob
     - gopro2gpx==0.1
     - moviepy
 

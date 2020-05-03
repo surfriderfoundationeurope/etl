@@ -28,7 +28,7 @@ Four main source of data:
   - Smartphone 1080p 24 ou 30 img/s + GPS in a separate GPX file
   - Smartphone picture + GPS data
   - OSM Tracker data: GPX file containing way-points with labeled trash and their coordinates
-
+See samples of those in folder /data
 
 Useful resources
 ----------------
@@ -50,6 +50,54 @@ Prerequisites
 - Copy file `example.env`, rename in `.env` and
    set environment variables
 
+Guidelines
+----------
+
+Install this package by adding the following line to your
+``environment.yaml`` file as follows:
+
+.. code-block:: yaml
+
+    name: ...
+    dependencies:
+    - pip
+    - pip:
+        - git+ssh://git@github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl
+        # or
+        - git+https://github.com/surfriderfoundationeurope/etl.git@vX.Y.Z#egg=etl
+
+where ``vX.Y.Z`` is the exact version number that you need.
+
+If you want to develop on Surfrider ETL *at the same time* that you are
+developing some other project, clone this repository and install it on
+development mode:
+
+.. code-block:: console
+
+    $ git clone git+ssh://git@github.com/surfriderfoundationeurope/etl.git
+    $ cd etl
+    $ pip install -e .
+
+Note that this *development mode* is not recommended for reproducible analyses
+because you might end up with a locally modified version that is not available
+to other people.
+
+How to create virtual/conda env ?
+---------------------------------
+You have the choice between virtual env or conda env:
+
+- conda env
+   .. code-block:: console
+
+      $ conda env create -f  environment.yml
+      $ conda activate etl-env
+
+- virtual env
+   .. code-block:: console
+
+      $ python3 -m venv etl-env
+      $ source etl-env/bin/activate
+      $ pip install -r requirements.txt
 
 Environment variables
 ---------------------
@@ -73,28 +121,6 @@ These environment variables is required if you need to insert trash to db :
   Info and identifier of PG database
 
 
-Dev
----
-
-1. Setup environment
----------------------
-
-You have the choice between virtual env or conda env:
-
-- conda env
-   .. code-block:: console
-
-      $ conda env create -f  environment.yml
-      $ conda activate etl-env
-
-- virtual env
-   .. code-block:: console
-
-      $ python3 -m venv etl-env
-      $ source etl-env-venv/bin/activate
-      $ pip install -r requirements
-
-
 Usage
 ======
 
@@ -104,7 +130,7 @@ Launch CLI
 Once your environment `etl-env` is activate:
    .. code-block:: console
 
-      >>> python etl_cli.py --help
+      >>> etl --help
            Usage: etl_cli.py [OPTIONS]
 
               Run the ETL
@@ -155,12 +181,24 @@ in directory `temp-dir`, looking like:
     - On Smartphone photo: not yet
 
 
+Work In Progress
+================
+
+Docker
+------
+   .. code-block:: console
+
+      $ docker build .
+
 In poduction
 -------------
 Coming soon, where to get the subscription info & co.
 
-Work In Progress
-================
+Documentation
+-------------
+
+A readthedocs server is coming soon.
+
 Notebooks
 ---------
 There is work in-progress [here](https://github.com/surfriderfoundationeurope/etl/tree/master/scripts) to build the script architecture that will allow then deploy the ETL in production. Typically, we target to deploy the ETL process on top of Azure Function to support a serverless deployement architecture, or conversly to leverage open souce solution like Apache Airflow or Docker container to make the ETL portable, scalable and event-triggered.
@@ -181,3 +219,15 @@ You can therefore navigate to the ETL API endpoint using a browser, and execute 
     http://localhost:7071/api/etlHttpTrigger?containername=<CONTAINERNAME>&blobname=<BLOBNAME>&videoname=<VIDEONAME>&aiurl=<http://AIURL>
 
 Please note you still need the function to be running within a python environment with ETL pre-requesite, as well as the large local video file.
+
+Contribute
+===========
+
+- Issue Tracker https://github.com/surfriderfoundationeurope/etl/issues
+- Source Code: https://github.com/surfriderfoundationeurope/etl
+
+.. |test-status| image:: https://github.com/surfriderfoundationeurope/etl/workflows/unit%20tests/badge.svg?branch=master
+    :alt: Automatic unit tests status (on master) - coming soon !
+    :scale: 100%
+    :target: https://github.com/surfriderfoundationeurope/etl/actions
+
