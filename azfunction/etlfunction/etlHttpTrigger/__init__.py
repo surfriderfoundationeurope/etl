@@ -160,4 +160,5 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
              status_code=400
         )
 
-#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl='aiapiplastico-dev.westeurope.cloudapp.azure.com'
+#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
+#http://localhost:7071/api/aiHttpTrigger?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
