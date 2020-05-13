@@ -3,6 +3,8 @@ import logging
 import requests
 
 
+logger = logging.getLogger()
+
 def AIready(url):
     '''
     AIready function evaluate whether AI inference service is available
@@ -12,16 +14,16 @@ def AIready(url):
     ready = False
     try:
         AI_request = requests.get(url)
-        print("HTTP Status Code: ",AI_request.status_code)
+        logger.info(f'HTTP Status Code: {AI_request.status_code}')
         if AI_request.status_code == 200:
-            print("AI inference service is available")
+            logger.info('AI inference service is available')
             ready = True
             return ready
         else:
-            print("HTTP Status Code: ",AI_request.status_code)
-            print("AI server is responding but there might be an issue")
+            logger.info("HTTP Status Code: ",AI_request.status_code)
+            logger.info("AI server is responding but there might be an issue")
     except requests.exceptions.RequestException:
-        print("AI not found, an error has occured")
+        logger.error("AI not found, an error has occured")
         return ready
 
 

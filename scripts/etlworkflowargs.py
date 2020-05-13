@@ -1,12 +1,12 @@
 # import prerequesite for blob_ops
 from azure.storage.blob import ContainerClient
 from azure.storage.blob import BlobClient
-from blob_ops import blobInContainer,blobInfos,downloadBlob
+from .blob import blobInContainer,blobInfos,downloadBlob
 # import prerequesite for ai_ops
 import json
 import requests
 import logging
-from ai_ops import AIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashIdPG
+from .ai import AIready,getPrediction,jsonPrediction,getTrashLabel,mapLabel2TrashIdPG
 # import prerequesite for gps_ops
 import gpxpy
 import gpxpy.gpx
@@ -20,11 +20,11 @@ from functools import partial
 import pyproj
 from shapely.ops import transform
 from tqdm import tqdm
-from gps_ops import goproToGPX,gpsPointList,getMediaInfo,getDuration,createTime,createLatitude,createLongitude,createElevation,fillGPS,longLat2shapePoint,longLat2shapeList,geometryTransfo,gps2154
+from .gps import goproToGPX,gpsPointList,getMediaInfo,getDuration,createTime,createLatitude,createLongitude,createElevation,fillGPS,longLat2shapePoint,longLat2shapeList,geometryTransfo,gps2154
 # import prerequesite for postgre_ops
 import os
 import psycopg2
-from postgre_ops import pgConnectionString,pgOpenConnection,pgCloseConnection,trashGPS,trashInsert
+from .postgre import pgConnectionString,pgOpenConnection,pgCloseConnection,trashGPS,trashInsert
 import warnings
 warnings.filterwarnings('ignore')
 # import argparse to pass parameters to main function
