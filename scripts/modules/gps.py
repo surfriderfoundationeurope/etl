@@ -23,7 +23,12 @@ def gopro_to_gpx(video_name:str)->str:
     return path
 
 
-def gps_point_list(gpxdata)->list:
+def parse_gpx(gpx_path:str)->gpxpy.gpx.GPX:
+    gpx_file = open(gpx_path,'r',encoding='utf-8')
+    gpx_data = gpxpy.parse(gpx_file)
+    return gpx_data
+
+def gps_point_list(gpxdata:gpxpy.gpx.GPX)->list:
     ''' 
     gpsPointList function extract gps points from gpx file
     Input: gpxdata is a gpxpy object that returns data from a parsed gpx file
@@ -38,31 +43,6 @@ def gps_point_list(gpxdata)->list:
                               'Longitude': point.longitude, 'Elevation': point.elevation}
                 point_list.append(point_info)
     return point_list
-
-
-def get_media_info(mediafile:str)->str:
-    '''
-    getMediaInfo function extract metadata info about a media file, using mediainfo shell command
-    Input: a media file like a video
-    Output: the metadata about the media
-    '''
-    cmd = "mediainfo --Output=JSON %s" % (mediafile)
-    proc = subprocess.Popen(
-        cmd, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    stdout, stderr = proc.communicate()
-    data = json.loads(stdout)
-    return data
-
-
-def get_duration(mediafile:str)->float:
-    '''
-    getDuration function get the duration of a mediafile, typically a video
-    Input: a mediafile, on which we then extract the mediainfo
-    Output: the duration of the media
-    '''
-    data = getMediaInfo(mediafile)
-    duration = float(data['media']['track'][0]['Duration'])
-    return duration
 
 
 def create_time(time:datetime)->datetime:
@@ -155,7 +135,7 @@ def long_lat_2_shape_point(gpsLongLatPoint:dict)->dict:
     Output: a dictionnary for a GPS data with key 'the_geom' built from Long/Lat
     '''
     gpsShapePoint = {'Time': gpsLongLatPoint['Time'], 'the_geom': Point(
-        gpsLongLatPoint['Longitude'], gpsLongLatPoint['Latitude']), 'Elevation': gpsLongLatPoint['Elevation']}
+        gpsLongLatPoint['Longitude'], gpsLongLatPoint['Latitude']),'Latitude':gpsLongLatPoint['Latitude'],'Longitude':gpsLongLatPoint['Longitude'], 'Elevation': gpsLongLatPoint['Elevation']}
     return gpsShapePoint
 
 

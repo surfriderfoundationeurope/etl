@@ -54,7 +54,7 @@ def trash_gps(trashId:int,gps2154Points:list)->int:
     return gpsIndex
 
 
-def trash_insert(gps2154Point:dict,trashTypeId:int,cursor,connexion:str)->str:
+def trash_insert(gps2154Point,trashTypeId,cursor,connexion):
     '''
     trashInsert function is the actual INSERT of a Trash detected by AI within PostGre Trash Table
     Input: a gps2154Point, a TrashTypeId, a postgre cursor, a postgre connection
@@ -63,7 +63,9 @@ def trash_insert(gps2154Point:dict,trashTypeId:int,cursor,connexion:str)->str:
     point = gps2154Point['the_geom'].wkt
     elevation = gps2154Point['Elevation']
     timestamp = gps2154Point['Time']
-    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time ) VALUES (DEFAULT, '1faaee65-1edb-45ab-bdd4-15268fccd301',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (point,elevation,trashTypeId,'icetea',timestamp))
+    longitude = gps2154Point['Longitude']
+    latitude = gps2154Point['Latitude']
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time,lon,lat ) VALUES (DEFAULT, '6b5c65c4-238b-4d8b-b0c3-a97f262038fe',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s,%s,%s) RETURNING id;", (point,elevation,trashTypeId,'coca',timestamp,longitude,latitude))
     connexion.commit()
     row_id = cursor.fetchone()[0]
     return row_id
