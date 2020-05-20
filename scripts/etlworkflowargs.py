@@ -1,12 +1,12 @@
 # import prerequesite for blob
 from azure.storage.blob import ContainerClient
 from azure.storage.blob import BlobClient
-from modules.blob import blob_in_container,blob_infos,download_blob
+from utils.blob import list_blob_in_container,get_blob_infos,download_blob
 # import prerequesite for ai
 import json
 import requests
 import logging
-from modules.ai import ai_ready,get_prediction,json_prediction,get_trash_label,map_label_2_trash_id_PG,get_trash_time_index,get_trash_time_stamp
+from utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_trash_label,map_label_to_trash_id_PG,get_trash_time_index,get_trash_time_stamp
 # import prerequesite for gps
 import gpxpy
 import gpxpy.gpx
@@ -20,13 +20,13 @@ from functools import partial
 import pyproj
 from shapely.ops import transform
 from tqdm import tqdm
-from modules.gps import extract_gpx_from_gopro,gps_point_list,create_time,create_latitude,create_longitude,create_elevation,fill_gps,long_lat_2_shape_point,long_lat_2_shape_list,transform_geo,gps_2154,parse_gpx
+from utils.gps import extract_gpx_from_gopro,parse_gpx,get_gps_point_list,create_time,create_latitude,create_longitude,create_elevation,fill_gps,long_lat_to_shape_point,transform_geo
 # import prerequesite from media
-from modules.media import get_media_duration,get_media_fps
+from utils.media import get_media_duration,get_media_fps
 # import prerequesite for postgre
 import os
 import psycopg2
-from modules.postgre import pg_connection_string,pg_open_connection,pg_close_connection,trash_gps,trash_insert
+from utils.postgre import get_pg_connection_string,open_pg_connection,close_pg_connection,insert_trash
 import warnings
 warnings.filterwarnings('ignore')
 # import argparse to pass parameters to main function
@@ -44,34 +44,34 @@ def main(argv):
     logger.info('############################################################')
     logger.info('###################### Pipeline Step0 ######################')
     logger.info('################ Get Video from Azure Storage ##############')
-    # Download Blob video
+    # Download Blob video from Azure
     connection_string = os.getenv("CONN_STRING")
     campaign_container_name = argv.containername
     blob_video_name = argv.blobname   
     blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
     download_blob(blob_video)
 
+    # AI prediction from AI inference server
     logger.info('###################### Pipeline Step1bis ###################')
     logger.info('##################### AI Trash prediction ##################')
-    isAIready = ai_ready(f'{argv.aiurl}:5000')
-    #logger =  logging.getLogger() #required by getPrediction()
-
+    ai_ready = is_ai_ready(f'{argv.aiurl}:5000')
     '''
-    if isAIready == True:
+    if ai_ready == True:
         prediction = get_prediction(blob_video_name,f'{argv.aiurl}:5000')
     else:
         logger.info("Early exit of ETL workflow as AI service is not available")
         exit()
   
-    # cast prediction to JSON/Dictionnary format
-    jsonPrediction = json_prediction(prediction)
+    # Cast prediction to JSON/Dictionnary format
+    jsonPrediction = get_json_prediction(prediction)
+
+    # Optionnal jsonPrediction from local file
     '''
-    # optionnal jsonPrediction from local file
-    
     with open('../data/prediction.json') as json_file:
         jsonPrediction = json.load(json_file)
-    
 
+
+    # GPS pipeline
     logger.info('###################### Pipeline Step1 ######################')
     logger.info('######################  GPX creation  ######################')
     video_name = argv.videoname
@@ -85,7 +85,7 @@ def main(argv):
     gpx_data = parse_gpx(gpx_path)
 
     # GPS Points
-    gps_points = gps_point_list(gpx_data)
+    gps_points = get_gps_point_list(gpx_data)
 
     # Video duration
     logger.info("\n")
@@ -94,8 +94,8 @@ def main(argv):
     media_fps = get_media_fps(f'/tmp/{video_name}')
 
     # GPS file duration
-    timestampDelta = gps_points[len(gps_points)-1]['Time'] - gps_points[0]['Time']
-    logger.info(f'GPS file time coverage in second:{timestampDelta.seconds}')
+    timestamp_delta = gps_points[len(gps_points)-1]['Time'] - gps_points[0]['Time']
+    logger.info(f'GPS file time coverage in second:{timestamp_delta.seconds}')
 
     logger.info('###################### Pipeline Step2 ######################')
     logger.info('################## Add missing GPS points ##################')
@@ -106,11 +106,11 @@ def main(argv):
     logger.info('################### Insert within PostGre ##################')
     
     # Get connection string information from env variables
-    pgConn_string = pg_connection_string()
+    pg_conn_string = get_pg_connection_string()
     # Open pgConnection
-    pgConnection = pg_open_connection(pgConn_string)
+    pg_connection = open_pg_connection(pg_conn_string)
     # Create Cursor
-    pgCursor = pgConnection.cursor()
+    pg_cursor = pg_connection.cursor()
 
 
     # INSERTING all detected_trash within PostGre
@@ -118,17 +118,17 @@ def main(argv):
     for prediction in tqdm(jsonPrediction['detected_trash']):
         try:    
             # get trash_gps from gps module
-            timeindex = get_trash_time_index(prediction)
-            timestamp = get_trash_time_stamp(timeindex,media_fps)
-            trash_gps = gps_points[timestamp]
-            shape_trash_gps = long_lat_2_shape_point(trash_gps)
+            time_index = get_trash_time_index(prediction)
+            time_stamp = get_trash_time_stamp(time_index,media_fps)
+            trash_gps = gps_points_filled[time_stamp]
+            shape_trash_gps = long_lat_to_shape_point(trash_gps)
             geo_2154 = transform_geo(shape_trash_gps)
             geo_2154_trash_gps = {'Time': shape_trash_gps['Time'], 'the_geom': geo_2154,'Latitude':shape_trash_gps['Latitude'],'Longitude':shape_trash_gps['Longitude'], 'Elevation': shape_trash_gps['Elevation']}
             # get trash_type from ai module
             label = get_trash_label(prediction)
-            trash_type = map_label_2_trash_id_PG(label)
+            trash_type = map_label_to_trash_id_PG(label)
             # insert trash from postgre module
-            row_id = trash_insert(geo_2154_trash_gps,trash_type,pgCursor,pgConnection)
+            row_id = insert_trash(geo_2154_trash_gps,trash_type,pg_cursor,pg_connection)
             row_id_list.append(row_id)
         except:
             prediction_id = prediction['id']
@@ -138,7 +138,7 @@ def main(argv):
     logger.info(f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')    
 
     # Close PG connection
-    pg_close_connection(pgConnection)
+    close_pg_connection(pg_connection)
 
     logger.info('############################################################')
     logger.info('################   Plastic Origin ETL End   ################')

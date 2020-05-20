@@ -16,6 +16,14 @@ def get_media_duration(media_path: str) -> float:
     return clip.duration
 
 def get_media_fps(media_path: str) -> int:
+    """ Get FPS of video media
+
+    Arguments:
+        media_path {str} -- path of video media to get FPS from
+
+    Returns:
+        fps {int} -- the FPS of the media video
+    """
     clip = VideoFileClip(media_path)
     fps = clip.fps
     fps = int(np.ceil(fps))
