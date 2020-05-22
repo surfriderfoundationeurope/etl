@@ -6,7 +6,7 @@ from utils.blob import list_blob_in_container,get_blob_infos,download_blob
 import json
 import requests
 import logging
-from utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_trash_label,map_label_to_trash_id_PG,get_trash_time_index,get_trash_time_stamp
+from utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_clean_timed_prediction,get_trash_label,map_label_to_trash_id_PG,get_trash_first_time,get_trash_time_index
 # import prerequesite for gps
 import gpxpy
 import gpxpy.gpx
@@ -51,11 +51,11 @@ def main(argv):
     blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
     download_blob(blob_video)
 
-    # AI prediction from AI inference server
+    # Get AI prediction from AI inference server
     logger.info('###################### Pipeline Step1bis ###################')
     logger.info('##################### AI Trash prediction ##################')
     ai_ready = is_ai_ready(f'{argv.aiurl}:5000')
-    '''
+    
     if ai_ready == True:
         prediction = get_prediction(blob_video_name,f'{argv.aiurl}:5000')
     else:
@@ -69,7 +69,7 @@ def main(argv):
     '''
     with open('../data/prediction.json') as json_file:
         jsonPrediction = json.load(json_file)
-
+    '''
 
     # GPS pipeline
     logger.info('###################### Pipeline Step1 ######################')
@@ -80,19 +80,15 @@ def main(argv):
     after = datetime.now()
     delta = after - before
     logger.info(delta)
-
     # GPX parsing
     gpx_data = parse_gpx(gpx_path)
-
     # GPS Points
     gps_points = get_gps_point_list(gpx_data)
-
     # Video duration
     logger.info("\n")
     video_duration = get_media_duration(f'/tmp/{video_name}')
     logger.info(f'Video duration in second from metadata:{video_duration}')
     media_fps = get_media_fps(f'/tmp/{video_name}')
-
     # GPS file duration
     timestamp_delta = gps_points[len(gps_points)-1]['Time'] - gps_points[0]['Time']
     logger.info(f'GPS file time coverage in second:{timestamp_delta.seconds}')
@@ -104,27 +100,24 @@ def main(argv):
 
     logger.info('###################### Pipeline Step3 ######################')
     logger.info('################### Insert within PostGre ##################')
-    
     # Get connection string information from env variables
     pg_conn_string = get_pg_connection_string()
-    # Open pgConnection
     pg_connection = open_pg_connection(pg_conn_string)
-    # Create Cursor
     pg_cursor = pg_connection.cursor()
-
 
     # INSERTING all detected_trash within PostGre
     row_id_list = []
     for prediction in tqdm(jsonPrediction['detected_trash']):
         try:    
             # get trash_gps from gps module
-            time_index = get_trash_time_index(prediction)
-            time_stamp = get_trash_time_stamp(time_index,media_fps)
-            trash_gps = gps_points_filled[time_stamp]
+            #time_index = get_trash_time_index(prediction)
+            time_index = get_trash_time_index(prediction,media_fps)
+            trash_gps = gps_points_filled[time_index]
             shape_trash_gps = long_lat_to_shape_point(trash_gps)
             geo_2154 = transform_geo(shape_trash_gps)
             geo_2154_trash_gps = {'Time': shape_trash_gps['Time'], 'the_geom': geo_2154,'Latitude':shape_trash_gps['Latitude'],'Longitude':shape_trash_gps['Longitude'], 'Elevation': shape_trash_gps['Elevation']}
             # get trash_type from ai module
+            clean_prediction = get_clean_timed_prediction(prediction)
             label = get_trash_label(prediction)
             trash_type = map_label_to_trash_id_PG(label)
             # insert trash from postgre module
@@ -151,7 +144,6 @@ parser.add_argument('-c','--containername',required=True, help='container name t
 parser.add_argument('-b','--blobname', required=True, help='blob name to be downloaded from azure blob storage campaign0 container into /tmp')
 parser.add_argument('-v','--videoname', required=True,help='video name stored locally in /tmp to apply gpx extraction process on')
 parser.add_argument('-a','--aiurl', required=True,help='url endpoint where AI inference service can be reached')
-
 
 # Create args parsing standard input
 args = parser.parse_args()

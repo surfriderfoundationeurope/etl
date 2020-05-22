@@ -5,6 +5,7 @@ import gpxpy.gpx
 import json
 import subprocess
 import datetime
+import pandas as pd
 from datetime import datetime
 from datetime import timedelta
 from shapely.geometry import Point
@@ -155,12 +156,12 @@ def fill_gps(input_gps_list:list, video_length:float)->list:
         delta = filled_gps[i+1]['Time']-filled_gps[i]['Time']
         delta = int(delta.total_seconds())
         if delta > 1:  # adding a newly created element at index i+1
-            missing_time = createTime(filled_gps[i]['Time'])
-            missing_latitude = createLatitude(
+            missing_time = create_time(filled_gps[i]['Time'])
+            missing_latitude = create_latitude(
                 filled_gps[i]['Latitude'], filled_gps[i+1]['Latitude'])
-            missing_longitude = createLongitude(
+            missing_longitude = create_longitude(
                 filled_gps[i]['Longitude'], filled_gps[i+1]['Longitude'])
-            missing_elevation = createElevation(
+            missing_elevation = create_elevation(
                 filled_gps[i]['Elevation'], filled_gps[i+1]['Elevation'])
             new_gps = {'Time': missing_time, 'Latitude': missing_latitude,
                        'Longitude': missing_longitude, 'Elevation': missing_elevation}
@@ -209,3 +210,23 @@ def transform_geo(gps_shape_point:dict)->str:
     geo2 = transform(project, geo1)
     return geo2
 
+def get_df_trash_gps(df_predictions:pd.DataFrame,gps_points_filled:list)->pd.DataFrame:
+    """Get GPS information of a Trash as a Dataframe
+
+    Arguments:
+        df_predictions {pd.DataFrame} -- an AI prediction as a Dataframe (using get_df_predictio from utils.ai)
+        gps_points_filled {list} -- a list filled list of GPS points
+
+    Returns:
+        df_trash_gps -- the gps coordinates of all trashes detected by AI as a Dataframe
+    """
+    geo_2154_trash_gps_list = []
+    time_indexes = df_predictions['time_index']
+    for time_index in time_indexes:
+        trash_gps = gps_points_filled[time_index]
+        shape_trash_gps = long_lat_to_shape_point(trash_gps)
+        geo_2154 = transform_geo(shape_trash_gps)
+        geo_2154_trash_gps = {'Time': shape_trash_gps['Time'], 'the_geom': geo_2154,'Latitude':shape_trash_gps['Latitude'],'Longitude':shape_trash_gps['Longitude'], 'Elevation': shape_trash_gps['Elevation']}
+        geo_2154_trash_gps_list.append(geo_2154_trash_gps)
+        df_trash_gps = pd.DataFrame(geo_2154_trash_gps_list)
+    return df_trash_gps
