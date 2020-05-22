@@ -1,5 +1,6 @@
 import json
-import logging 
+import logging
+import pandas as pd
 import requests
 
 
@@ -74,7 +75,7 @@ def get_trash_label(frame_to_box:dict)->str:
     return frame_to_box['label']
 
 
-def get_trash_time_index(trash:dict)->int:
+def get_trash_first_time(trash:dict)->int:
     """Get the time index for a trash, the first time it is identified
 
     Arguments:
@@ -87,18 +88,49 @@ def get_trash_time_index(trash:dict)->int:
     return int(list(frame_to_box.keys())[0])
 
 
-def get_trash_time_stamp(time_index:int,media_fps:float)->int:
-    """Get trash time stamp with regard to the video media it is identified from
+def get_trash_time_index(prediction:dict,media_fps:float)->int:
+    """ Get trash time stamp
 
     Arguments:
-        time_index {int} -- the index when the trash is identified for the first time
-        media_fps {float} -- the fps of the media where trash is identified
+        prediction {dict} -- the prediction made by AI of a unique trash
+        media_fps {float} -- the FPS of the media where the trash comes from
 
     Returns:
-        int -- the timestamp of the trash
+        timestamp -- the timestamp of the trash with regard to video it comes from
     """
-    return int(time_index / media_fps)
+    time_index = get_trash_first_time(prediction)
+    timestamp = int(time_index / media_fps)
+    return timestamp
 
+
+def get_clean_timed_prediction(prediction:dict)->dict:
+    """Get timed prediction with single frame_to_box
+
+    Arguments:
+        prediction {dict} -- a single prediction from a dictionary of AI predictions
+
+    Returns:
+        clean_prediction -- a prediction with the first frame_to_box only & a time_index additional key/value pair
+    """
+    index = str(get_trash_first_time(prediction))
+    clean_frame_to_box = prediction['frame_to_box'][index]
+    timed_prediction = {'time_index':index,'frame_to_box':clean_frame_to_box,'id':prediction['id'],'label':prediction['label']}    
+    return timed_prediction
+
+def get_df_prediction(json_prediction:dict)->pd.DataFrame:
+    """Get AI prediction dictionnary as Dataframe
+
+    Arguments:
+        json_prediction {dict} -- a full prediction of AI service as JSON dico
+
+    Returns:
+       df_prediction -- the AI prediction as a Dataframe
+    """
+    timed_prediction_list = []
+    for prediction in json_prediction['detected_trash']:
+        timed_prediction_list.append(get_clean_timed_prediction(prediction))
+    df_prediction = pd.DataFrame(timed_prediction_list)
+    return df_prediction
 
 def map_label_to_trash_id_PG(label:str)->str:
     """Map label of a trash to equivalent ID within PostGre server

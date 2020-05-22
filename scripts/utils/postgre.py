@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import pandas as pd
 from .exceptions import ETLError
 
 #https://pynative.com/psycopg2-python-postgresql-connection-pooling/
@@ -49,6 +50,19 @@ def close_pg_connection(connection:str):
     except:
         print("PG connection could not close successfully")
 
+
+def get_df_data(df_predictions:pd.DataFrame,df_trash_gps:pd.DataFrame)->pd.Dataframe:
+    """Get Data to be inserted within PostGre DB as a Dataframe
+
+    Arguments:
+        df_predictions {pd.DataFrame} -- the AI prediction as a Dataframe
+        df_trash_gps {pd.DataFrame} -- the gps coordinate of all trash detected by AI as a Dataframe
+
+    Returns:
+        pdf_data -- Data to be inserted within PostGre DB
+    """
+    df_data = pd.concat([df_predictions,df_trash_gps],axis=1)
+    return df_data
 
 
 def insert_trash(gps_2154_point:dict,trash_type_id:int,cursor:object,connection:object):
