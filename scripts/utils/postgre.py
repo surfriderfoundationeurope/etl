@@ -51,7 +51,7 @@ def close_pg_connection(connection:str):
         print("PG connection could not close successfully")
 
 
-def get_df_data(df_predictions:pd.DataFrame,df_trash_gps:pd.DataFrame)->pd.Dataframe:
+def get_df_data(df_predictions:pd.DataFrame,df_trash_gps:pd.DataFrame)->pd.DataFrame:
     """Get Data to be inserted within PostGre DB as a Dataframe
 
     Arguments:
@@ -83,6 +83,72 @@ def insert_trash(gps_2154_point:dict,trash_type_id:int,cursor:object,connection:
     longitude = gps_2154_point['Longitude']
     latitude = gps_2154_point['Latitude']
     cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time,lon,lat ) VALUES (DEFAULT, '6b5c65c4-238b-4d8b-b0c3-a97f262038fe',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s,%s,%s) RETURNING id;", (point,elevation,trash_type_id,'coca',timestamp,longitude,latitude))
+    connection.commit()
+    row_id = cursor.fetchone()[0]
+    return row_id
+
+def insert_trash(gps_2154_point:dict,trash_type_id:int,cursor:object,connection:object):
+    """Insert trash within PostGre Trash Table within Campaign schema
+
+    Arguments:
+        gps_2154_point {dict} -- the gps data associated with a trash
+        trash_type_id {int} -- the trash type id as defined within Trash table
+        cursor {object} -- the postgre cursor object created from connection
+        connection {object} -- the postgre connection object
+
+    Returns:
+        row_id -- the new id of the row created for the trash within Trash table
+    """
+    point = gps_2154_point['the_geom'].wkt
+    elevation = gps_2154_point['Elevation']
+    timestamp = gps_2154_point['Time']
+    longitude = gps_2154_point['Longitude']
+    latitude = gps_2154_point['Latitude']
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,brand_type,time,lon,lat ) VALUES (DEFAULT, 'ec501e35-b022-4c73-9988-a41218d6105e',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s,%s,%s) RETURNING id;", (point,elevation,trash_type_id,'coca',timestamp,longitude,latitude))
+    connection.commit()
+    row_id = cursor.fetchone()[0]
+    return row_id
+
+def insert_trash_2(gps_2154_point:dict,trash_type_id:int,cursor:object,connection:object):
+    """Insert trash within PostGre Trash Table within Campaign schema
+    This function replace insert_trash as Table data model has been updated
+
+    Arguments:
+        gps_2154_point {dict} -- the gps data associated with a trash
+        trash_type_id {int} -- the trash type id as defined within Trash table
+        cursor {object} -- the postgre cursor object created from connection
+        connection {object} -- the postgre connection object
+
+    Returns:
+        row_id -- the new id of the row created for the trash within Trash table
+    """
+    point = gps_2154_point['the_geom'].wkt
+    elevation = gps_2154_point['Elevation']
+    timestamp = gps_2154_point['Time']
+    precision = 99
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,time,precision ) VALUES (DEFAULT, 'ec501e35-b022-4c73-9988-a41218d6105e',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (point,elevation,trash_type_id,timestamp,precision))
+    connection.commit()
+    row_id = cursor.fetchone()[0]
+    return row_id
+
+
+def insert_trash_df(trash_data:pd.Series,cursor:object,connection:object):
+    """Insert trash dataframe within PostGre DB
+
+    Arguments:
+        trash_data {pd.Series} -- the pd.Series row of a trash dataframe data
+        cursor {object} -- the postgre cursor object created from connection
+        connection {object} -- the postgre connection object
+
+    Returns:
+        row_id -- the new id of the row created for the trash within Trash table
+    """
+    point = trash_data['the_geom'].wkt
+    elevation = trash_data['Elevation']
+    trash_type_id = int(trash_data['trash_type_id']) #int() casting to address single pd.Series insert use case
+    timestamp = trash_data['Time']
+    precision = 99
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,time,precision ) VALUES (DEFAULT, 'ec501e35-b022-4c73-9988-a41218d6105e',ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (point,elevation,trash_type_id,timestamp,precision))
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id
