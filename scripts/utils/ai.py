@@ -82,10 +82,11 @@ def get_trash_first_time(trash:dict)->int:
         trash {dict} -- [description]
 
     Returns:
-        int -- the index when the trash is identified for the first time
+        fist_index -- the index when the trash is identified for the first time
     """
-    frame_to_box = trash['frame_to_box']    
-    return int(list(frame_to_box.keys())[0])
+    frame_to_box = trash['frame_to_box']
+    first_index = int(list(frame_to_box.keys())[0])
+    return first_index
 
 
 def get_trash_time_index(prediction:dict,media_fps:float)->int:
@@ -96,40 +97,45 @@ def get_trash_time_index(prediction:dict,media_fps:float)->int:
         media_fps {float} -- the FPS of the media where the trash comes from
 
     Returns:
-        timestamp -- the timestamp of the trash with regard to video it comes from
+        time_index -- the timestamp of the trash with regard to video it comes from
     """
-    time_index = get_trash_first_time(prediction)
-    timestamp = int(time_index / media_fps)
-    return timestamp
+    first_index = get_trash_first_time(prediction)
+    time_index = int(first_index / media_fps)
+    return time_index
 
 
-def get_clean_timed_prediction(prediction:dict)->dict:
+def get_clean_timed_prediction(prediction:dict,media_fps:int)->dict:
     """Get timed prediction with single frame_to_box
 
     Arguments:
         prediction {dict} -- a single prediction from a dictionary of AI predictions
+        media_fps {float} -- the FPS of the media where the trash comes from
 
     Returns:
-        clean_prediction -- a prediction with the first frame_to_box only & a time_index additional key/value pair
+        timed_prediction -- a prediction with the first frame_to_box only & a time_index additional key/value pair
     """
-    index = str(get_trash_first_time(prediction))
-    clean_frame_to_box = prediction['frame_to_box'][index]
-    timed_prediction = {'time_index':index,'frame_to_box':clean_frame_to_box,'id':prediction['id'],'label':prediction['label']}    
+    first_index = str(get_trash_first_time(prediction))
+    clean_frame_to_box = prediction['frame_to_box'][first_index]
+    time_index = get_trash_time_index(prediction,media_fps)
+    trash_type_id =  int(map_label_to_trash_id_PG(prediction['label']))
+    timed_prediction = {'time_index':int(time_index),'frame_to_box':clean_frame_to_box,'id':prediction['id'],'label':prediction['label'],'trash_type_id':trash_type_id}    
     return timed_prediction
 
-def get_df_prediction(json_prediction:dict)->pd.DataFrame:
+def get_df_prediction(json_prediction:dict,media_fps)->pd.DataFrame:
     """Get AI prediction dictionnary as Dataframe
 
     Arguments:
         json_prediction {dict} -- a full prediction of AI service as JSON dico
+        media_fps {float} -- the FPS of the media where the trash comes from
 
     Returns:
        df_prediction -- the AI prediction as a Dataframe
     """
     timed_prediction_list = []
     for prediction in json_prediction['detected_trash']:
-        timed_prediction_list.append(get_clean_timed_prediction(prediction))
+        timed_prediction_list.append(get_clean_timed_prediction(prediction,media_fps))
     df_prediction = pd.DataFrame(timed_prediction_list)
+
     return df_prediction
 
 def map_label_to_trash_id_PG(label:str)->str:

@@ -6,7 +6,7 @@ from utils.blob import list_blob_in_container,get_blob_infos,download_blob
 import json
 import requests
 import logging
-from utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_clean_timed_prediction,get_trash_label,map_label_to_trash_id_PG,get_trash_first_time,get_trash_time_index
+from utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_clean_timed_prediction,get_trash_label,map_label_to_trash_id_PG,get_trash_first_time,get_trash_time_index,get_df_prediction
 # import prerequesite for gps
 import gpxpy
 import gpxpy.gpx
@@ -20,13 +20,13 @@ from functools import partial
 import pyproj
 from shapely.ops import transform
 from tqdm import tqdm
-from utils.gps import extract_gpx_from_gopro,parse_gpx,get_gps_point_list,create_time,create_latitude,create_longitude,create_elevation,fill_gps,long_lat_to_shape_point,transform_geo
+from utils.gps import extract_gpx_from_gopro,parse_gpx,get_gps_point_list,create_time,create_latitude,create_longitude,create_elevation,fill_gps,long_lat_to_shape_point,transform_geo,get_df_trash_gps
 # import prerequesite from media
 from utils.media import get_media_duration,get_media_fps
 # import prerequesite for postgre
 import os
 import psycopg2
-from utils.postgre import get_pg_connection_string,open_pg_connection,close_pg_connection,insert_trash
+from utils.postgre import get_pg_connection_string,open_pg_connection,close_pg_connection,insert_trash_2,insert_trash_df,get_df_data
 import warnings
 warnings.filterwarnings('ignore')
 # import argparse to pass parameters to main function
@@ -55,7 +55,7 @@ def main(argv):
     logger.info('###################### Pipeline Step1bis ###################')
     logger.info('##################### AI Trash prediction ##################')
     ai_ready = is_ai_ready(f'{argv.aiurl}:5000')
-    
+    '''
     if ai_ready == True:
         prediction = get_prediction(blob_video_name,f'{argv.aiurl}:5000')
     else:
@@ -63,13 +63,13 @@ def main(argv):
         exit()
   
     # Cast prediction to JSON/Dictionnary format
-    jsonPrediction = get_json_prediction(prediction)
+    json_prediction = get_json_prediction(prediction)
 
-    # Optionnal jsonPrediction from local file
+    # Optionnal json_prediction from local file
     '''
     with open('../data/prediction.json') as json_file:
-        jsonPrediction = json.load(json_file)
-    '''
+        json_prediction = json.load(json_file)
+
 
     # GPS pipeline
     logger.info('###################### Pipeline Step1 ######################')
@@ -107,7 +107,8 @@ def main(argv):
 
     # INSERTING all detected_trash within PostGre
     row_id_list = []
-    for prediction in tqdm(jsonPrediction['detected_trash']):
+    '''
+    for prediction in tqdm(json_prediction['detected_trash']):
         try:    
             # get trash_gps from gps module
             #time_index = get_trash_time_index(prediction)
@@ -117,17 +118,33 @@ def main(argv):
             geo_2154 = transform_geo(shape_trash_gps)
             geo_2154_trash_gps = {'Time': shape_trash_gps['Time'], 'the_geom': geo_2154,'Latitude':shape_trash_gps['Latitude'],'Longitude':shape_trash_gps['Longitude'], 'Elevation': shape_trash_gps['Elevation']}
             # get trash_type from ai module
-            clean_prediction = get_clean_timed_prediction(prediction)
             label = get_trash_label(prediction)
             trash_type = map_label_to_trash_id_PG(label)
             # insert trash from postgre module
-            row_id = insert_trash(geo_2154_trash_gps,trash_type,pg_cursor,pg_connection)
+            row_id = insert_trash_2(geo_2154_trash_gps,trash_type,pg_cursor,pg_connection)
+            logger.info(row_id)
             row_id_list.append(row_id)
         except:
             prediction_id = prediction['id']
             logger.error(f'There was an issue inserting Trash id: {prediction_id} within PostGre')
             logger.error("Early exit of ETL workflow as PG INSERT failed")
             exit()
+        '''
+    df_predictions = get_df_prediction(json_prediction,media_fps) 
+    df_trash_gps = get_df_trash_gps(df_predictions,gps_points_filled)
+    df_data = get_df_data(df_predictions,df_trash_gps)
+
+    for i,row in tqdm(df_data.iterrows()):
+        try:
+            row_id = insert_trash_df(row,pg_cursor,pg_connection)
+            logger.info(row_id)
+            row_id_list.append(row_id)
+        except:
+            prediction_id = row['id']
+            logger.error(f'There was an issue inserting Trash id: {prediction_id} within PostGre')
+            logger.error("Early exit of ETL workflow as PG INSERT failed")
+            exit()
+
     logger.info(f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')    
 
     # Close PG connection
