@@ -11,6 +11,10 @@ import requests
 from .utils.ai import is_ai_ready,get_prediction,get_json_prediction,get_trash_label,map_label_to_trash_id_PG
 # extra import
 import os
+import pathlib
+
+DOWNLOAD_PATH = '/tmp'
+AI_PORT = '5000'
 
 logger = logging.getLogger()
 
@@ -34,8 +38,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         connection_string = os.getenv("CONN_STRING")
 
         # Download locally in /tmp blob video
-        blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=container_name, blob_name=blob_video_name)
-        download_blob(blob_video)
+        if not blob_video_name in os.listdir(DOWNLOAD_PATH):    
+            blob_video = BlobClient.from_connection_string(conn_str=connection_string,container_name=container_name, blob_name=blob_video_name)
+            download_blob(blob_video,DOWNLOAD_PATH)
 
         logger.info('###################### Pipeline Step1bis ###################')
         logger.info('################## Get Trash Prediction Data ################')
@@ -52,8 +57,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             logger.info("Have json prediction")
 
         elif source_data == 'json':
-            prediction_path = '../../data/prediction.json'
-            with open(prediction_path) as json_file:
+            with open(pathlib.Path(__file__).parent / 'prediction.json') as json_file:
                 json_prediction = json.load(json_file)
 
         
@@ -61,7 +65,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logger.info('###################  AI Prediction End   ###################')
         logger.info('############################################################')
 
-        output = func.HttpResponse(f'Congratulations, you have successfully made prediction from container name: {container_name}, blobname: {blob_video_name} with AI service !')
+        output = func.HttpResponse(json.dumps(json_prediction),mimetype="application/json")
         return output
 
     else:
@@ -71,9 +75,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         )
 
 # Local
-#?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=ai
-#http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=csv
-#http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=postgre
+#&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json
+#http://localhost:7072/api/ailHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json
+#http://localhost:7072/api/aiHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json
 # Azure
 #&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
-#https://azfunplasticoetl.azurewebsites.net/api/aiHttpTrigger?code=/Ixlz/BmpcNtyEu3NXKUvNsauf9SjKuEz0cqH/ro6uv62oy4uzbv3Q==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
+#https://azfunplasticoetl.azurewebsites.net/api/aiHttpTrigger?code=/Ixlz/BmpcNtyEu3NXKUvNsauf9SjKuEz0cqH/ro6uv62oy4uzbv3Q==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json
+#http://azfunplasticoetldock.azurewebsites.net/api/aiHttpTriggerNew?code=IOMWcujHKUNLGbBXTqwisBe4BGwcUVAda9fxIBcYpw9/k0O1jj94ug==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json

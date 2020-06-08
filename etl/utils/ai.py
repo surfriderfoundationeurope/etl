@@ -177,5 +177,5 @@ def map_label_to_trash_id_PG(label:str)->str:
         "objet vie courante":"7",
         "autres dechets +10":"8"
     }
-    id_PG =  switcher.get(label, "nothing")
+    id_PG =  switcher.get(label, "0")
     return id_PG
