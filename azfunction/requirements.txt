@@ -1,5 +1,6 @@
 azure-functions
 azure
+click
 gopro2gpx==0.1
 shapely
 psycopg2

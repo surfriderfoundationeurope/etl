@@ -35,6 +35,10 @@ import warnings
 warnings.filterwarnings('ignore')
 # import argparse to pass parameters to main function
 import argparse
+import pathlib
+
+DOWNLOAD_PATH = '/tmp'
+AI_PORT = '5000'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -72,8 +76,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logger.info('################ Get Video from Azure Storage ##############')
 
         # Download Blob video from Azure
-        blob_video_client = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
-        download_blob(blob_video_client)
+        if not video_name in os.listdir(DOWNLOAD_PATH):
+            blob_video_client = BlobClient.from_connection_string(conn_str=connection_string,container_name=campaign_container_name, blob_name=blob_video_name)
+            download_blob(blob_video_client,DOWNLOAD_PATH)
 
         # Get AI prediction
         logger.info('###################### Pipeline Step1bis ###################')
@@ -93,8 +98,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         # From JSON file
         elif source_data == 'json':
-            prediction_path = '../../data/prediction.json'
-            with open(prediction_path) as json_file:
+            with open(pathlib.Path(__file__).parent / 'prediction.json') as json_file:
                 json_prediction = json.load(json_file)
 
         # GPS pipeline
@@ -127,46 +131,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logger.info('################ Store Data in PostGre or CSV ##############')
         
         # INSERTING all detected_trash within PostGre
-        '''
-        # NO DATAFRAME
-        if target_store == 'postgre':
-            # Get connection string information from env variables
-            pg_conn_string = get_pg_connection_string()
-            pg_connection = open_pg_connection(pg_conn_string)
-            pg_cursor = pg_connection.cursor()
-            # Store row_id when insert
-            row_id_list = []
-
-            for prediction in tqdm(json_prediction['detected_trash']):
-                try:    
-                    # get trash_gps from gps module
-                    #time_index = get_trash_time_index(prediction)
-                    time_index = get_trash_time_index(prediction,media_fps)
-                    trash_gps = gps_points_filled[time_index]
-                    shape_trash_gps = long_lat_to_shape_point(trash_gps)
-                    geo_2154 = transform_geo(shape_trash_gps)
-                    geo_2154_trash_gps = {'Time': shape_trash_gps['Time'], 'the_geom': geo_2154,'Latitude':shape_trash_gps['Latitude'],'Longitude':shape_trash_gps['Longitude'], 'Elevation': shape_trash_gps['Elevation']}
-                    # get trash_type from ai module
-                    label = get_trash_label(prediction)
-                    trash_type = map_label_to_trash_id_PG(label)
-                    # insert trash from postgre module
-                    row_id = insert_trash_2(geo_2154_trash_gps,trash_type,pg_cursor,pg_connection)
-                    logger.info(row_id)
-                    row_id_list.append(row_id)
-                except:
-                    prediction_id = prediction['id']
-                    logger.error(f'There was an issue inserting Trash id: {prediction_id} within PostGre')
-                    logger.error("Early exit of ETL workflow as PG INSERT failed")
-                    exit()
-        elif target_store == 'csv':
-            df_predictions = get_df_prediction(json_prediction,media_fps) 
-            df_trash_gps = get_df_trash_gps(df_predictions,gps_points_filled)
-            df_data = get_df_data(df_predictions,df_trash_gps)
-            export_path='/tmp/data.csv'
-            df_data.to_csv(export_path, encoding='utf-8')
-            logger.info(f'exporting trash data to {export_path}')
-            '''
-
         # WITH DATAFRAME
         # Create Dataframe
         df_predictions = get_df_prediction(json_prediction,media_fps) 
@@ -192,22 +156,25 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     logger.error("Early exit of ETL workflow as PG INSERT failed")
                     exit()
 
-            logger.info(f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')    
+            logger.info(f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
+            output = func.HttpResponse(f'Congratulations, you have predicted trashes with AI and made insert within PostGre ! row_id list: {row_id_list}')
+    
 
             # Close PG connection
             close_pg_connection(pg_connection)
 
         elif target_store == 'csv':
-            export_path='/tmp/data.csv'
+            export_path='/tmp/dataexport.csv'
             df_data.to_csv(export_path, encoding='utf-8')
             logger.info(f'exporting trash data to {export_path}')
+            output = func.HttpResponse(f'Congratulations, you have predicted trashes with AI and made CSV export to /tmp/dataexport.csv')
 
 
         logger.info('############################################################')
         logger.info('################   Plastic Origin ETL End   ################')
         logger.info('############################################################')
 
-        output = func.HttpResponse(f'Congratulations, you have successfully made prediction from container name: {campaign_container_name}, blobname: {blob_video_name} with AI service !')
+        #output = func.HttpResponse(f'Congratulations, you have successfully made prediction from container name: {campaign_container_name}, blobname: {blob_video_name} with AI service !')
         return output
 
     else:
@@ -218,7 +185,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
 # Local
 #?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=ai
+# AI
 #http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=ai&target=csv
+#http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=ai&target=postgre
+# JSON
+#http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=csv
+#http://localhost:7072/api/etlHttpTriggerNew?containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=postgre
+
 # Azure
 #&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
-#https://azfunplasticoetl.azurewebsites.net/api/aiHttpTrigger?code=/Ixlz/BmpcNtyEu3NXKUvNsauf9SjKuEz0cqH/ro6uv62oy4uzbv3Q==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com
+# https://azfunplasticoeltapp.azurewebsites.net/api/etlHttpTriggerNew?code=rdLjseVObYmVWPUnmxL2YdGy6byiTe0VfdB5BB6gOH0gRbWoM4wZzQ==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=postgre
+# https://azfunplasticoeltapp.azurewebsites.net/api/etlHttpTriggerNew?code=rdLjseVObYmVWPUnmxL2YdGy6byiTe0VfdB5BB6gOH0gRbWoM4wZzQ==&containername=campaign0&blobname=28022020_Boudigau_4_short_480.mov&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=csv
+
+
+#http://azfunplasticoetldock.azurewebsites.net/api/etlHttpTriggerNew?code=nWeWfFkxDnvuH8SxjaGBdfLGsQLSLx/2aOKON3SNoWW9IP/y0aUArg==&containername=campaign0&blobname=28022020_Boudigau_4.MP4&videoname=28022020_Boudigau_4.MP4&aiurl=http://aiapiplastico-dev.westeurope.cloudapp.azure.com&source=json&target=csv

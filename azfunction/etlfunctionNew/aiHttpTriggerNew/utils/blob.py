@@ -44,22 +44,23 @@ def get_blob_infos(connection_s:str,container_n:str,blob_n:str):
         logger.error("The blob you are trying to get info from probably does not exist.")
 
 
-def download_blob(blobclient:object)->str:
+def download_blob(blobclient:object,dl_path:str)->str:
     """Download blob from a blob client object
 
     Arguments:
         blobclient {object} -- a blob client from the azure storage SDK
+        dl_path {str} -- the path where the blob is going to be downloaded
 
     Returns:
         path -- the path of where the blob has been downloaded
     """
 
     try:
-        with open("/tmp/"+blobclient.blob_name, "wb") as my_blob_dl:
+        with open(f'{dl_path}/{blobclient.blob_name}', "wb") as my_blob_dl:
             blob_data = blobclient.download_blob()
             blob_data.readinto(my_blob_dl)
-        logger.info(f'Blob {blobclient.blob_name} downloaded within /tmp/{blobclient.blob_name}' )
-        path = "/tmp/"+blobclient.blob_name
+        logger.info(f'Blob {blobclient.blob_name} downloaded within {dl_path}/{blobclient.blob_name}' )
+        path = f'{dl_path}/{blobclient.blob_name}'
         return path
     except:
         logger.error("The blob you are trying to download probably does not exist within container.")

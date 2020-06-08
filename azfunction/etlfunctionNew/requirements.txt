@@ -1,9 +1,11 @@
 azure-functions
 azure-storage-blob
-azure
+Click
 gopro2gpx==0.1
+moviepy
 shapely
-psycopg2
+pandas
+psycopg2-binary
 pyproj
 gpxpy
 requests

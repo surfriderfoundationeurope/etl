@@ -97,22 +97,23 @@ def main(argv):
         logger.info('###################### Pipeline Step1bis ###################')
         logger.info('################# Get Trash Prediction Data ################')
 
-        # From AI inference server
-        if prediction_source == 'ai':
-            # Test that AI service is ready
-            ai_ready = is_ai_ready(f'{ai_url}:{AI_PORT}')
-            if ai_ready == True:
-                prediction = get_prediction(blob_name,f'{ai_url}:{AI_PORT}')
-            else:
-                logger.info("Early exit of ETL workflow as AI service is not available")
-                exit()
-            # Cast prediction to JSON/Dictionnary format
-            json_prediction = get_json_prediction(prediction)
+        if source_data == 'gopro' or source_data == 'mobile':
+            # From AI inference server
+            if prediction_source == 'ai':
+                # Test that AI service is ready
+                ai_ready = is_ai_ready(f'{ai_url}:{AI_PORT}')
+                if ai_ready == True:
+                    prediction = get_prediction(blob_name,f'{ai_url}:{AI_PORT}')
+                else:
+                    logger.info("Early exit of ETL workflow as AI service is not available")
+                    exit()
+                # Cast prediction to JSON/Dictionnary format
+                json_prediction = get_json_prediction(prediction)
 
-        # From JSON file
-        elif prediction_source == 'json':
-            with open(pathlib.Path(__file__).parent / '../data/prediction.json') as json_file:
-                json_prediction = json.load(json_file)
+            # From JSON file
+            elif prediction_source == 'json':
+                with open(pathlib.Path(__file__).parent / '../data/prediction.json') as json_file:
+                    json_prediction = json.load(json_file)
 
         # GPS pipeline
         logger.info('###################### Pipeline Step1 ######################')
@@ -137,10 +138,7 @@ def main(argv):
             video_duration = get_media_duration(f'{DOWNLOAD_PATH}/{video_name}')
             logger.info(f'Video duration in second from metadata:{video_duration}')
             media_fps = get_media_fps(f'{DOWNLOAD_PATH}/{video_name}')
-        # media_fps = int(json_prediction['fps'])
-        
-        # GPS file duration
-        if source_data == 'gopro' or source_data == 'mobile':
+            #media_fps = int(json_prediction['fps'])
             timestamp_delta = gps_points[len(gps_points)-1]['Time'] - gps_points[0]['Time']
             logger.info(f'GPS file time coverage in second:{timestamp_delta.seconds}')
 
@@ -165,6 +163,7 @@ def main(argv):
             df_manual_trash = get_df_manual_trash(gps_points)
             df_data = get_df_data(df_manual_trash,df_manual_gps)
 
+        # Store Data
         if target_store == 'postgre':
             # Get connection string information from env variables
             pg_conn_string = get_pg_connection_string()
