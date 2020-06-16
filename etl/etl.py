@@ -180,10 +180,14 @@ def main(argv):
             df_predictions = get_df_prediction(json_prediction, media_fps)
             df_trash_gps = get_df_trash_gps(df_predictions, gps_points_filled)
             df_data = get_df_data(df_predictions, df_trash_gps)
+            campaign_id = 'ec501e35-b022-4c73-9988-a41218d6105e'
+            df_data['campaign_id'] = campaign_id
         elif source_data == 'manual':
             df_manual_gps = get_df_manual_gps(gps_points)
             df_manual_trash = get_df_manual_trash(gps_points)
             df_data = get_df_data(df_manual_trash, df_manual_gps)
+            campaign_id = 'ec501e35-b022-4c73-9988-a41218d6105e'
+            df_data['campaign_id'] = campaign_id    
 
         # Store Data
         if target_store == 'postgre':
