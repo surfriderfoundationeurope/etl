@@ -1,0 +1,12 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+      {
+          "name": "etlblob",
+          "type": "blobTrigger",
+          "direction": "in",
+          "path": "campaign0/{name}",
+          "connection":"CONN_STRING"
+      }
+  ]
+}
