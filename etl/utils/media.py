@@ -15,7 +15,7 @@ def get_media_duration(media_path: str) -> float:
     clip = VideoFileClip(media_path)
     return clip.duration
 
-def get_media_fps(media_path: str) -> int:
+def get_media_fps(json_prediction: dict) -> int:
     """ Get FPS of video media
 
     Arguments:
@@ -24,7 +24,5 @@ def get_media_fps(media_path: str) -> int:
     Returns:
         fps {int} -- the FPS of the media video
     """
-    clip = VideoFileClip(media_path)
-    fps = clip.fps
-    fps = int(np.ceil(fps))
+    fps = int(json_prediction['fps'])
     return fps
