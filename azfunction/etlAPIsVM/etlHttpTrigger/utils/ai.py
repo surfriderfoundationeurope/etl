@@ -138,6 +138,26 @@ def get_df_prediction(json_prediction:dict,media_fps)->pd.DataFrame:
 
     return df_prediction
 
+
+def get_df_manual_trash(gpx_data_waypoints:list)->pd.DataFrame:
+    """ Get trash DataFrame from a gpx file where Trash have been manually collected
+
+    Arguments:
+        gpx_data_waypoints {list} -- the waypoints list from an OSM track gpx_data parsing
+
+    Returns:
+       df_manual_trash -- the manually collected trash as a DataFrame
+    """
+    trash_list = []
+    i = 0
+    for waypoint in gpx_data_waypoints:
+        trash_type_id = map_label_to_trash_id_PG(waypoint.name.lower())
+        trash = {'id':i,'label':waypoint.name,'trash_type_id':trash_type_id}
+        trash_list.append(trash)
+        i = i+1
+    df_manual_trash = pd.DataFrame(trash_list)
+    return df_manual_trash
+
 def map_label_to_trash_id_PG(label:str)->str:
     """Map label of a trash to equivalent ID within PostGre server
 
@@ -157,5 +177,5 @@ def map_label_to_trash_id_PG(label:str)->str:
         "objet vie courante":"7",
         "autres dechets +10":"8"
     }
-    id_PG =  switcher.get(label, "nothing")
+    id_PG =  switcher.get(label, "0")
     return id_PG

@@ -53,6 +53,19 @@ def extract_gpx_from_gopro(
     return gpx_path
 
 
+def get_gpx_name(file_name:str)->str:
+    """Get gpx file name associated with a video
+
+    Arguments:
+        file_name {str} -- a video name for which gpx file name to be created
+
+    Returns:
+        gpx_file_name -- the name of the gpx file associated with a video
+    """
+    file_prefix = os.path.splitext(file_name)[0]
+    gpx_file_name = file_prefix + '.gpx'
+    return gpx_file_name
+
 def parse_gpx(gpx_path:str)->object:
     """Parse a gpx file to extract gps information
 
@@ -230,3 +243,24 @@ def get_df_trash_gps(df_predictions:pd.DataFrame,gps_points_filled:list)->pd.Dat
         geo_2154_trash_gps_list.append(geo_2154_trash_gps)
         df_trash_gps = pd.DataFrame(geo_2154_trash_gps_list)
     return df_trash_gps
+
+
+def get_df_manual_gps(gpx_data_waypoints:list)->pd.DataFrame:
+    """Get GPS coordinate as a DataFrame from a manually collected trash gpx file
+
+    Arguments:
+        gpx_data_waypoints {list} -- the waypoints list from an OSM track gpx_data parsing
+
+    Returns:
+        df_manual_gps -- the gps info as a DataFrame associated with manually collected trash 
+    """
+    gps_list = []
+    for waypoint in gpx_data_waypoints:
+        gps_point = {'Time': waypoint.time, 'Latitude': waypoint.latitude,
+                              'Longitude': waypoint.longitude, 'Elevation': waypoint.elevation}
+        shape_gps_point = long_lat_to_shape_point(gps_point)
+        geo_2154 = transform_geo(shape_gps_point)
+        geo_2154_gps_point = {'Time': shape_gps_point['Time'],'the_geom':geo_2154, 'Latitude':shape_gps_point['Latitude'],'Longitude': shape_gps_point['Longitude'], 'Elevation':shape_gps_point['Elevation']}
+        gps_list.append(geo_2154_gps_point)
+    df_manual_gps = pd.DataFrame(gps_list)
+    return df_manual_gps

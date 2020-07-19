@@ -47,6 +47,7 @@ logger = logging.getLogger()
 DOWNLOAD_PATH = '/tmp'
 AI_PORT = '5000'
 
+
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
