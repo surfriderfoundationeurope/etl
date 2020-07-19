@@ -5,7 +5,7 @@
           "name": "etlblob",
           "type": "blobTrigger",
           "direction": "in",
-          "path": "campaign0/{name}",
+          "path": "gopro/{name}",
           "connection":"CONN_STRING"
       }
   ]
