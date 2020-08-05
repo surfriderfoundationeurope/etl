@@ -11,7 +11,7 @@ Please note that this project is under active development and that frequent chan
 ## ETL Data Management Process
 Overiew of ETL process architecture to insert Trash
 
-![SFETLArch](https://user-images.githubusercontent.com/8882133/79349912-1a561780-7f37-11ea-84fa-cd6e12ecf2c8.png)
+![SFETLArch](https://user-images.githubusercontent.com/8882133/89392324-ae780480-d709-11ea-9dbb-c5518eb4ec91.png)
 
 
 ### ETL Scripts
