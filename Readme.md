@@ -14,51 +14,69 @@ Overiew of ETL process architecture to insert Trash
 ![SFETLArch](https://user-images.githubusercontent.com/8882133/79349912-1a561780-7f37-11ea-84fa-cd6e12ecf2c8.png)
 
 
-### ETL Get started Notebook
-To get started, easiest way it so execute the end2end_workflow notebooks [here](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/end2end_workflow.ipynb). This notebook allows to go trough the main steps of the ETL pipeline and understand the different building block: Azure Blob Operation, AI Operation, GPS operation, PostGre SQL operation.
+### ETL Scripts
+The full ETL process rely on a Python script located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py). This script allows to locally run the full ETL process, that will download the media file to be processed (gopro, mobile, manual), extract and geolocalize Trashed and finally store the result as csv file or within PostGre Database server.
 
-Service Prequesite: ETL principle is a Data pipeline workflow between different source and destination. There are pre-requesite to connect to the different source and destination, typically connection string to access Blob Storage and PostGre SQL server. You also need the AI Inference service to be available, as it's a key component extracting Trashes from raw input Data.
-
-Python Prerequesite: there are a bunch of python libraries required, for now on, please check this [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflow.py) to have a look at import.
-
-
-You can also find development notebooks in notebook folder, but be aware they are somehow deprecated. They remain available for further development and testing purpose.
-
-### Scripts
-There is work in-progress [here](https://github.com/surfriderfoundationeurope/etl/tree/master/scripts) to build the script architecture that will allow then deploy the ETL in production. Typically, we target to deploy the ETL process on top of Azure Function to support a serverless deployement architecture, or conversly to leverage open souce solution like Apache Airflow or Docker container to make the ETL portable, scalable and event-triggered.
-
-Get Started Script:
-To get started executing the full ETL workflow, you can run the following [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflow.py) with no argument:
-
+To process a gopro media without AI:
 ```bash
-python etlworkflow.py
+python etl.py -c campaign0 -b gopro.mp4 -p json -s gopro -t csv
 ```
 
-This script will use a remote video file in blob storage, but requires you to have downloaded before the file 28022020_Boudigau_4.MP4 with full Data (2.5GB) including GPS in your local /tmp folder.
+To process a mobile media without AI:
+```bash
+python etl.py -c campaign0 -b mobile.mp4 -p json -s mobile -t csv
+```
 
 Script with Parameters:
-This [script](https://github.com/surfriderfoundationeurope/etl/blob/master/scripts/etlworkflowargs.py) takes containername, blobname and videoname parameters. It's intended for production usage where the ETL would run again multiple videos within different containers in Azure Blob Storage.
-
+This [script](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py) takes the following argument parameter: 
 ```bash
-python etlworkflowargs.py --containername <CONTAINERNAME> --blobname <BLOBNAME> --videoname <VIDEO.MP4> --aiurl <http://AIAPIURL>
+python etl.py -h
+usage: etl.py [-h] -c CONTAINERNAME -b BLOBNAME [-a AIURL] [-p {ai,json}]
+              [-s {gopro,mobile,manual}] [-t {postgre,csv}]
 ```
 
-Like for get started script, it's expected dowloading the file 28022020_Boudigau_4.MP4 locally to /tmp folder.
-For production, this requirement will be removed. Only blob name will remain mandatory.
+The ETL script is the foundation to build the ETL API. The ETL API relies on the ETL scrit logic + Azure Function to easily creates a production REST API available in the Cloud.
 
-### Azure Function
+### ETL Azure Function
 After you installed [Azure function for Python pre-requesite](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function-azure-cli?pivots=programming-language-python&tabs=bash%2Cbrowser) on your local machine, you can run the ETL workflow as a local Azure function. 
-First go to azfunction folder, then:
+Note you need to launch the function from within a python environment configured with ETL pre-requesite.
+First go to /azfunction/etlAPIs/, then:
 
 ```bash
 func start etlHttpTrigger/
 ```
 
 This will run the ETL workflow as a local API using Azure function utilities.
-You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with:
-
+You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with.
+Please note this will download the media file mobile.mp4 from Azure for which you need storage credential.
 ```bash
-http://localhost:7071/api/etlHttpTrigger?containername=<CONTAINERNAME>&blobname=<BLOBNAME>&videoname=<VIDEONAME>&aiurl=<http://AIURL>
+http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=json&source=mobile&target=csv
 ```
 
-Please note you still need the function to be running within a python environment with ETL pre-requesite, as well as the large local video file.
+When the AI inference service is running you would test it by calling the API with: 
+```
+http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=ai&source=mobile&target=csv&aiurl=http://<AIURL>
+```
+
+When running the End to End process, download blob, making prediction with AI, writing to PostGre you would test with:
+```
+http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=ai&source=mobile&target=postgre&aiurl=http://<AIURL>
+```
+
+### ETL Trigger Azure Function
+The ETL Trigger Azure function defines additionnaly 3 x functions that will automatically call the ETL API when new media to process are stored in Azure.
+They used the [blob trigger capabilities](https://docs.microsoft.com/fr-fr/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python) defined within the [function.json] (https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/azfunction/etlBlobTrigger/etlBlobTriggerGoPro/function.json).
+Simplest way for testing is to publish directly to Azure with:
+```
+func azure functionapp publish <AZUREFUNCTIONApp>
+```
+
+### Docker
+The GPS extraction subprocess requires to use binaries like ffmpeg which is not natively available within Python Azure Function. To address this requirement, the ETL Azure Function has been made available as a Docker image. 
+The Docker file to build the image is located [here] (https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/azfunction/etlAPIs/Dockerfile)
+You will need to pass the appropriate credential at build time for the ETL to use Azure Storage and PostGre Database server.
+
+### VM Scale Set
+To overcome timeout limitation of native Azure Function service related to HTTP call and Load Balancer, the ETL APIs has also been made available to run on an Azure [Virtul Machine Scale Set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/)
+The related code for deployment is located [here](https://github.com/surfriderfoundationeurope/etl/tree/clem_dev/azfunction/etlAPIsVM)
+To prepare the Virtual Machine for VM Scale Set deployment, the Azure related documentation can be found [here](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli)
