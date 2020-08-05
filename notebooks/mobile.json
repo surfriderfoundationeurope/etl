@@ -1,0 +1,58 @@
+{
+
+    "date": "timestamp ou json datetime",
+    
+    "move type": "string ou enum",
+    
+    "bank": "string",
+    
+    "mode": "string ou enum",
+    
+    "photos": [
+    
+        {
+    
+    "filename": "string",
+    
+    "lat": "number",
+    
+    "lng": "number",
+    
+    "date": "timestamp ou json datetime"
+    
+        }
+    
+      ],
+    
+    "trashes": [
+    
+        {
+    
+    "name": "string",
+    
+    "lat": "number",
+    
+    "lng": "number",
+    
+    "date": "timestamp ou json datetime"
+    
+        }
+    
+      ],
+    
+    "positions": [
+    
+        {
+    
+    "lat": "number",
+    
+    "lng": "number",
+    
+    "date": "timestamp ou json datetime"
+    
+        }
+    
+      ]
+    
+    }
+    

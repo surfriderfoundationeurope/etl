@@ -60,7 +60,7 @@ def get_df_data(df_predictions:pd.DataFrame,df_trash_gps:pd.DataFrame)->pd.DataF
         df_trash_gps {pd.DataFrame} -- the gps coordinate of all trash detected by AI as a Dataframe
 
     Returns:
-        df_data -- Data to be inserted within PostGre DB
+        pdf_data -- Data to be inserted within PostGre DB
     """
     df_data = pd.concat([df_predictions,df_trash_gps],axis=1)
     return df_data
@@ -135,45 +135,7 @@ def insert_trash_df(trash_data:pd.Series,cursor:object,connection:object):
     return row_id
 
 
-def select_media_info(blob_url:str,cursor:object,connection:object)->dict:
-    """Select media id, campaign id, media name for subsequent ETL process task
-
-    Args:
-        blob_url (str): the fqn of a blob
-        cursor {object} -- the postgre cursor object created from connection
-        connection {object} -- the postgre connection object
-
-    Returns:
-        media_info: dictionnary of media id, campaign id, media name
-    """
-
-    cursor.execute("SELECT id,id_ref_campaign_fk,filename FROM campaign.media WHERE blob_url = %s",(blob_url,))
-    connection.commit()
-    query_result = list(cursor.fetchone()) # cast tuple to list
-    media_info = {'media_id':query_result[0],'campaign_id':query_result[1],'media_name':query_result[2]}
-    return media_info
-
-
-def get_log_df(campaign_id:str,media_id:str,media_name:str,status:str='failed')->pd.DataFrame:
-    """Get log as a Dataframe before inserting within logs.etl table
-
-    Args:
-        campaign_id (str): from campaign table, campaign_id of the media to be processed
-        media_id (str): from media table, media_id of the media to be processed
-        media_name (str): from media table, media_name of the media to be processed
-        status (str, optional): Defaults to 'failed' as log is first inserted when ETL process not done yet
-
-    Returns:
-        log_df(pd.DataFrame): the log as a Dataframe to be inserted then within postgre 
-    """
-
-    cols = ['campaign_id','media_id','media_name','status']
-    log_data = [[campaign_id,media_id,media_name,status]]
-    log_df = pd.DataFrame(log_data,columns=cols)
-    return log_df
-
-
-def insert_log_etl_df(log_data:pd.Series,cursor:object,connection:object)->str:
+def insert_logs_etl_df(log_data:pd.Series,cursor:object,connection:object):
     """Insert logs of ETL operation within logs.etl table
 
     Args:
@@ -182,30 +144,13 @@ def insert_log_etl_df(log_data:pd.Series,cursor:object,connection:object)->str:
         connection {object} -- the postgre connection object
 
     Returns:
-        row_id -- the new id of the row created for the log within logs.etl table
+        row_id -- the new id of the row created for the trash within Trash table
     """
     campaign_id = log_data['campaign_id']
     media_id = log_data['media_id']
-    media_name = log_data['media_name']
+    media_name = log_data['campaign_id']
     status = log_data['status']
-    cursor.execute("INSERT INTO logs.etl (id, campaign_id,media_id,media_name,initiated_on,finished_on,status ) VALUES (gen_random_uuid (),%s,%s,%s,now(),now(),%s) RETURNING id;",(campaign_id,media_id,media_name,status))
-    connection.commit()
-    row_id = cursor.fetchone()[0]
-    return row_id
-
-
-def update_log_etl(row_id:str,cursor:object,connection:object)->str:
-    """Update etl log status to 'success' once ETL process has finished successfully
-
-    Args:
-        row_id (str): the row_id within logs.etl table to be updated
-        cursor {object} -- the postgre cursor object created from connection
-        connection {object} -- the postgre connection object
-
-    Returns:
-        row_id (str): the row_id within logs.etl table to be updated
-    """
-    cursor.execute("UPDATE logs.etl SET status = 'success' WHERE id = %s RETURNING id;",(row_id,))
+    cursor.execute("INSERT INTO logs.etl (id, campaign_id,media_id,media_name,status ) VALUES (DEFAULT,%s,%s,%s,%s) RETURNING id;", (id,campaign_id,media_id,media_name,status))
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id
