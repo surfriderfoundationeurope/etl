@@ -15,7 +15,7 @@ Overiew of ETL process architecture to insert Trash
 
 
 ### ETL Script
-The full ETL process rely on a Python script located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py). This script allows to locally run the full ETL process, that will download the media file to be processed (gopro, mobile, manual), extract and geolocalize Trashed and finally store the result as csv file or within PostGre Database server.
+The full ETL process relies on a Python script located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py). This script allows to locally run the full ETL process, that will download the media file to be processed (gopro, mobile, manual), extract and geolocalize Trashes and finally store the result as csv file or within PostGre Database server.
 
 To process a gopro media without AI:
 ```bash
