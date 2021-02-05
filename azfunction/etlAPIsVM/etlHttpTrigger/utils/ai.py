@@ -158,6 +158,28 @@ def get_df_manual_trash(gpx_data_waypoints:list)->pd.DataFrame:
     df_manual_trash = pd.DataFrame(trash_list)
     return df_manual_trash
 
+
+def get_df_json_manual_trash(json_data:dict)->pd.DataFrame:
+    """Get trash DataFrame from a JSON file where Trash have been manually collected
+
+
+    Args:
+        json_data (dict): the json data from the Plastic Origin Mobile app
+
+    Returns:
+        pd.DataFrame: the gps info as a DataFrame associated with manually collected trash
+    """
+    trash_list = []
+    i = 0
+    for trash in json_data['trashes']:
+        trash_type_id = map_json_label_to_trash_id_PG(trash['name'])
+        trash = {'id':i,'label':trash['name'],'trash_type_id':trash_type_id}
+        trash_list.append(trash)
+        i = i+1
+        df_manual_trash = pd.DataFrame(trash_list)
+    return df_manual_trash
+
+
 def map_label_to_trash_id_PG(label:str)->str:
     """Map label of a trash to equivalent ID within PostGre server
 
@@ -176,6 +198,29 @@ def map_label_to_trash_id_PG(label:str)->str:
         "emballage alimentaire":"6",
         "objet vie courante":"7",
         "autres dechets +10":"8"
+    }
+    id_PG =  switcher.get(label, "0")
+    return id_PG
+
+
+def map_json_label_to_trash_id_PG(label:str)->str:
+    """Map label of a trash to equivalent ID within PostGre server
+
+    Arguments:
+        label {str} -- the label of the trash
+
+    Returns:
+        id_PG -- the equivalent id within PG Trash table of trash label
+    """
+    switcher = { 
+        "unknown":"1", #"autre dechet" in PG Data Model mapped to IA "others" label
+        "agriculturalFoodWaste":"2",
+        "bottles":"3", #"bouteille boisson" in PG Data Model mapped to IA "bottles" label
+        "industrials":"1",#"industriel ou construction in PG Data Model mapped to IA "fragments" label
+        "fishHunting":"2",
+        "foodPackage":"2",
+        "householdItems":"2",
+        "unknown10":"1"
     }
     id_PG =  switcher.get(label, "0")
     return id_PG

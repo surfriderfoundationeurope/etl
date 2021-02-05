@@ -14,9 +14,8 @@ def main(etlblob: func.InputStream):
     container = blob_fullname.split('/')[0]
     blob_name = blob_fullname.split('/')[1]
     source = 'mobile'
-    aiurl = 'http://aiapiplastico-vmss-dev.westeurope.cloudapp.azure.com'
-    url = f'http://etlapiplastico-vmss-dev.westeurope.cloudapp.azure.com:8082/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&aiurl={aiurl}&source={source}&target=csv'
-    #url = f'http://etlapiplastico-vmss-dev.westeurope.cloudapp.azure.com:8082/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=json&source={source}&target=csv'
+    aiurl = '<aiurl>'
+    url = f'<url>'
     payload = {}
     headers= {}
     response = requests.request("GET", url, headers=headers, data = payload)
