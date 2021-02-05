@@ -19,12 +19,17 @@ The full ETL process relies on a Python script located [here](https://github.com
 
 To process a gopro media without AI:
 ```bash
-python etl.py -c campaign0 -b gopro.mp4 -p json -s gopro -t csv
+python etl.py -c gopro -b 56c76b96-6248-4723-bf1e-8674a36f8877.mp4 -p json -s gopro -t csv
 ```
 
 To process a mobile media without AI:
 ```bash
-python etl.py -c campaign0 -b mobile.mp4 -p json -s mobile -t csv
+python etl.py -c mobile -b 6250052d-f716-435c-9d71-83ad49347c5e.mp4 -p json -s mobile -t csv
+```
+
+To process a manual media without AI:
+```bash
+python etl.py -c manual -b 6250052d-f716-435c-9d71-83ad49347c5e.json -p json -s manual -t csv
 ```
 
 Script with Parameters:
@@ -50,17 +55,17 @@ This will run the ETL workflow as a local API using Azure function utilities.
 You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with.
 Please note this will download the media file mobile.mp4 from Azure for which you need storage credential.
 ```
-http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=json&source=mobile&target=csv
+http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=csv
 ```
 
 When the AI inference service is running you would test it by calling the API with: 
 ```
-http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=ai&source=mobile&target=csv&aiurl=http://<AIURL>
+http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=ai&source=mobile&target=csv&aiurl=http://<AIURL>
 ```
 
 When running the End to End process, download blob, making prediction with AI, writing to PostGre you would test with:
 ```
-http://localhost:7071/api/etlHttpTrigger/?container=campaign0&blob=mobile.mp4&prediction=ai&source=mobile&target=postgre&aiurl=http://<AIURL>
+http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=ai&source=mobile&target=postgre&aiurl=http://<AIURL>
 ```
 
 ### ETL Trigger Azure Function
