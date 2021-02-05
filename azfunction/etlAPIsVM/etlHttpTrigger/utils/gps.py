@@ -66,6 +66,19 @@ def get_gpx_name(file_name:str)->str:
     gpx_file_name = file_prefix + '.gpx'
     return gpx_file_name
 
+def get_json_name(file_name:str)->str:
+    """Get json file name associated with a video
+
+    Arguments:
+        file_name {str} -- a video name for which json file name to be created
+
+    Returns:
+        json_file_name -- the name of the json file associated with a video
+    """
+    file_prefix = os.path.splitext(file_name)[0]
+    json_file_name = file_prefix + '.json'
+    return json_file_name
+
 def parse_gpx(gpx_path:str)->object:
     """Parse a gpx file to extract gps information
 
@@ -78,6 +91,19 @@ def parse_gpx(gpx_path:str)->object:
     gpx_file = open(gpx_path,'r',encoding='utf-8')
     gpx_data = gpxpy.parse(gpx_file)
     return gpx_data
+
+def parse_json(json_path:str)->dict:
+    """Parse a JSON file produced by Plastic Origin Mobile App
+
+    Args:
+        json_path (str): the path of a json file produced by mobile app
+
+    Returns:
+        dict: the json data as a dictionnary
+    """
+    with open(json_path) as json_file:
+        json_data = json.load(json_file)
+    return json_data
 
 def get_gps_point_list(gpx_data:object)->list:
     """Get a list of GPS point from a gpx_data object
@@ -95,6 +121,25 @@ def get_gps_point_list(gpx_data:object)->list:
                 point_info = {'Time': point.time, 'Latitude': point.latitude,
                               'Longitude': point.longitude, 'Elevation': point.elevation}
                 point_list.append(point_info)
+    return point_list
+
+
+def get_json_gps_list(json_data:dict)->list:
+    """Get a list of GPS point from a json_data object
+
+    Args:
+        json_data (dict): the gps data as a json dict
+
+    Returns:
+        list: a list of GPS point
+    """
+    point_list = []
+    for point in json_data['positions']:
+        # clean & cast time to datetime
+        time = datetime.strptime(point['date'][:19].replace("T"," "),'%Y-%m-%d %H:%M:%S')
+        point_info = {'Time': time, 'Latitude': point['lat'],
+                              'Longitude': point['lng'], 'Elevation': 0}
+        point_list.append(point_info)
     return point_list
 
 
@@ -258,6 +303,27 @@ def get_df_manual_gps(gpx_data_waypoints:list)->pd.DataFrame:
     for waypoint in gpx_data_waypoints:
         gps_point = {'Time': waypoint.time, 'Latitude': waypoint.latitude,
                               'Longitude': waypoint.longitude, 'Elevation': waypoint.elevation}
+        shape_gps_point = long_lat_to_shape_point(gps_point)
+        geo_2154 = transform_geo(shape_gps_point)
+        geo_2154_gps_point = {'Time': shape_gps_point['Time'],'the_geom':geo_2154, 'Latitude':shape_gps_point['Latitude'],'Longitude': shape_gps_point['Longitude'], 'Elevation':shape_gps_point['Elevation']}
+        gps_list.append(geo_2154_gps_point)
+    df_manual_gps = pd.DataFrame(gps_list)
+    return df_manual_gps
+
+
+def get_df_json_manual_gps(json_data:dict)->pd.DataFrame:
+    """Get GPS coordinate as a DataFrame from a manually collected trash JSON file
+
+    Args:
+        json_data (dict): the json data from the Plastic Origin Mobile app
+
+    Returns:
+        pd.DataFrame: the gps info as a DataFrame associated with manually collected trash
+    """
+    gps_list = []
+    for trash in json_data['trashes']:
+        time = datetime.strptime(trash['date'][:19].replace("T"," "),'%Y-%m-%d %H:%M:%S')
+        gps_point = {'Time': time, 'Latitude': trash['lat'],'Longitude': trash['lng'], 'Elevation': 0}
         shape_gps_point = long_lat_to_shape_point(gps_point)
         geo_2154 = transform_geo(shape_gps_point)
         geo_2154_gps_point = {'Time': shape_gps_point['Time'],'the_geom':geo_2154, 'Latitude':shape_gps_point['Latitude'],'Longitude': shape_gps_point['Longitude'], 'Elevation':shape_gps_point['Elevation']}

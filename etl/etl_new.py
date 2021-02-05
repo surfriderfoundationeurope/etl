@@ -1,9 +1,11 @@
 import argparse
+import csv
 import datetime
 import json
 import logging
 import os
 import pathlib
+from prettytable import PrettyTable
 import subprocess
 import warnings
 from datetime import datetime, timedelta
@@ -77,17 +79,17 @@ def main(argv):
 
         # Entering ETL process
         logger.info(
-            '############################################################')
+            '#########################################################')
         logger.info(
-            '################ Plastic Origin ETL process ################')
+                '############ Plastic Origin ETL process Start ###########')
         logger.info(
-            '################  Let\'s predict some Trash  ################')
+                '###############  Let\'s predict some Trash  ##############')
         logger.info(
-            '############################################################')
+                '#########################################################')
         logger.info(
-            '###################### Pipeline Step0 ######################')
+                '#################### Pipeline Step0 #####################')
         logger.info(
-            '################ Get Video from Azure Storage ##############')
+                '############# Download data from Azure Storage ##########')
 
         # Download Blob video from Azure
         if source_data == 'gopro' or source_data == 'mobile':
@@ -114,9 +116,9 @@ def main(argv):
 
         # Get AI prediction
         logger.info(
-            '###################### Pipeline Step1bis ###################')
+            '###################### Pipeline Step1 ###################')
         logger.info(
-            '################# Get Trash Prediction Data ################')
+            '################ Get Trash Prediction Data ##############')
 
         if source_data == 'gopro' or source_data == 'mobile':
             # From AI inference server
@@ -138,11 +140,12 @@ def main(argv):
                 with open(pathlib.Path(__file__).parent / '../datasample/prediction.json') as json_file:
                     json_prediction = json.load(json_file)
 
+
         # GPS pipeline
         logger.info(
-            '###################### Pipeline Step1 ######################')
+            '##################### Pipeline Step2 ####################')
         logger.info(
-            '######################  Get GPX Data  ######################')
+            '#####################  Get GPS Data  ####################')
 
         if source_data == 'gopro':
             gpx_path = extract_gpx_from_gopro(f'{DOWNLOAD_PATH}/{blob_name}')
@@ -160,13 +163,6 @@ def main(argv):
         
 
         # GPS Points
-        '''
-        if source_data == 'gopro' or source_data == 'mobile':
-            gps_points = get_gps_point_list(gpx_data)  # full list of gps point
-        elif source_data == 'manual':
-            gps_points = gpx_data.waypoints  # list of gps point with trash
-
-        '''
         if source_data == 'gopro' :
             gps_points = get_gps_point_list(gpx_data)  # full list of gps point
         elif source_data == 'mobile' or source_data == 'manual':
@@ -179,17 +175,17 @@ def main(argv):
             media_fps = get_media_fps(json_prediction)
 
         logger.info(
-            '###################### Pipeline Step2 ######################')
+            '#################### Pipeline Step3 #####################')
         logger.info(
-            '#####################   Get GPS Data   #####################')
+            '###################   Fill GPS Data   ###################')
         if source_data == 'gopro' or source_data == 'mobile':
             video_duration_sup = int(video_duration)+1
             gps_points_filled = fill_gps(gps_points, video_duration_sup)
 
         logger.info(
-            '###################### Pipeline Step3 ######################')
+            '##################### Pipeline Step4 ####################')
         logger.info(
-            '################ Store Data in PostGre or CSV ##############')
+            '############### Store Data in PostGre or CSV ############')
 
         # INSERTING all detected_trash
 
@@ -198,7 +194,7 @@ def main(argv):
             df_predictions = get_df_prediction(json_prediction, media_fps)
             df_trash_gps = get_df_trash_gps(df_predictions, gps_points_filled)
             df_data = get_df_data(df_predictions, df_trash_gps)
-            campaign_id = 'ec501e35-b022-4c73-9988-a41218d6105e'
+            campaign_id = os.path.splitext(blob_name)[0]
             df_data['campaign_id'] = campaign_id
 
         elif source_data == 'manual':
@@ -206,7 +202,7 @@ def main(argv):
             df_manual_gps = get_df_json_manual_gps(json_data)
             df_manual_trash = get_df_json_manual_trash(json_data)
             df_data = get_df_data(df_manual_trash,df_manual_gps)
-            campaign_id = 'ec501e35-b022-4c73-9988-a41218d6105e'
+            campaign_id = os.path.splitext(blob_name)[0]
             df_data['campaign_id'] = campaign_id
         
 
@@ -218,12 +214,31 @@ def main(argv):
             pg_cursor = pg_connection.cursor()
             # Store row_id when insert
             row_id_list = []
-
+            trash_table = PrettyTable()
+            trash_table.field_names = [
+                "id", "campaign_id", "the_geom", "id_ref_trash_type"]
+            # Creating Log file
+            time_now = datetime.now()
+            campaign_log_file = f'{DOWNLOAD_PATH}/log_{campaign_id}_{time_now.strftime("%Y-%m-%d_%H:%M:%S")}.csv'
+            logger.info(f'Creating Log file {campaign_log_file}')
+            with open(campaign_log_file, 'w') as f:
+                writer = csv.writer(f)
+                header = ("id", "campaign_id",
+                            "the_geom", "id_ref_trash_type")
+                writer.writerow(header)
+            
             for i, row in tqdm(df_data.iterrows()):
                 try:
                     row_id = insert_trash_df(row, pg_cursor, pg_connection)
                     logger.info(row_id)
                     row_id_list.append(row_id)
+                    trash_table.add_row(
+                        [row_id, campaign_id, row['the_geom'], row['trash_type_id']])
+                    csv_row = (row_id, campaign_id,
+                                   row['the_geom'], row['trash_type_id'])
+                    with open(campaign_log_file, mode='a') as f:
+                        writer = csv.writer(f)
+                        writer.writerow(csv_row)
                 except:
                     prediction_id = row['id']
                     logger.error(
@@ -231,7 +246,7 @@ def main(argv):
                     logger.error(
                         "Early exit of ETL workflow as PG INSERT failed")
                     exit()
-
+            logger.info(trash_table)
             logger.info(
                 f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
 
@@ -244,11 +259,11 @@ def main(argv):
             logger.info(f'exporting trash data to {export_path}')
 
         logger.info(
-            '############################################################')
+            '#########################################################')
         logger.info(
-            '################   Plastic Origin ETL End   ################')
+            '###############   Plastic Origin ETL End   ##############')
         logger.info(
-            '############################################################')
+            '#########################################################')
 
 
 ##### Main Execution ####
@@ -260,8 +275,8 @@ parser.add_argument('-b', '--blobname', required=True,
                     help='blob name to be downloaded from azure blob storage campaign0 container into {DOWNLOAD_PATH}')
 parser.add_argument(
     '-a', '--aiurl', help='url endpoint where AI inference service can be reached')
-parser.add_argument('-p', '--prediction', choices=['ai', 'json'], default='ai',
-                    help='specify whether prediction source comes from AI inference or local JSON file')
+parser.add_argument('-p', '--prediction', choices=['ai', 'json'], default='json',
+                    help='specify whether prediction source comes from AI inference or local JSON')
 parser.add_argument('-s', '--source', choices=['gopro', 'mobile', 'manual'], default='gopro',
                     help='specify whether data source comes from gopro, mobile app or manual file')
 parser.add_argument('-t', '--target', choices=['postgre', 'csv'], default='postgre',

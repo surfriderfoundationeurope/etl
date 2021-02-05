@@ -17,18 +17,6 @@ RUN pip install /tmp/wheels/*.whl
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
-ARG CONN_STRING
-ARG PGSERVER
-ARG PGDATABASE
-ARG PGUSERNAME
-ARG PGPWD
-
-ENV CONN_STRING=$CONN_STRING
-ENV PGSERVER=$PGSERVER
-ENV PGDATABASE=$PGDATABASE
-ENV PGUSERNAME=$PGUSERNAME
-ENV PGPWD=$PGPWD
-
 RUN apt-get update && apt-get install -y git ffmpeg vim
 
 COPY requirements.txt /

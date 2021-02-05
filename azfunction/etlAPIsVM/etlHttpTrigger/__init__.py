@@ -1,13 +1,15 @@
 import argparse
+import csv
 import datetime
 import json
-import logging
 import os
 import pathlib
 import subprocess
 import warnings
 from datetime import datetime, timedelta
 from functools import partial
+import logging
+from prettytable import PrettyTable
 
 import requests
 from tqdm import tqdm
@@ -20,18 +22,18 @@ import pyproj
 from azure.storage.blob import BlobClient, ContainerClient
 from shapely.geometry import Point
 from shapely.ops import transform
-from .utils.ai import (get_clean_timed_prediction, get_df_manual_trash,
+from .utils.ai import (get_clean_timed_prediction, get_df_manual_trash, get_df_json_manual_trash,
                        get_df_prediction, get_json_prediction, get_prediction,
                        get_trash_first_time, get_trash_label,
                        get_trash_time_index, is_ai_ready,
-                       map_label_to_trash_id_PG)
+                       map_label_to_trash_id_PG, map_json_label_to_trash_id_PG)
 from .utils.blob import download_blob, get_blob_infos, list_blob_in_container
 from .utils.exceptions import ETLError
-from .utils.gps import (
-    create_elevation, create_latitude, create_longitude, create_time,
-    extract_gpx_from_gopro, fill_gps, get_df_manual_gps, get_df_trash_gps,
-    get_gps_point_list, get_gpx_name, long_lat_to_shape_point, parse_gpx,
-    transform_geo)
+from .utils.gps import (create_elevation, create_latitude, create_longitude,
+                        create_time, extract_gpx_from_gopro, fill_gps,
+                        get_df_manual_gps, get_df_json_manual_gps, get_df_trash_gps, get_gps_point_list, get_json_gps_list,
+                        get_gpx_name, get_json_name, long_lat_to_shape_point, parse_gpx, parse_json,
+                        transform_geo)
 from .utils.media import get_media_duration, get_media_fps
 from .utils.postgre import (close_pg_connection, get_df_data,
                             get_pg_connection_string, insert_trash_2,
@@ -49,7 +51,7 @@ AI_PORT = '5000'
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logger.info('Python HTTP trigger function processed a request.')
 
     ai_url = req.params.get('aiurl')
     blob_name = req.params.get('blob')
@@ -82,17 +84,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
             # Entering ETL process
             logger.info(
-                '############################################################')
+                '#########################################################')
             logger.info(
-                '################ Plastic Origin ETL process ################')
+                '############ Plastic Origin ETL process Start ###########')
             logger.info(
-                '################  Let\'s predict some Trash  ################')
+                '###############  Let\'s predict some Trash  ##############')
             logger.info(
-                '############################################################')
+                '#########################################################')
             logger.info(
-                '###################### Pipeline Step0 ######################')
+                '#################### Pipeline Step0 #####################')
             logger.info(
-                '################ Get Video from Azure Storage ##############')
+                '############# Download data from Azure Storage ##########')
 
             # Download Blob video from Azure
             if source_data == 'gopro' or source_data == 'mobile':
@@ -101,24 +103,26 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     blob_video_client = BlobClient.from_connection_string(
                         conn_str=connection_string, container_name=container_name, blob_name=blob_name)
                     download_blob(blob_video_client, DOWNLOAD_PATH)
+
                 if source_data == 'mobile':
-                    blob_gpx_name = get_gpx_name(blob_name)
-                    if not blob_gpx_name in os.listdir(DOWNLOAD_PATH):
-                        blob_gpx_client = BlobClient.from_connection_string(
-                            conn_str=connection_string, container_name=container_name, blob_name=blob_gpx_name)
-                        download_blob(blob_gpx_client, DOWNLOAD_PATH)
+                    blob_json_name = get_json_name(blob_name)
+                    if not blob_json_name in os.listdir(DOWNLOAD_PATH):
+                        blob_json_client = BlobClient.from_connection_string(
+                            conn_str=connection_string, container_name=container_name, blob_name=blob_json_name)
+                        download_blob(blob_json_client, DOWNLOAD_PATH)
+
             elif source_data == 'manual':
-                blob_gpx_name = get_gpx_name(blob_name)
-                if not blob_gpx_name in os.listdir(DOWNLOAD_PATH):
-                    blob_gpx_client = BlobClient.from_connection_string(
-                        conn_str=connection_string, container_name=container_name, blob_name=blob_gpx_name)
-                    download_blob(blob_gpx_client, DOWNLOAD_PATH)
+                blob_json_name = get_json_name(blob_name)
+                if not blob_json_name in os.listdir(DOWNLOAD_PATH):
+                    blob_json_client = BlobClient.from_connection_string(
+                        conn_str=connection_string, container_name=container_name, blob_name=blob_json_name)
+                    download_blob(blob_json_client, DOWNLOAD_PATH)
 
             # Get AI prediction
             logger.info(
-                '###################### Pipeline Step1bis ###################')
+                '###################### Pipeline Step1 ###################')
             logger.info(
-                '################# Get Trash Prediction Data ################')
+                '################ Get Trash Prediction Data ##############')
 
             if source_data == 'gopro' or source_data == 'mobile':
                 # From AI inference server
@@ -142,25 +146,30 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
             # GPS pipeline
             logger.info(
-                '###################### Pipeline Step1 ######################')
+                '##################### Pipeline Step2 ####################')
             logger.info(
-                '######################  Get GPX Data  ######################')
+                '#####################  Get GPS Data  ####################')
 
             if source_data == 'gopro':
                 gpx_path = extract_gpx_from_gopro(
                     f'{DOWNLOAD_PATH}/{blob_name}')
-            elif source_data == 'mobile' or source_data == 'manual':
-                gpx_path = f'{DOWNLOAD_PATH}/{blob_gpx_name}'
 
-            # GPX parsing
-            gpx_data = parse_gpx(gpx_path)
+            elif source_data == 'mobile' or source_data == 'manual':
+                json_path = f'{DOWNLOAD_PATH}/{blob_json_name}'
+
+            # GPX & JSON parsing
+            if source_data == 'gopro':
+                gpx_data = parse_gpx(gpx_path)
+
+            elif source_data == 'mobile' or source_data == 'manual':
+                json_data = parse_json(json_path)
 
             # GPS Points
-            if source_data == 'gopro' or source_data == 'mobile':
+            if source_data == 'gopro':
                 gps_points = get_gps_point_list(
                     gpx_data)  # full list of gps point
-            elif source_data == 'manual':
-                gps_points = gpx_data.waypoints  # list of gps point with trash
+            elif source_data == 'mobile' or source_data == 'manual':
+                gps_points = get_json_gps_list(json_data)
 
             # Video duration
             if source_data == 'gopro' or source_data == 'mobile':
@@ -169,19 +178,20 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 media_fps = get_media_fps(json_prediction)
 
             logger.info(
-                '###################### Pipeline Step2 ######################')
+                '#################### Pipeline Step3 #####################')
             logger.info(
-                '#####################   Get GPS Data   #####################')
+                '###################   Fill GPS Data   ###################')
             if source_data == 'gopro' or source_data == 'mobile':
                 video_duration_sup = int(video_duration)+1
                 gps_points_filled = fill_gps(gps_points, video_duration_sup)
 
             logger.info(
-                '###################### Pipeline Step3 ######################')
-            logger.info(
-                '################ Store Data in PostGre or CSV ##############')
 
-            # INSERTING all detected_trash within PostGre
+                '##################### Pipeline Step4 ####################')
+            logger.info(
+                '############### Store Data in PostGre or CSV ############')
+
+            # INSERTING all detected_trash
 
             # Create Dataframe
             if source_data == 'gopro' or source_data == 'mobile':
@@ -189,10 +199,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 df_trash_gps = get_df_trash_gps(
                     df_predictions, gps_points_filled)
                 df_data = get_df_data(df_predictions, df_trash_gps)
+                campaign_id = os.path.splitext(blob_name)[0]
+                df_data['campaign_id'] = campaign_id
+
             elif source_data == 'manual':
-                df_manual_gps = get_df_manual_gps(gps_points)
-                df_manual_trash = get_df_manual_trash(gps_points)
+                # this needs to be rewrite as manual comes as JSON now
+                df_manual_gps = get_df_json_manual_gps(json_data)
+                df_manual_trash = get_df_json_manual_trash(json_data)
                 df_data = get_df_data(df_manual_trash, df_manual_gps)
+                campaign_id = os.path.splitext(blob_name)[0]
+                df_data['campaign_id'] = campaign_id
 
             # Store Data
             if target_store == 'postgre':
@@ -202,12 +218,32 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 pg_cursor = pg_connection.cursor()
                 # Store row_id when insert
                 row_id_list = []
+                trash_table = PrettyTable()
+                trash_table.field_names = [
+                    "id", "campaign_id", "the_geom", "id_ref_trash_type"]
+                # Creating Log file
+                time_now = datetime.now()
+                campaign_log_file = f'{DOWNLOAD_PATH}/log_{campaign_id}_{time_now.strftime("%Y-%m-%d_%H:%M:%S")}.csv'
+                logger.info(f'Creating Log file {campaign_log_file}')
+                with open(campaign_log_file, 'w') as f:
+                    writer = csv.writer(f)
+                    header = ("id", "campaign_id",
+                              "the_geom", "id_ref_trash_type")
+                    writer.writerow(header)
 
                 for i, row in tqdm(df_data.iterrows()):
                     try:
                         row_id = insert_trash_df(row, pg_cursor, pg_connection)
                         logger.info(row_id)
                         row_id_list.append(row_id)
+                        trash_table.add_row(
+                            [row_id, campaign_id, row['the_geom'], row['trash_type_id']])
+
+                        csv_row = (row_id, campaign_id,
+                                   row['the_geom'], row['trash_type_id'])
+                        with open(campaign_log_file, mode='a') as f:
+                            writer = csv.writer(f)
+                            writer.writerow(csv_row)
                     except:
                         prediction_id = row['id']
                         logger.error(
@@ -216,6 +252,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                             "Early exit of ETL workflow as PG INSERT failed")
                         exit()
 
+                logger.info(trash_table)
                 logger.info(
                     f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
                 output = func.HttpResponse(
@@ -232,13 +269,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     f'Congratulations, you have predicted trashes with AI and made CSV export to /tmp/dataexport.csv')
 
             logger.info(
-                '############################################################')
+                '#########################################################')
             logger.info(
-                '################   Plastic Origin ETL End   ################')
+                '###############   Plastic Origin ETL End   ##############')
             logger.info(
-                '############################################################')
+                '#########################################################')
 
-            # output = func.HttpResponse(f'Congratulations, you have successfully made prediction from container name: {container_name}, blobna} with AI service !')
             return output
 
     else:
