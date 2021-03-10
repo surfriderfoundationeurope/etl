@@ -37,7 +37,7 @@ from .utils.gps import (create_elevation, create_latitude, create_longitude,
 from .utils.media import get_media_duration, get_media_fps
 from .utils.postgre import (close_pg_connection, get_df_data,
                             get_pg_connection_string, insert_trash_2,
-                            insert_trash_df, open_pg_connection)
+                            insert_trash_df, open_pg_connection, get_log_df, insert_log_etl_df, update_log_etl)
 
 warnings.filterwarnings('ignore')
 
@@ -80,7 +80,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     "Could not find Azure Storage connection string in environment")
             if target_store == 'postgre' and None in [pgserver, pgdatabase, pgusername, pgpassword]:
                 raise ETLError(
-                    "Could not find Postgre variable in environment. ")
+                    "Could not find Postgre variable in environment. ")       
 
             # Entering ETL process
             logger.info(
