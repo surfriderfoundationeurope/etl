@@ -188,7 +188,7 @@ def insert_log_etl_df(log_data:pd.Series,cursor:object,connection:object)->str:
     media_id = log_data['media_id']
     media_name = log_data['media_name']
     status = log_data['status']
-    cursor.execute("INSERT INTO logs.etl (id, campaign_id,media_id,media_name,initiated_on,finished_on,status ) VALUES (gen_random_uuid (),%s,%s,%s,now(),now(),%s) RETURNING id;",(campaign_id,media_id,media_name,status))
+    cursor.execute("INSERT INTO logs.etl (id, campaign_id,media_id,media_name,initiated_on,finished_on,status ) VALUES (DEFAULT,%s,%s,%s,now(),now(),%s) RETURNING id;",(campaign_id,media_id,media_name,status))
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id

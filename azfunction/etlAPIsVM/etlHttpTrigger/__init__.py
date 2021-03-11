@@ -80,7 +80,28 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     "Could not find Azure Storage connection string in environment")
             if target_store == 'postgre' and None in [pgserver, pgdatabase, pgusername, pgpassword]:
                 raise ETLError(
-                    "Could not find Postgre variable in environment. ")       
+                    "Could not find Postgre variable in environment. ")
+
+            # Creating ETL process log
+            campaign_id = os.path.splitext(blob_name)[0]
+            media_name = blob_name
+            media_id = campaign_id
+            etl_log_df = get_log_df(campaign_id,media_id,media_name)
+            pg_conn_string = get_pg_connection_string()
+            pg_connection = open_pg_connection(pg_conn_string)
+            pg_cursor = pg_connection.cursor()
+
+            for i, row in etl_log_df.iterrows():
+                try:
+                    log_id = insert_log_etl_df(row,pg_cursor,pg_connection)
+                except:
+                    log_id = row['id']
+                    logger.error(
+                        f'There was an issue inserting log id: {log_id} within PostGre')
+                    logger.error(
+                        "Early exit of ETL workflow as PG INSERT failed")
+                    exit()
+    
 
             # Entering ETL process
             logger.info(
@@ -257,6 +278,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
                 output = func.HttpResponse(
                     f'Congratulations, you have predicted trashes with AI and made insert within PostGre ! row_id list: {row_id_list}')
+
+                
+                # Updating ETL process log to success status
+                try:
+                    row_id = update_log_etl(log_id,pg_cursor,pg_connection)
+                except:
+                    log_id = row['id']
+                    logger.error(
+                        f'There was an issue updating log id: {log_id} within PostGre')
+                    logger.error(
+                        "Early exit of ETL workflow as PG INSERT failed")
+                    exit()
 
                 # Close PG connection
                 close_pg_connection(pg_connection)
