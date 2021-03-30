@@ -8,10 +8,6 @@ _________________
 
 <!--- OPTIONAL: You can add badges and shields to reflect the current status of the project, the licence it uses and if any dependencies it uses are up-to-date. Plus they look pretty cool! You can find a list of badges or design your own at https://shields.io/ --->
 
-<!--- TODO: Give a short introduction of product. Let this section explain the objectives or the motivation behind this product. Add a line of information text about what the product does. Your introduction should be around 2 or 3 sentences.--->
-
-<!--- These are just example (copied from current readme file): add, duplicate or remove as required --->
-
 Welcome to **Plastic Origin ETL**, an ETL (Extract Transform Load) Data Management process allowing to produce Data that will be leveraged within the Plastic Origin project. This Data will serve to build then analytics and reports of plastic pollution within rivers.
 
 **Overiew of ETL Data Management process architecture to insert Trash:**
@@ -21,28 +17,23 @@ Welcome to **Plastic Origin ETL**, an ETL (Extract Transform Load) Data Manageme
 >Please note that this project is under active development and that frequent changes and updates happen over time.
 
 ## **Getting Started**
-<!--- TODO: Guide users through getting your code up and running on their own system.--->
 
 ### **Prerequisites**
 
 Before you begin, ensure you have met the following requirements:
-<!--- These are just example requirements. Add, duplicate or remove as required --->
+
 * You have a `<Windows/Linux/Mac>` machine supporting python.
-<!--- One more example from other project's repo: --->
 * You have installed requirements.txt with pip install -r requirements.txt
 * You have installed locally the latest version of [azure function](https://docs.microsoft.com/fr-fr/azure/azure-functions/create-first-function-cli-python?tabs=azure-cli%2Cbash%2Cbrowser#configure-your-local-environment) for python.
 
 #### **Technical stack**
-<!--- These are just example from other project's repo: add, duplicate or remove as required --->
+
 * Language: `Python`
 * Framework: `Python 3.7`
 * Unit test framework: `NA`
 
 ### **Installation**
 
-<!--- TODO: It's a code block illustrating how to install. Include any system-specific information needed for installation. If there are multiple versions which the user may interface with, an updating section would be useful. Add Dependencies subsection if there are unusual dependencies or dependencies that must be manually installed.--->
-
-<!--- These are just example (copied from current readme file): add, duplicate or remove as required --->
 **ETL script**
 
 The full ETL process relies on a Python script located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py). This script allows to locally run the full ETL process, that will download the media file to be processed (gopro, mobile, manual), extract and geolocalize Trashes and finally store the result as csv file or within PostGre Database server.
@@ -73,10 +64,6 @@ usage: etl.py [-h] -c CONTAINERNAME -b BLOBNAME [-a AIURL] [-p {ai,json}]
 The ETL script is the foundation to build the ETL API. The ETL API relies on the ETL script logic + Azure Function to easily create a production REST API available in the Cloud.
 
 ### **Usage**
-
-<!---TODO: It's a code block illustrating common usage that might cover basic choices that may affect usage (for instance, if JavaScript, cover promises/callbacks, ES6). If CLI importable, code block indicating both import functionality and usage (if CLI functionality exists, add CLI subsection).If relevant, point to a runnable file for the usage code.--->
-
-<!--- These are just example (copied from current readme file): add, duplicate or remove as required --->
 
 #### **ETL Azure Function**
 
@@ -128,14 +115,14 @@ To prepare the Virtual Machine for VM Scale Set deployment, the Azure related do
 
 <!--- If needed add here any Extra Sections (must have their own titles).Specifically, the Security section should be here if it wasn't important enough to be placed above.-->
 
-### **API references**
+<!---### **API references**--->
 
 <!---TODO: Describe exported functions and objects. Describe signatures, return types, callbacks, and events. Cover types covered where not obvious. Describe caveats. If using an external API generator (like go-doc, js-doc, or so on), point to an external API.md file. This can be the only item in the section, if present.--->
 
-<!--- If an external API file is work in progress, please use the text below as exaple: add, duplicate or remove as required -->
-*SOON: To see API specification used by this repository browse to the Swagger documentation (currently not available).*
+<!--- If an external API file is work in progress, please use the text below as exaple: add, duplicate or remove as required 
+*SOON: To see API specification used by this repository browse to the Swagger documentation (currently not available).*--->
 
-## **Build and Test**
+<!--- ## **Build and Test**--->
 
 <!---TODO: Describe and show how to build your code and run the tests.--->
 
@@ -150,20 +137,21 @@ It's great to have you here! We welcome any help and thank you in advance for yo
 ## **Maintainers**
 
 If you experience any problems, please don't hesitate to ping:
-<!--- Need to check the full list of Maintainers and their GIThub contacts -->
+
 * [@cl3m3nt](https://github.com/cl3m3nt)
 
-Special thanks to all our [Contributors](https://github.com/surfriderfoundationeurope/The-Plastic-Origins-Project).
+Special thanks to all our [Contributors](https://github.com/orgs/surfriderfoundationeurope/people).
 
 ## **License**
 
-We’re using the [GNU General Public License (GPL) version 3 - `GPLv3`](https://www.gnu.org/licenses/gpl-3.0.en.html) - a free, copyleft license for software and other kinds of works.
+We’re using the `MIT` License. For more details, check [`LICENSE`](https://github.com/surfriderfoundationeurope/etl/blob/master/LICENSE) file.
 
-## **Additional information**
-<!--- These are just example: add, duplicate or remove as required --->
+<!---## **Additional information**--->
+<!--- These are just example: add, duplicate or remove as required 
 <details>
 <summary>Please write here the text you would like to show</summary>
 
 TODO: Please write here detils that you would like to hide `
 
 </details>
+--->
