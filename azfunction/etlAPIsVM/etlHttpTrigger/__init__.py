@@ -95,7 +95,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 try:
                     log_id = insert_log_etl_df(row,pg_cursor,pg_connection)
                 except:
-                    log_id = row['id']
+                    log_id = row['campaign_id']
                     logger.error(
                         f'There was an issue inserting log id: {log_id} within PostGre')
                     logger.error(
@@ -149,7 +149,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 # From AI inference server
                 if prediction_source == 'ai':
                     # Test that AI service is ready
-                    ai_ready = is_ai_ready(f'{ai_url}:{AI_PORT}')
+                    #ai_ready = is_ai_ready(f'{ai_url}:{AI_PORT}')
+                    # is_ai_ready not required as health check from VMSS load balancer
+                    # also to check whether this improve AI instance load balancing
+                    ai_ready = True
                     if ai_ready == True:
                         prediction = get_prediction(
                             blob_name, f'{ai_url}:{AI_PORT}')

@@ -14,7 +14,7 @@ def main(etlblob: func.InputStream):
     container = blob_fullname.split('/')[0]
     blob_name = blob_fullname.split('/')[1]
     source = 'manual'
-    url = f'<url>'
+    url = f'http://etlapivmssplastico-prod.northeurope.cloudapp.azure.com:8081/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=json&source={source}&target=postgre'
     payload = {}
     headers= {}
     response = requests.request("GET", url, headers=headers, data = payload)
