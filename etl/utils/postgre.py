@@ -2,6 +2,7 @@ import os
 import psycopg2
 import logging
 import pandas as pd
+from datetime import datetime
 from .exceptions import ETLError
 
 logger = logging.getLogger()
@@ -129,7 +130,7 @@ def insert_trash_df(trash_data:pd.Series,cursor:object,connection:object):
     trash_type_id = int(trash_data['trash_type_id']) #int() casting to address single pd.Series insert use case
     timestamp = trash_data['Time']
     precision = 99
-    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,time,precision ) VALUES (DEFAULT,%s,ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s) RETURNING id;", (campaign_id,point,elevation,trash_type_id,timestamp,precision))
+    cursor.execute("INSERT INTO campaign.trash (id, id_ref_campaign_fk,the_geom, elevation, id_ref_trash_type_fk,time,precision,createdon ) VALUES (DEFAULT,%s,ST_SetSRID(%s::geometry,2154),%s,%s,%s,%s,%s) RETURNING id;", (campaign_id,point,elevation,trash_type_id,timestamp,precision,datetime.now()))
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id
@@ -154,14 +155,14 @@ def select_media_info(blob_url:str,cursor:object,connection:object)->dict:
     return media_info
 
 
-def get_log_df(campaign_id:str,media_id:str,media_name:str,status:str='failed')->pd.DataFrame:
+def get_log_df(campaign_id:str,media_id:str,media_name:str,status:str='notprocessed')->pd.DataFrame:
     """Get log as a Dataframe before inserting within logs.etl table
 
     Args:
         campaign_id (str): from campaign table, campaign_id of the media to be processed
         media_id (str): from media table, media_id of the media to be processed
         media_name (str): from media table, media_name of the media to be processed
-        status (str, optional): Defaults to 'failed' as log is first inserted when ETL process not done yet
+        status (str, optional): Defaults to 'notprocessed' as log is first inserted when ETL process not done yet
 
     Returns:
         log_df(pd.DataFrame): the log as a Dataframe to be inserted then within postgre 
@@ -205,7 +206,7 @@ def update_log_etl(row_id:str,cursor:object,connection:object)->str:
     Returns:
         row_id (str): the row_id within logs.etl table to be updated
     """
-    cursor.execute("UPDATE logs.etl SET status = 'success' WHERE id = %s RETURNING id;",(row_id,))
+    cursor.execute("UPDATE logs.etl SET status = 'processed' WHERE id = %s RETURNING id;",(row_id,))
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id
