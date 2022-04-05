@@ -47,7 +47,7 @@ logger = logging.getLogger()
 
 # Constant
 DOWNLOAD_PATH = '/tmp'
-AI_PORT = '5000'
+AI_PORT = '8000'
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -69,7 +69,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 status_code=400)
 
         else:
-            # Eary check that environment variables are set
+            # Early check that environment variables are set
             connection_string = os.getenv("CONN_STRING")
             pgserver = os.getenv("PGSERVER")
             pgdatabase = os.getenv("PGDATABASE")
@@ -82,26 +82,26 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 raise ETLError(
                     "Could not find Postgre variable in environment. ")
 
+            if target_store == 'postgre':
             # Creating ETL process log
-            campaign_id = os.path.splitext(blob_name)[0]
-            media_name = blob_name
-            media_id = campaign_id
-            etl_log_df = get_log_df(campaign_id,media_id,media_name)
-            pg_conn_string = get_pg_connection_string()
-            pg_connection = open_pg_connection(pg_conn_string)
-            pg_cursor = pg_connection.cursor()
+                campaign_id = os.path.splitext(blob_name)[0]
+                media_name = blob_name
+                media_id = campaign_id
+                etl_log_df = get_log_df(campaign_id,media_id,media_name)
+                pg_conn_string = get_pg_connection_string()
+                pg_connection = open_pg_connection(pg_conn_string)
+                pg_cursor = pg_connection.cursor()
 
-            for i, row in etl_log_df.iterrows():
-                try:
-                    log_id = insert_log_etl_df(row,pg_cursor,pg_connection)
-                except:
-                    log_id = row['campaign_id']
-                    logger.error(
-                        f'There was an issue inserting log id: {log_id} within PostGre')
-                    logger.error(
-                        "Early exit of ETL workflow as PG INSERT failed")
-                    exit()
-    
+                for i, row in etl_log_df.iterrows():
+                    try:
+                        log_id = insert_log_etl_df(row,pg_cursor,pg_connection)
+                    except:
+                        log_id = row['campaign_id']
+                        logger.error(
+                            f'There was an issue inserting log id: {log_id} within PostGre')
+                        logger.error(
+                            "Early exit of ETL workflow as PG INSERT failed")
+                        exit()
 
             # Entering ETL process
             logger.info(
@@ -216,15 +216,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 '############### Store Data in PostGre or CSV ############')
 
             # INSERTING all detected_trash
+            noTrash = False
 
             # Create Dataframe
             if source_data == 'gopro' or source_data == 'mobile':
                 df_predictions = get_df_prediction(json_prediction, media_fps)
-                df_trash_gps = get_df_trash_gps(
-                    df_predictions, gps_points_filled)
-                df_data = get_df_data(df_predictions, df_trash_gps)
-                campaign_id = os.path.splitext(blob_name)[0]
-                df_data['campaign_id'] = campaign_id
+                if len(df_predictions !=0):
+                    df_trash_gps = get_df_trash_gps(
+                        df_predictions, gps_points_filled)
+                    df_data = get_df_data(df_predictions, df_trash_gps)
+                    campaign_id = os.path.splitext(blob_name)[0]
+                    df_data['campaign_id'] = campaign_id
+                else:
+                    noTrash = True
 
             elif source_data == 'manual':
                 # this needs to be rewrite as manual comes as JSON now
@@ -236,53 +240,60 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
             # Store Data
             if target_store == 'postgre':
-                # Get connection string information from env variables
-                pg_conn_string = get_pg_connection_string()
-                pg_connection = open_pg_connection(pg_conn_string)
-                pg_cursor = pg_connection.cursor()
-                # Store row_id when insert
-                row_id_list = []
-                trash_table = PrettyTable()
-                trash_table.field_names = [
-                    "id", "campaign_id", "the_geom", "id_ref_trash_type"]
-                # Creating Log file
-                time_now = datetime.now()
-                campaign_log_file = f'{DOWNLOAD_PATH}/log_{campaign_id}_{time_now.strftime("%Y-%m-%d_%H:%M:%S")}.csv'
-                logger.info(f'Creating Log file {campaign_log_file}')
-                with open(campaign_log_file, 'w') as f:
-                    writer = csv.writer(f)
-                    header = ("id", "campaign_id",
-                              "the_geom", "id_ref_trash_type")
-                    writer.writerow(header)
+                if noTrash == False:
+                    # Get connection string information from env variables
+                    pg_conn_string = get_pg_connection_string()
+                    pg_connection = open_pg_connection(pg_conn_string)
+                    pg_cursor = pg_connection.cursor()
+                    # Store row_id when insert
+                    row_id_list = []
+                    trash_table = PrettyTable()
+                    trash_table.field_names = [
+                        "id", "campaign_id", "the_geom", "id_ref_trash_type"]
+                    # Creating Log file
+                    time_now = datetime.now()
+                    campaign_log_file = f'{DOWNLOAD_PATH}/log_{campaign_id}_{time_now.strftime("%Y-%m-%d_%H:%M:%S")}.csv'
+                    logger.info(f'Creating Log file {campaign_log_file}')
+                    with open(campaign_log_file, 'w') as f:
+                        writer = csv.writer(f)
+                        header = ("id", "campaign_id",
+                                "the_geom", "id_ref_trash_type")
+                        writer.writerow(header)
 
-                for i, row in tqdm(df_data.iterrows()):
-                    try:
-                        row_id = insert_trash_df(row, pg_cursor, pg_connection)
-                        logger.info(row_id)
-                        row_id_list.append(row_id)
-                        trash_table.add_row(
-                            [row_id, campaign_id, row['the_geom'], row['trash_type_id']])
+                    for i, row in tqdm(df_data.iterrows()):
+                        try:
+                            row_id = insert_trash_df(row, pg_cursor, pg_connection)
+                            logger.info(row_id)
+                            row_id_list.append(row_id)
+                            trash_table.add_row(
+                                [row_id, campaign_id, row['the_geom'], row['trash_type_id']])
 
-                        csv_row = (row_id, campaign_id,
-                                   row['the_geom'], row['trash_type_id'])
-                        with open(campaign_log_file, mode='a') as f:
-                            writer = csv.writer(f)
-                            writer.writerow(csv_row)
-                    except:
-                        prediction_id = row['id']
-                        logger.error(
-                            f'There was an issue inserting Trash id: {prediction_id} within PostGre')
-                        logger.error(
-                            "Early exit of ETL workflow as PG INSERT failed")
-                        exit()
+                            csv_row = (row_id, campaign_id,
+                                    row['the_geom'], row['trash_type_id'])
+                            with open(campaign_log_file, mode='a') as f:
+                                writer = csv.writer(f)
+                                writer.writerow(csv_row)
+                        except:
+                            prediction_id = row['id']
+                            logger.error(
+                                f'There was an issue inserting Trash id: {prediction_id} within PostGre')
+                            logger.error(
+                                "Early exit of ETL workflow as PG INSERT failed")
+                            exit()
 
-                logger.info(trash_table)
-                logger.info(
-                    f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
-                output = func.HttpResponse(
-                    f'Congratulations, you have predicted trashes with AI and made insert within PostGre ! row_id list: {row_id_list}')
+                    logger.info(trash_table)
+                    logger.info(
+                        f'Successfully inserted {str(len(row_id_list))} Trashes within Trash table')
+                    output = func.HttpResponse(
+                        f'Congratulations, you have identified plastic trashes and made insert within PostGre ! row_id list: {row_id_list}')
 
+                elif noTrash == True:
+                    logger.info(
+                        f'There was no trash identified within the video')
+                    output = func.HttpResponse(
+                        f'Congratulations, you have analyzed a video with NO plastic trashes !')
                 
+
                 # Updating ETL process log to success status
                 try:
                     row_id = update_log_etl(log_id,pg_cursor,pg_connection)
@@ -297,12 +308,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 # Close PG connection
                 close_pg_connection(pg_connection)
 
+
             elif target_store == 'csv':
-                export_path = f'{DOWNLOAD_PATH}/data.csv'
-                df_data.to_csv(export_path, encoding='utf-8')
-                logger.info(f'exporting trash data to {export_path}')
-                output = func.HttpResponse(
-                    f'Congratulations, you have predicted trashes with AI and made CSV export to /tmp/dataexport.csv')
+                if noTrash == False:
+                    export_path = f'{DOWNLOAD_PATH}/data.csv'
+                    df_data.to_csv(export_path, encoding='utf-8')
+                    logger.info(f'exporting trash data to {export_path}')
+                    output = func.HttpResponse(
+                        f'Congratulations, you have identified plastic trashes and made CSV export to /tmp/dataexport.csv')
+            
+                else: 
+                    output = func.HttpResponse(
+                        f'There was no trash identified within the video to save on CSV')
+
 
             logger.info(
                 '#########################################################')
