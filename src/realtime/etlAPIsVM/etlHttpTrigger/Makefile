@@ -23,7 +23,7 @@ etl-api-start:
 	func start ../etlHttpTrigger
 
 etl-api-test-manual-csv:
-	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.mp4&prediction=json&source=manual&target=csv'
+	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.json&prediction=json&source=manual&target=csv'
 
 etl-api-test-mobile-csv:
 	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=csv'
@@ -32,7 +32,7 @@ etl-api-test-gopro-csv:
 	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=gopro&blob=b09a5594-988c-4fb3-9e95-11fd170f96b3.mp4&prediction=json&source=gopro&target=csv'
 
 etl-api-test-manual-postgre:
-	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.mp4&prediction=json&source=manual&target=postgre'
+	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.json&prediction=json&source=manual&target=postgre'
 
 etl-api-test-mobile-postgre:
 	curl  --request GET 'http://localhost:7071/api/etlHttpTrigger?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=postgre'
@@ -51,7 +51,7 @@ etl-run-docker:
 
 # ETL Docker local API & no AI (JSON Prediction)
 etl-api-test-manual-csv:
-	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.mp4&prediction=json&source=manual&target=csv'
+	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.json&prediction=json&source=manual&target=csv'
 
 etl-api-test-mobile-csv:
 	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=csv'
@@ -60,7 +60,7 @@ etl-api-test-gopro-csv:
 	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=gopro&blob=b09a5594-988c-4fb3-9e95-11fd170f96b3.mp4&prediction=json&source=gopro&target=csv'
 
 etl-api-test-manual-postgre:
-	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.mp4&prediction=json&source=manual&target=postgre'
+	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=manual&blob=50e1bd32-48c6-45e0-97d6-3cd4c688af8e.json&prediction=json&source=manual&target=postgre'
 
 etl-api-test-mobile-postgre:
 	curl  --request GET 'http://localhost:8082/api/etlHttpTrigger?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=postgre'
