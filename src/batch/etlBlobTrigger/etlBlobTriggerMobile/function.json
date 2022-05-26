@@ -1,0 +1,12 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+      {
+          "name": "etlblob",
+          "type": "blobTrigger",
+          "direction": "in",
+          "path": "mobile/{name}.mp4",
+          "connection":"CONN_STRING"
+      }
+  ]
+}
