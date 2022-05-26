@@ -28,13 +28,17 @@ logger = logging.getLogger()
 
 with DAG(
     dag_id='trigger_batch_etl_all',
-    schedule_interval='@daily',
+    schedule_interval='@weekly',
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
     tags=['plastico'],
    ) as dag:
 
         # Parameters
+        TENANT_ID = os.getenv('TENANT_ID')
+        SUBSCRIPTION_ID = os.getenv('SUBSCRIPTION_ID')
+        VALUE = os.getenv('VALUE')
+        CLIENT_ID = os.getenv('CLIENT_ID')
         AKS_RG = os.getenv('AKS_RG')
         AKS_CLUSTER = os.getenv('AKS_CLUSTER')
         AKS_NODEPOOL = os.getenv('AKS_NODEPOOL')
@@ -48,16 +52,47 @@ with DAG(
         pg_connection = open_pg_connection(pg_conn_string)
         pg_cursor = pg_connection.cursor()
 
-        # [START aks_nodepool_scaleup_op]
-        aks_nodepool_scaleup_op = BashOperator(
-        task_id='aks_nodepool_scaleup',
-        bash_command=f'az aks nodepool scale \
-        --resource-group {AKS_RG} \
-        --cluster-name {AKS_CLUSTER} \
-        --name {AKS_NODEPOOL} \
-        --node-count 1',
-        )
-        # [END aks_nodepool_scaleup_op]
+        
+        # [START scale_aks_nodepool]
+        @task(task_id="scaleup_aks_nodepool")
+        def scale_aks_nodepool(tenant_id,value,client_id,subscription,aks_rg,aks_cluster,aks_nodepool,scale):
+
+            # azure oauth2 authentication
+            url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
+            data = {'grant_type': 'client_credentials',
+                    'client_secret': f'{value}',
+                    'client_id': f'{client_id}',
+                    'resource': 'https://management.azure.com'}
+            try:
+                response = requests.post(url, data=data)
+            except:
+                logging.info(f"There was an error when acquiring token {response.content}")
+
+            token = response.json()['access_token']
+
+            # scale aks nodepool
+            headers = {"Content-Type":"application/json","Authorization":f"Bearer {token}"}
+            url = f"https://management.azure.com/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/managedClusters/{aks_cluster}/agentPools/{aks_nodepool}?api-version=2022-02-01"
+            data = {
+            "properties": {
+                "orchestratorVersion": "",
+                "count": scale,
+                "osType": "Linux",
+                "creationData": {
+                "sourceResourceId": f"/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/"
+                }
+                }
+            }
+            try:
+                response = requests.put(url,data=json.dumps(data),headers=headers)
+            except:
+                logging.info(f"There was an error when scaling aks {response.content}")
+                
+            return str(response)
+        
+        scaleup_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,1)
+        # [END scaleup_aks_nodepool]
+
 
         # [START wait_surfnet_op]
         def wait_surfnet():
@@ -116,15 +151,18 @@ with DAG(
             for media in notprocessed_media:
                 media_name = media[3]
                 media_container = media[10]
-                media_dico = {'name':media_name,'container':media_container}
+                media_logid = media[0]
+                media_dico = {'name':media_name,'container':media_container,'logid':media_logid}
                 notprocessed_media_list.append(media_dico)
+
 
             # Batch ETL on not processed media
             output_list = []
             for notprocessed_media in notprocessed_media_list:
                 blob_name = notprocessed_media['name']
                 container = notprocessed_media['container']
-                url = f'{ETL_DEV_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_DEV_URL}'
+                logid = notprocessed_media['logid']
+                url = f'{ETL_DEV_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_DEV_URL}&logid={logid}'
                 response = requests.get(url)
                 if not response.ok:
                     print(f'Request to ETL failed wih reason {response.reason}.')
@@ -136,18 +174,48 @@ with DAG(
         trigger_batch_etl_op = trigger_batch_etl(pg_cursor)
         # [END trigger_batch_etl]
 
-        # [START aks_nodepool_scaledown_op]
-        aks_nodepool_scaledown_op = BashOperator(
-        task_id='aks_nodepool_scaledown',
-        bash_command=f'az aks nodepool scale \
-        --resource-group {AKS_RG} \
-        --cluster-name {AKS_CLUSTER} \
-        --name {AKS_NODEPOOL} \
-        --node-count 0',
-        )
-        # [END aks_nodepool_scaledown_op]
+
+        # [START scaledown_aks_nodepool]
+        @task(task_id="scaledown_aks_nodepool")
+        def scale_aks_nodepool(tenant_id,value,client_id,subscription,aks_rg,aks_cluster,aks_nodepool,scale):
+
+            # azure oauth2 authentication
+            url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
+            data = {'grant_type': 'client_credentials',
+                    'client_secret': f'{value}',
+                    'client_id': f'{client_id}',
+                    'resource': 'https://management.azure.com'}
+            try:
+                response = requests.post(url, data=data)
+            except:
+                logging.info(f"There was an error when acquiring token {response.content}")
+
+            token = response.json()['access_token']
+
+            # scale aks nodepool
+            headers = {"Content-Type":"application/json","Authorization":f"Bearer {token}"}
+            url = f"https://management.azure.com/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/managedClusters/{aks_cluster}/agentPools/{aks_nodepool}?api-version=2022-02-01"
+            data = {
+            "properties": {
+                "orchestratorVersion": "",
+                "count": scale,
+                "osType": "Linux",
+                "creationData": {
+                "sourceResourceId": f"/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/"
+                }
+                }
+            }
+            try:
+                response = requests.put(url,data=json.dumps(data),headers=headers)
+            except:
+                logging.info(f"There was an error when scaling aks {response.content}")
+                
+            return str(response)
+        
+        scaledown_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,0)
+        # [END scaledown_aks_nodepool]
     
-        aks_nodepool_scaleup_op >> wait_surfnet_op >> get_surfnet_video_op >> post_surfnet_video_op >> trigger_batch_etl_op >> aks_nodepool_scaledown_op
+        scaleup_aks_nodepool_op >> wait_surfnet_op >> get_surfnet_video_op >> post_surfnet_video_op >> trigger_batch_etl_op >> scaledown_aks_nodepool_op
 
 
         
