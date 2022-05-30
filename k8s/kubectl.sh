@@ -2,6 +2,9 @@
 kubectl apply -f https://k8s.io/examples/service/load-balancer-example.yaml
 kubectl apply -f etl.yaml
 
+# create cronjob
+kubectl create -f https://k8s.io/examples/application/job/cronjob.yaml
+
 # get deployment information
 kubectl get deployments <deployment-name>
 kubectl describe deployments <deployment-name>

@@ -1,0 +1,159 @@
+import os
+import json
+import pandas as pd
+import requests
+import logging
+from postgre import *
+from exceptions import *
+from postgre import get_pg_connection_string, open_pg_connection, close_pg_connection
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+
+
+# Parameters
+TENANT_ID = os.getenv('TENANT_ID')
+SUBSCRIPTION_ID = os.getenv('SUBSCRIPTION_ID')
+VALUE = os.getenv('VALUE')
+CLIENT_ID = os.getenv('CLIENT_ID')
+AKS_RG = os.getenv('AKS_RG')
+AKS_CLUSTER = os.getenv('AKS_CLUSTER')
+AKS_NODEPOOL = os.getenv('AKS_NODEPOOL')
+AI_DEV_URL = os.getenv('AI_DEV_URL')
+VIDEO_TEST_NAME = os.getenv('VIDEO_TEST_NAME')
+VIDEO_TEST_URL = os.getenv('VIDEO_TEST_URL')
+ETL_DEV_URL = os.getenv('ETL_DEV_URL')
+
+
+# Scaleup AKS nodepool
+def scale_aks_nodepool(tenant_id,value,client_id,subscription,aks_rg,aks_cluster,aks_nodepool,scale):
+
+  # azure oauth2 authentication
+  url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
+  data = {'grant_type': 'client_credentials',
+          'client_secret': f'{value}',
+          'client_id': f'{client_id}',
+          'resource': 'https://management.azure.com'}
+  try:
+      response = requests.post(url, data=data)
+  except:
+      logging.info(f"There was an error when acquiring token {response.content}")
+
+  token = response.json()['access_token']
+
+  # scale aks nodepool
+  headers = {"Content-Type":"application/json","Authorization":f"Bearer {token}"}
+  url = f"https://management.azure.com/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/managedClusters/{aks_cluster}/agentPools/{aks_nodepool}?api-version=2022-02-01"
+  data = {
+  "properties": {
+      "orchestratorVersion": "",
+      "count": scale,
+      "osType": "Linux",
+      "creationData": {
+      "sourceResourceId": f"/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/"
+      }
+      }
+  }
+  try:
+      response = requests.put(url,data=json.dumps(data),headers=headers)
+  except:
+      logging.info(f"There was an error when scaling aks {response.content}")
+      
+  return str(response)
+
+
+# Wait Surfnet availability
+def wait_surfnet():
+  ai_ready = False
+  while (ai_ready == False):
+      try:
+        response = requests.get(AI_DEV_URL+':8000')
+        output = [response.status_code][0]
+        if output == 200:
+          ai_ready = True
+          logger.info('AI is ready now!')
+      except:
+        pass
+        logger.info('AI is not ready yet!')
+  return ai_ready
+
+
+# Download Surfnet test video
+def get_surfnet_video(video_url,video_name):
+  response = requests.get(video_url)
+  open(video_name, 'wb').write(response.content)
+
+
+# POST Surfnet test video
+def post_video_surfnet(video_name,ai_url):
+  files = {'file': (video_name, open(video_name, 'rb'), 'application/octet-stream')}
+  response = requests.post(ai_url+':8000', files=files)
+  if not response.ok:
+      logger.error(f'Request to AI failed wih reason {response.reason}.')
+  output = [response._content]
+  return str(output)
+
+
+# Trigger ETL Batch
+def trigger_batch_etl(cursor):
+  # Get notprocessed media
+  cursor.execute("SELECT * FROM logs.etl WHERE status = 'notprocessed'")
+  query_output = cursor.fetchall()
+  notprocessed_media = query_output
+
+  # List not processed media name & container
+  notprocessed_media_list = []
+  for media in notprocessed_media:
+      media_name = media[3]
+      media_container = media[10]
+      media_logid = media[0]
+      media_dico = {'name':media_name,'container':media_container,'logid':media_logid}
+      notprocessed_media_list.append(media_dico)
+
+  # Batch ETL on not processed media
+  output_list = []
+  for notprocessed_media in notprocessed_media_list:
+      blob_name = notprocessed_media['name']
+      container = notprocessed_media['container']
+      logid = notprocessed_media['logid']
+      url = f'{ETL_DEV_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_DEV_URL}&logid={logid}'
+      response = requests.get(url)
+      if not response.ok:
+          print(f'Request to ETL failed wih reason {response.reason}.')
+      output = [response._content]
+      output_list.append(output)
+  
+  return str(output_list)
+
+
+def main():
+  logger.info('Starting ETL Batch')
+  # Scale up AKS nodepool
+  logger.info('Scaling up AKS nodepool')
+  scaleup_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,1)
+  # Wait Surfnet availability
+  logger.info('Waiting Surfnet availablity')
+  wait_surfnet_op = wait_surfnet()  
+  # Get Surfnet test video
+  logger.info('Getting Surfnet test video')
+  get_surfnet_video_op = get_surfnet_video(VIDEO_TEST_URL,VIDEO_TEST_NAME)
+  # Post Surfnet test video
+  logger.info('Posting Surfnet test video')
+  post_surfnet_video_op = post_video_surfnet(VIDEO_TEST_NAME,AI_DEV_URL)
+  # PG connection
+  logger.info('Opening Postgre connection')
+  pg_conn_string = get_pg_connection_string()
+  pg_connection = open_pg_connection(pg_conn_string)
+  pg_cursor = pg_connection.cursor()
+  # Trigger ETL Batch
+  logger.info('Triggering ETL Batch')
+  trigger_batch_etl_op = trigger_batch_etl(pg_cursor)
+  # Scale down AKS nodepool
+  logger.info('Scaling down AKS nodepool')
+  scaledown_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,0)
+  logger.info('Finishing ETL Batch successfully :)')
+
+
+# Run main
+if __name__ == '__main__':
+  main()

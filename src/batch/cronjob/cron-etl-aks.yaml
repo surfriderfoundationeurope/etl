@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-etl-aks
+spec:
+  schedule: "@weekly"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cron-etl-aks
+            image: ghcr.io/surfriderfoundationeurope/cron-etl-batch:latest
+            imagePullPolicy: Always
+            env:
+              - name: TENANT_ID
+                value: '<tenant_id>'
+              - name: SUBSCRIPTION_ID
+                value: '<subscription_id>'
+              - name: VALUE
+                value: '<value>'
+              - name: CLIENT_ID
+                value: '<client_id>'
+              - name: AKS_RG
+                value: '<aks_rg>'
+              - name: AKS_CLUSTER
+                value: '<aks_cluster>'
+              - name: AKS_NODEPOOL
+                value: '<aks_nodepool>'
+              - name: VIDEO_TEST_NAME
+                value: '<video_test_name>'
+              - name: VIDEO_TEST_URL
+                value: '<video_test_url>'
+              - name: AI_DEV_URL
+                value: '<ai_dev_url>'
+              - name: ETL_DEV_URL
+                value: '<etl_dev_url>'
+              - name: PGUSERNAME
+                value: '<pgusername>'
+              - name: PGDATABASE
+                value: '<pgdatabase>'
+              - name: PGSERVER
+                value: '<pgserver>'
+              - name: PGPWD
+                value: '<pgpwd>'
+              - name: CONN_STRING
+                value: '<conn_string>'
+          restartPolicy: OnFailure
+          
+          nodeSelector:
+            agentpool: nodepool1
