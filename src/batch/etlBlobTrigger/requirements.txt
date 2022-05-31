@@ -1,3 +1,5 @@
 azure-functions
 azure-storage-blob
+pandas
 requests
+psycopg2-binary
