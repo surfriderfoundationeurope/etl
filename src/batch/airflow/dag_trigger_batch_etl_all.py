@@ -42,10 +42,10 @@ with DAG(
         AKS_RG = os.getenv('AKS_RG')
         AKS_CLUSTER = os.getenv('AKS_CLUSTER')
         AKS_NODEPOOL = os.getenv('AKS_NODEPOOL')
-        AI_DEV_URL = os.getenv('AI_DEV_URL')
+        AI_URL = os.getenv('AI_URL')
         VIDEO_TEST_NAME = os.getenv('VIDEO_TEST_NAME')
         VIDEO_TEST_URL = os.getenv('VIDEO_TEST_URL')
-        ETL_DEV_URL = os.getenv('ETL_DEV_URL')
+        ETL_URL = os.getenv('ETL_URL')
 
         # PG connection
         pg_conn_string = get_pg_connection_string()
@@ -99,7 +99,7 @@ with DAG(
             ai_ready = False
             while (ai_ready == False):
                 try:
-                    response = requests.get(AI_DEV_URL+':8000')
+                    response = requests.get(AI_URL+':8000')
                     output = [response.status_code][0]
                     if output == 200:
                         ai_ready = True
@@ -134,7 +134,7 @@ with DAG(
             output = [response._content]
             return str(output)
 
-        post_surfnet_video_op = post_video_surfnet(VIDEO_TEST_NAME,AI_DEV_URL)
+        post_surfnet_video_op = post_video_surfnet(VIDEO_TEST_NAME,AI_URL)
         # [END post_surfnet_video]
 
         # [START trigger_batch_etl]
@@ -162,7 +162,7 @@ with DAG(
                 blob_name = notprocessed_media['name']
                 container = notprocessed_media['container']
                 logid = notprocessed_media['logid']
-                url = f'{ETL_DEV_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_DEV_URL}&logid={logid}'
+                url = f'{ETL_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_URL}&logid={logid}'
                 response = requests.get(url)
                 if not response.ok:
                     print(f'Request to ETL failed wih reason {response.reason}.')
