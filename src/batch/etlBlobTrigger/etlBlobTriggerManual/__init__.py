@@ -3,7 +3,7 @@ import os
 import requests
 
 import azure.functions as func
-from .postgre import get_log_df, get_pg_connection_string, open_pg_connection, insert_log_etl_df
+from .postgre import get_log_df, get_pg_connection_string, open_pg_connection, insert_log_etl_df, check_etl_log
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,14 +26,21 @@ def main(etlblob: func.InputStream):
     pg_conn_string = get_pg_connection_string()
     pg_connection = open_pg_connection(pg_conn_string)
     pg_cursor = pg_connection.cursor()
+    # Ckeck if media log exist already
+    try:
+        media_log = check_etl_log(media_name,pg_cursor,pg_connection)
+    except:
+        logging.error('There was an issue checking media log')
     # Log insert
-    for i, row in etl_log_df.iterrows():
-        try:
-            log_id = insert_log_etl_df(row,pg_cursor,pg_connection,'manual')
-            logging.info(f'Successfully insterted new log: {log_id}')
-        except:
-            log_id = row['campaign_id']
-            logging.error(f'There was an issue inserting log id: {log_id} within PostGre')
-            logging.error("Early exit of ETL workflow as PG INSERT failed")
-            exit()    
-   
+    if len(media_log) == 0:
+        for i, row in etl_log_df.iterrows():
+            try:
+                log_id = insert_log_etl_df(row,pg_cursor,pg_connection,'manual')
+                logging.info(f'Successfully insterted new log: {log_id}')
+            except:
+                log_id = row['campaign_id']
+                logging.error(f'There was an issue inserting log id: {log_id} within PostGre')
+                logging.error("Early exit of ETL workflow as PG INSERT failed")
+                exit()    
+    else:
+        logging.info("Log for media already exist")

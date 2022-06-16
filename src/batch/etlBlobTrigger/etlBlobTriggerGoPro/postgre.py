@@ -210,3 +210,10 @@ def update_log_etl(row_id:str,cursor:object,connection:object)->str:
     connection.commit()
     row_id = cursor.fetchone()[0]
     return row_id
+
+
+def check_etl_log(media_name:object,cursor:object,connection:object)->dict:
+    cursor.execute("SELECT * FROM logs.etl WHERE media_name = %s", (media_name,))
+    connection.commit()
+    query_result = list(cursor.fetchall()) 
+    return query_result
