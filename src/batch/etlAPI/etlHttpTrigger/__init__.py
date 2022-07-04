@@ -302,6 +302,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     output = func.HttpResponse(
                         f'There was no trash identified within the video to save on CSV')
 
+            if os.path.exists(os.path.join(DOWNLOAD_PATH,blob_name)):
+                os.remove(os.path.join(DOWNLOAD_PATH,blob_name))
+                if container_name == 'mobile':
+                    os.remove(os.path.join(DOWNLOAD_PATH,blob_json_name))
+                elif container_name == 'gopro':
+                    os.remove(os.path.splitext(os.path.join(DOWNLOAD_PATH,blob_name))[0]+'.gpx')
+            else:
+                logger.info("The file does not exist")
 
             logger.info(
                 '#########################################################')
