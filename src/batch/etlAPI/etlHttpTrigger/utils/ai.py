@@ -176,7 +176,7 @@ def get_df_json_manual_trash(json_data:dict)->pd.DataFrame:
         trash = {'id':i,'label':trash['name'],'trash_type_id':trash_type_id}
         trash_list.append(trash)
         i = i+1
-        df_manual_trash = pd.DataFrame(trash_list)
+    df_manual_trash = pd.DataFrame(trash_list)
     return df_manual_trash
 
 
