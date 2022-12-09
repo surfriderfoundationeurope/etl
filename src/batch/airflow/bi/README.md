@@ -2,17 +2,6 @@
 
 This Airflow Pipeline must be used to compute metrics of `BI` schema in `PlasticOrigin` database
 
-## Requirements
-
-- [Apache-Airflow](https://airflow.apache.org/docs/apache-airflow/stable/start/docker.html), easier ton install localy using docker-compose ;) 
-
-- Creates connection to database (env `dev`or `prod`) 
-
-  ```bash
-  ./airflow.sh connections add [CONNECTIO] --conn-uri 'postgres://[USERNAME]@pgdb-plastico-dev:[PASSWORD]@pgdb-plastico-[ENV].postgres.database.azure.com:5432/plastico-[ENV]'
-  ```
-
-
 
 ## Pipeline description
 
