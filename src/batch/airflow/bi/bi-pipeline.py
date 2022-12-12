@@ -7,7 +7,7 @@ with DAG(
 
     dag_id="bi-pipeline",
     start_date=days_ago(1),
-    template_searchpath="/opt/airflow/dags/bi/scripts/",
+    template_searchpath="dags/bi/scripts/",
     schedule_interval=None,
     catchup=False,
 
