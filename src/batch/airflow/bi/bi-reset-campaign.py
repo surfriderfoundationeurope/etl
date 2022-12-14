@@ -8,7 +8,6 @@ with DAG(
     dag_id= 'bi-reset-campaign',
     start_date=days_ago(1),
     schedule_interval=None,
-    template_searchpath="dags/bi/scripts/",
     catchup=False
 
 ) as dag:
