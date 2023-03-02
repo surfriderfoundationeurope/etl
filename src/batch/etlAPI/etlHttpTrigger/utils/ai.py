@@ -193,9 +193,9 @@ def map_label_to_trash_id_PG(label:str)->str:
         "Fragment":"1",
         "Insulating":"2",
         "Bottle":"3",
-        "Can": "4"
+        "Can": "4",
         "Drum":"5",
-        "Packaging":6", 
+        "Packaging":"6", 
         "Tire":"7",
         "Fishing net":"8", 
         "Easily namable":"9",
