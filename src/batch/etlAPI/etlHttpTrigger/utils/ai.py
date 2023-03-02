@@ -190,16 +190,18 @@ def map_label_to_trash_id_PG(label:str)->str:
         id_PG -- the equivalent id within PG Trash table of trash label
     """
     switcher = { 
-        "others":"1", #"autre dechet" in PG Data Model mapped to IA "others" label
-        "dechet agricole":"2",
-        "bottles":"3", #"bouteille boisson" in PG Data Model mapped to IA "bottles" label
-        "fragments":"4",#"industriel ou construction in PG Data Model mapped to IA "fragments" label
-        "peche et chasse":"5",
-        "emballage alimentaire":"6",
-        "objet vie courante":"7",
-        "autres dechets +10":"8"
+        "Fragment":"1",
+        "Insulating":"2",
+        "Bottle":"3",
+        "Can": "4"
+        "Drum":"5",
+        "Packaging":6", 
+        "Tire":"7",
+        "Fishing net":"8", 
+        "Easily namable":"9",
+        "Unclear":"10"
     }
-    id_PG =  switcher.get(label, "0")
+    id_PG =  switcher.get(label, "1")
     return id_PG
 
 
@@ -222,5 +224,5 @@ def map_json_label_to_trash_id_PG(label:str)->str:
         "householdItems":"17",
         "unknown10":"18"
     }
-    id_PG =  switcher.get(label, "0")
+    id_PG =  switcher.get(label, "11")
     return id_PG
