@@ -222,7 +222,10 @@ def map_json_label_to_trash_id_PG(label:str)->str:
         "fishHunting":"15",
         "foodPackage":"16",
         "householdItems":"17",
-        "unknown10":"18"
+        "unknown10":"18",
+        "Trash":"19",
+        "Bulky Trash":"20",
+        "Accumulation Zone":"21"
     }
     id_PG =  switcher.get(label, "11")
     return id_PG
