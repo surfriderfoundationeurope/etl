@@ -10,11 +10,11 @@ _________________
 
 Welcome to **Plastic Origin ETL**, an ETL (Extract Transform Load) Data Management process allowing to produce Data that will be leveraged within the Plastic Origin project. This Data will serve to build then analytics and reports of plastic pollution within rivers.
 
-**Overiew of ETL Data Management process architecture to insert Trash:**
+**Overiew of ETL Data Management process to insert Trash:**
 
 ![SFETLArch](https://user-images.githubusercontent.com/8882133/89392324-ae780480-d709-11ea-9dbb-c5518eb4ec91.png)
 
->Please note that this project is under active development and that frequent changes and updates happen over time.
+>Please note that this project is under development and that frequent changes and updates happen over time.
 
 ## **Getting Started**
 
@@ -32,99 +32,73 @@ Before you begin, ensure you have met the following requirements:
 * Framework: `Python 3.7`
 * Unit test framework: `NA`
 
-### **Installation**
-
-**ETL script**
-
-The full ETL process relies on a Python script located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py). This script allows to locally run the full ETL process, that will download the media file to be processed (gopro, mobile, manual), extract and geolocalize Trashes and finally store the result as csv file or within PostGre Database server.
-
-To process a gopro media without AI:
+## **Installation**
+### **ETL local API**
+The ETL API can be locally deployed using the [Azure function framework](https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python?tabs=azure-cli%2Cbash&pivots=python-mode-configuration).
+#### **Pre-requesite**: 
+It's recommended that you use python virtual environement before installing packages with pip. You also have to set the following environment variables:
+CONN_STRING, PGSERVER, PGDATABASE, PGUSERNAME, PGPWD. 
+#### **Deploy local ETL API**:
 ```bash
-python etl.py -c gopro -b 56c76b96-6248-4723-bf1e-8674a36f8877.mp4 -p json -s gopro -t csv
+cd src/batch/etlAPI/
+
+pip install -r requirements
+
+func start etlHttpTrigger
 ```
 
-To process a mobile media without AI:
-```bash
-python etl.py -c mobile -b 6250052d-f716-435c-9d71-83ad49347c5e.mp4 -p json -s mobile -t csv
-```
-
-To process a manual media without AI:
-```bash
-python etl.py -c manual -b 6250052d-f716-435c-9d71-83ad49347c5e.json -p json -s manual -t csv
-```
-
-Script with Parameters:
-This [script](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/etl/etl.py) takes the following argument parameter: 
-```bash
-python etl.py -h
-usage: etl.py [-h] -c CONTAINERNAME -b BLOBNAME [-a AIURL] [-p {ai,json}]
-              [-s {gopro,mobile,manual}] [-t {postgre,csv}]
-```
-
-The ETL script is the foundation to build the ETL API. The ETL API relies on the ETL script logic + Azure Function to easily create a production REST API available in the Cloud.
-
-### **Usage**
-
-#### **ETL Azure Function**
-
-After you installed [Azure function for Python pre-requesite](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function-azure-cli?pivots=programming-language-python&tabs=bash%2Cbrowser) on your local machine, you can run the ETL workflow as a local Azure function. 
-Note you need to launch the function from within a python environment configured with ETL pre-requesite.
-First go to /azfunction/etlAPIs/, then:
+#### **Build Docker ETL API**
+The GPS extraction subprocess requires to use binaries like ffmpeg which is not natively available within Python Azure Function. To address this requirement, the ETL Azure Function has been made available as a Docker image. 
+The Docker file to build the image is located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/azfunction/etlAPIs/Dockerfile)
+You will need to pass the appropriate credential at run time for the ETL to use correctly Azure Storage and PostGre Database server.
 
 ```bash
-func start etlHttpTrigger/
+cd src/batch/etlAPI/
+
+docker build -t surfrider/etl:latest .
 ```
 
-This will run the ETL workflow as a local API using Azure function utilities.
-You can therefore navigate to the ETL API endpoint using a browser, and execute the ETL process with.
-Please note this will download the media file mobile.mp4 from Azure for which you need storage credential.
-```
-http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=json&source=mobile&target=csv
+#### **Run Docker ETL API**
+```bash
+cd src/batch/etlAPI/
+
+docker run -p 8082:80 --restart always --name etl -e PGUSERNAME=${PGUSERNAME} -e PGDATABASE=${PGDATABASE} -e PGSERVER=${PGSERVER} -e PGPWD=${PGPWD} -e CONN_STRING=${CONN_STRING} surfrider/etl:latest
 ```
 
-When the AI inference service is running you would test it by calling the API with: 
-```
-http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=ai&source=mobile&target=csv&aiurl=http://<AIURL>
+## **Usage**
+
+### **Call local ETL API**:
+#### **Option**: 
+**target**: csv or postgre, **prediction**: json or ai
+#### **Port**: 
+**7071** for local API, **8082** for docker API
+##### No Surfnet AI
+```bash
+manual: curl --request GET 'http://localhost:<port>/api/etlHttpTrigger?container=manual&blob=<blobname>&prediction=json&source=manual&target=csv&logid=<logid>'
+mobile: curl --request GET 'http://localhost:<port>/api/etlHttpTrigger?container=mobile&blob=<blobname>&prediction=json&source=mobile&target=csv&logid=<logid>'
+gopro:  curl --request GET 'http://localhost:<port>/api/etlHttpTrigger?container=gopro&blob=<blobname>&prediction=json&source=gopro&target=csv&logid=<logid>'
 ```
 
-When running the End to End process, download blob, making prediction with AI, writing to PostGre you would test with:
-```
-http://localhost:7071/api/etlHttpTrigger/?container=mobile&blob=6250052d-f716-435c-9d71-83ad49347c5e.mp4&prediction=ai&source=mobile&target=postgre&aiurl=http://<AIURL>
+##### With Surfnet AI
+```bash
+mobile: curl --request GET 'http://localhost:<port>/api/etlHttpTrigger?container=mobile&blob=<blobname>&prediction=ai&source=mobile&target=csv&aiurl=<aiurl>&logid=<logid>'
+gopro:  curl  --request GET 'http://localhost:<port>/api/etlHttpTrigger?container=gopro&blob=<blobname>&prediction=ai&source=gopro&target=csv&aiurl=<aiurl>&logid=<logid>'
 ```
 
 #### **ETL Trigger Azure Function**
 The ETL Trigger Azure function defines additionnaly 3 x functions that will automatically call the ETL API when new media to process are stored in Azure.
 They used the [blob trigger capabilities](https://docs.microsoft.com/fr-fr/azure/azure-functions/functions-bindings-storage-blob-trigger?tabs=python) defined within the [function.json](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/azfunction/etlBlobTrigger/etlBlobTriggerGoPro/function.json).
 Simplest way for testing is to publish directly to Azure with:
-```
+```bash
+cd src/batch/etlBlobTrigger/
+
 func azure functionapp publish <AZUREFUNCTIONApp>
 ```
 
-#### **Docker**
-The GPS extraction subprocess requires to use binaries like ffmpeg which is not natively available within Python Azure Function. To address this requirement, the ETL Azure Function has been made available as a Docker image. 
-The Docker file to build the image is located [here](https://github.com/surfriderfoundationeurope/etl/blob/clem_dev/azfunction/etlAPIs/Dockerfile)
-You will need to pass the appropriate credential at build time for the ETL to use Azure Storage and PostGre Database server.
 
-#### **VM Scale Set**
-To overcome timeout limitation of native Azure Function service related to HTTP call and Load Balancer, the ETL APIs has also been made available to run on an Azure [Virtual Machine Scale Set](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/)
-The related code for deployment is located [here](https://github.com/surfriderfoundationeurope/etl/tree/clem_dev/azfunction/etlAPIsVM)
-To prepare the Virtual Machine for VM Scale Set deployment, the Azure related documentation can be found [here](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/tutorial-use-custom-image-cli)
 
-#### **ETL Deployment Architecture**
-![etlDeployment](https://user-images.githubusercontent.com/8882133/89409113-cfe4ea80-d721-11ea-9bd4-bb3899174334.png)
+## **ETL  Architecture**
 
-<!--- If needed add here any Extra Sections (must have their own titles).Specifically, the Security section should be here if it wasn't important enough to be placed above.-->
-
-<!---### **API references**--->
-
-<!---TODO: Describe exported functions and objects. Describe signatures, return types, callbacks, and events. Cover types covered where not obvious. Describe caveats. If using an external API generator (like go-doc, js-doc, or so on), point to an external API.md file. This can be the only item in the section, if present.--->
-
-<!--- If an external API file is work in progress, please use the text below as exaple: add, duplicate or remove as required 
-*SOON: To see API specification used by this repository browse to the Swagger documentation (currently not available).*--->
-
-<!--- ## **Build and Test**--->
-
-<!---TODO: Describe and show how to build your code and run the tests.--->
 
 ## **Contributing**
 
@@ -146,12 +120,3 @@ Special thanks to all our [Contributors](https://github.com/orgs/surfriderfounda
 
 We’re using the `MIT` License. For more details, check [`LICENSE`](https://github.com/surfriderfoundationeurope/etl/blob/master/LICENSE) file.
 
-<!---## **Additional information**--->
-<!--- These are just example: add, duplicate or remove as required 
-<details>
-<summary>Please write here the text you would like to show</summary>
-
-TODO: Please write here detils that you would like to hide `
-
-</details>
---->

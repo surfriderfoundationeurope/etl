@@ -1,6 +1,5 @@
 # To enable ssh & remote debugging on app service change the base image to the one below
 FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7-appservice
-#FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7
 
 # install all OMI requirements as wheels
 RUN mkdir /tmp/wheels
@@ -17,7 +16,8 @@ RUN pip install /tmp/wheels/*.whl
 ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
     AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 
-RUN apt-get update && apt-get install -y git ffmpeg vim
+RUN sed -i '/jessie/d' /etc/apt/sources.list \
+    && apt-get update && apt-get install -y git ffmpeg vim
 
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
