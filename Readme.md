@@ -10,11 +10,7 @@ _________________
 
 Welcome to **Plastic Origin ETL**, an ETL (Extract Transform Load) Data Management process allowing to produce Data that will be leveraged within the Plastic Origin project. This Data will serve to build then analytics and reports of plastic pollution within rivers.
 
-**Overiew of ETL Data Management process to insert Trash:**
-
-![SFETLArch](https://user-images.githubusercontent.com/8882133/89392324-ae780480-d709-11ea-9dbb-c5518eb4ec91.png)
-
->Please note that this project is under development and that frequent changes and updates happen over time.
+>Please note this project is under development and that frequent changes and updates happen over time.
 
 ## **Getting Started**
 
@@ -96,9 +92,12 @@ func azure functionapp publish <AZUREFUNCTIONApp>
 ```
 
 
-
-## **ETL  Architecture**
-
+## **ETL Deployment Architecture**
+<img width="381" alt="ETLarchitecture" src="https://user-images.githubusercontent.com/8882133/234884053-4c9741bc-45e4-41fc-9614-e87ac94524f0.png">
+The ETL is made of three parts: 
+* The BlobTrigger function which is triggered by new media
+* The ETL API function which does the actual ETL process
+* The ETL batch which is a DAG running on Airflow
 
 ## **Contributing**
 
