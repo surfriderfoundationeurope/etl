@@ -93,7 +93,6 @@ func azure functionapp publish <AZUREFUNCTIONApp>
 
 
 ## **ETL Deployment Architecture**
-<img width="381" alt="ETLarchitecture" src="https://user-images.githubusercontent.com/8882133/234884053-4c9741bc-45e4-41fc-9614-e87ac94524f0.png">
 The ETL is made of three parts: 
 * The BlobTrigger function which is triggered by new media
 * The ETL API function which does the actual ETL process
