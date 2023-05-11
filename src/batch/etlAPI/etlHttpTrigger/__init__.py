@@ -296,7 +296,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     df_data.to_csv(export_path, encoding='utf-8')
                     logger.info(f'exporting trash data to {export_path}')
                     output = func.HttpResponse(
-                        f'Congratulations, you have identified plastic trashes and made CSV export to /tmp/dataexport.csv')
+                        f'Congratulations, you have identified plastic trashes and made CSV export to /tmp/data.csv')
             
                 else: 
                     output = func.HttpResponse(
