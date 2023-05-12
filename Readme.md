@@ -98,6 +98,38 @@ The ETL is made of three parts:
 * The ETL API function which does the actual ETL process
 * The ETL batch which is a DAG running on Airflow
 
+## Recipe for re-running ETL on data
+
+
+  
+
+If you want to re-run the full processing from starting data:
+- We assume that files (.json and .mp4 if automatic) are present in the blob storage
+- We assume that the blob trigger worked properly and the table `campaign.campaign` contains the campaign details.
+
+There are two steps
+<details> 
+  <summary>trigger_batch_etl_all</summary>
+
+  The `trigger_batch_etl_all` will re-insert the trash in `campaign.trash`. To rerun this process for a given campaign `campaign_id`, you need to:
+  - remove the rows in `campaing.trash` which corresponds to the `campaign_id`
+  - In `logs.etl` row with the corresponding `campaign_id`, set the column "status" to "notprocessed"
+  
+  You may then run the `trigger_batch_etl_all` DAG.
+</details>
+
+  
+<details> 
+  <summary>bi processing and postprocessing</summary>
+
+  The `bi-processing` will recompute the different metrics related to the trash and campaign. To rerun this process for a given campaign `campaign_id`, you need to:
+  - In table `campaign.campaign` row `campaign_id`, set the column "has_been_computed" to NULL
+  - Remove the line corresponing to `campaign_id` in `bi_temp.pipelines`
+  
+  You may then run the `bi-processing` DAG which will update the `bi` tables and run `bi-postprocessin`
+</details>
+
+
 ## **Contributing**
 
 It's great to have you here! We welcome any help and thank you in advance for your contributions.
@@ -111,6 +143,7 @@ It's great to have you here! We welcome any help and thank you in advance for yo
 If you experience any problems, please don't hesitate to ping:
 
 * [@cl3m3nt](https://github.com/cl3m3nt)
+* [@charlesollion](https://github.com/charlesollion)
 
 Special thanks to all our [Contributors](https://github.com/orgs/surfriderfoundationeurope/people).
 
