@@ -18,7 +18,7 @@ def main(etlblob: func.InputStream):
     blob_name = blob_fullname.split('/')[1]
     # Media info
     campaign_id = os.path.splitext(blob_name)[0]
-    media_name = blob_name
+    media_name = campaign_id +'.mp4'
     media_id = campaign_id
     # Log Dataframe
     etl_log_df = get_log_df(campaign_id,media_id,media_name)

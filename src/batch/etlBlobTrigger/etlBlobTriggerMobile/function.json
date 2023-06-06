@@ -5,7 +5,7 @@
           "name": "etlblob",
           "type": "blobTrigger",
           "direction": "in",
-          "path": "mobile/{name}.mp4",
+          "path": "mobile/{name}.json",
           "connection":"CONN_STRING"
       }
   ]
