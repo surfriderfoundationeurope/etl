@@ -75,7 +75,40 @@ DROP INDEX IF EXISTS bi.campaign_river_the_geom;
 CREATE INDEX campaign_river_the_geom
 ON bi.campaign_river USING gist(the_geom);
 
+-- Add the tag disabled to campaigns with GPS problems. They are identified when the number of  
+-- trash is 8 times below the number of different trash locations
+-- But the bi_temp schema does not have the "disabled" field, so this computation is here instead
+-- of in `compute_bi_temp_campaign_river.sql`
+WITH table_summary AS (
+    WITH grouped_trash AS (
+        SELECT 
+            id_ref_campaign_fk, 
+            the_geom, 
+            count(*) AS num
+        FROM bi.trash
+        WHERE id_ref_campaign_fk IN (
+            SELECT campaign_id FROM bi_temp.pipeline_to_compute
+        )
+        GROUP BY id_ref_campaign_fk, the_geom
 
+    )
+    SELECT 
+        id_ref_campaign_fk, 
+        count(*) AS "num different locations", 
+        sum(num) AS "num trash"
+    FROM grouped_trash 
+    GROUP BY id_ref_campaign_fk
+)
+UPDATE bi.campaign_river cr 
+SET "disabled" = TRUE
+WHERE cr.id_ref_campaign_fk IN (
+    SELECT id_ref_campaign_fk 
+    FROM table_summary ts 
+    WHERE (ts."num trash" > ts."num different locations" * 8)
+);
+
+
+-- QUERY 3: migration for table trajectory_poiny
 DELETE FROM
     bi.trajectory_point
 WHERE
