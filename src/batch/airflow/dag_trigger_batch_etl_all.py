@@ -12,6 +12,7 @@ from airflow import DAG
 from airflow.decorators import task
 from airflow.sensors.python import PythonSensor
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import BranchPythonOperator
 
 from postgre import *
 from exceptions import *
@@ -53,8 +54,6 @@ with DAG(
         pg_cursor = pg_connection.cursor()
 
         
-        # [START scale_aks_nodepool]
-        @task(task_id="scaleup_aks_nodepool")
         def scale_aks_nodepool(tenant_id,value,client_id,subscription,aks_rg,aks_cluster,aks_nodepool,scale):
 
             # azure oauth2 authentication
@@ -90,10 +89,20 @@ with DAG(
                 
             return str(response)
         
-        scaleup_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,1)
+        # [START scale_aks_nodepool]
+        @task(task_id="scaleup_aks_nodepool")
+        def scaleup_aks_nodepool():
+            return scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,1)
+        scaleup_aks_nodepool_op = scaleup_aks_nodepool()
         # [END scaleup_aks_nodepool]
 
-
+        # [START scaledown_aks_nodepool]
+        @task(task_id="scaledown_aks_nodepool")
+        def scaledown_aks_nodepool():
+            return scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,0)
+        scaledown_aks_nodepool_op = scaledown_aks_nodepool()
+        # [END scaledown_aks_nodepool]
+            
         # [START wait_surfnet_op]
         def wait_surfnet():
             ai_ready = False
@@ -110,8 +119,8 @@ with DAG(
             return ai_ready
 
         wait_surfnet_op = PythonSensor(
-        task_id='wait_surfnet',
-        python_callable=wait_surfnet,
+            task_id='wait_surfnet',
+            python_callable=wait_surfnet,
         )
         # [END wait_surfnet_op]
 
@@ -137,11 +146,9 @@ with DAG(
         post_surfnet_video_op = post_video_surfnet(VIDEO_TEST_NAME,AI_URL)
         # [END post_surfnet_video]
 
-        # [START trigger_batch_etl]
-        @task(task_id="trigger_batch_etl")
-        
-        def trigger_batch_etl(cursor):
-            # Get notprocessed media
+        # [START get_notprocessed_media]
+        @task(task_id="get_notprocessed_media")
+        def get_notprocessed_media(cursor):
             cursor.execute("SELECT * FROM logs.etl WHERE status = 'notprocessed'")
             query_output = cursor.fetchall()
             notprocessed_media = query_output
@@ -154,7 +161,25 @@ with DAG(
                 media_logid = media[0]
                 media_dico = {'name':media_name,'container':media_container,'logid':media_logid}
                 notprocessed_media_list.append(media_dico)
+            
+            return notprocessed_media_list
+        
+        get_notprocessed_media_op = get_notprocessed_media(pg_cursor)
+        # [END get_notprocessed_media]
+        
+        @task.branch
+        def check_if_ai_media(notprocessed_media_list):
+            ai_media = False
+            for media in notprocessed_media_list:
+                if media['container'] == 'mobile' or media['container'] == 'gopro':
+                    ai_media = True
+                    break
+            return "scaleup_aks_nodepool" if ai_media else "trigger_batch_etl"
 
+
+        # [START trigger_batch_etl]
+        @task(task_id="trigger_batch_etl")
+        def trigger_batch_etl(notprocessed_media_list):
 
             # Batch ETL on not processed media
             output_list = []
@@ -162,6 +187,7 @@ with DAG(
                 blob_name = notprocessed_media['name']
                 container = notprocessed_media['container']
                 logid = notprocessed_media['logid']
+                logging.info(f"Blob: {blob_name} ETL_URL: {ETL_URL}")
                 url = f'{ETL_URL}:80/api/etlHttpTrigger?container={container}&blob={blob_name}&prediction=ai&source={container}&target=postgre&aiurl={AI_URL}&logid={logid}'
                 response = requests.get(url)
                 if not response.ok:
@@ -170,53 +196,13 @@ with DAG(
                 output_list.append(output)
             
             return str(output_list)
-
-        trigger_batch_etl_op = trigger_batch_etl(pg_cursor)
         # [END trigger_batch_etl]
 
+        notprocessed_media = get_notprocessed_media_op
 
-        # [START scaledown_aks_nodepool]
-        @task(task_id="scaledown_aks_nodepool")
-        def scale_aks_nodepool(tenant_id,value,client_id,subscription,aks_rg,aks_cluster,aks_nodepool,scale):
-
-            # azure oauth2 authentication
-            url = f"https://login.microsoftonline.com/{tenant_id}/oauth2/token"
-            data = {'grant_type': 'client_credentials',
-                    'client_secret': f'{value}',
-                    'client_id': f'{client_id}',
-                    'resource': 'https://management.azure.com'}
-            try:
-                response = requests.post(url, data=data)
-            except:
-                logging.info(f"There was an error when acquiring token {response.content}")
-
-            token = response.json()['access_token']
-
-            # scale aks nodepool
-            headers = {"Content-Type":"application/json","Authorization":f"Bearer {token}"}
-            url = f"https://management.azure.com/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/managedClusters/{aks_cluster}/agentPools/{aks_nodepool}?api-version=2022-02-01"
-            data = {
-            "properties": {
-                "orchestratorVersion": "",
-                "count": scale,
-                "osType": "Linux",
-                "creationData": {
-                "sourceResourceId": f"/subscriptions/{subscription}/resourceGroups/{aks_rg}/providers/Microsoft.ContainerService/"
-                }
-                }
-            }
-            try:
-                response = requests.put(url,data=json.dumps(data),headers=headers)
-            except:
-                logging.info(f"There was an error when scaling aks {response.content}")
-                
-            return str(response)
-        
-        scaledown_aks_nodepool_op = scale_aks_nodepool(TENANT_ID,VALUE,CLIENT_ID,SUBSCRIPTION_ID,AKS_RG,AKS_CLUSTER,AKS_NODEPOOL,0)
-        # [END scaledown_aks_nodepool]
-    
-        scaleup_aks_nodepool_op >> wait_surfnet_op >> get_surfnet_video_op >> post_surfnet_video_op >> trigger_batch_etl_op >> scaledown_aks_nodepool_op
-
+        check_if_ai_media_op = check_if_ai_media(notprocessed_media)
+        check_if_ai_media_op >> trigger_batch_etl(notprocessed_media)
+        check_if_ai_media_op >> scaleup_aks_nodepool_op >> wait_surfnet_op >> get_surfnet_video_op >> post_surfnet_video_op >> trigger_batch_etl(notprocessed_media) >> scaledown_aks_nodepool_op
 
         
         
