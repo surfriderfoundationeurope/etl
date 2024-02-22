@@ -25,6 +25,31 @@ from postgre import get_pg_connection_string, open_pg_connection, close_pg_conne
 
 logger = logging.getLogger()
 
+doc_md_DAG = """
+## ETL
+
+This DAG triggers the ETL (extract, transform and load) on all containers.
+This means it collects all .json files that were uploaded to the blob storage, through the mobile app.
+
+#### How it works
+When a user sends its data, the backend API stores the user data (json file, video, images) to a container (either `manual`, `mobile` for AI version, or `gopro`)
+The API also adds lines in the database:
+- in the `campaign.campaign` table
+- in the `logs.etl` table, stating that the campaign is `notprocessed`
+
+This DAG fills the DB with either the data from the json and/or the video processed by the AI.
+The AI part will not be powered if there is no AI videos to be processed.
+
+When it finishes successfully, it sets the campaigns in the `logs.etl` table to `processed`, or `failed`.
+
+#### If it fails
+- You can safely rerun this DAG, if it fails
+- try to see which node made the process failing: is it the AI? The `trigger_batch_etl`?
+- Check in the Airflow logs what is the error.
+
+#### Maintainers
+- Charles Ollion or Clément Le Roux
+"""
 
 with DAG(
     dag_id='trigger_batch_etl_all',
@@ -32,6 +57,7 @@ with DAG(
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
     tags=['plastico'],
+    doc_md=doc_md_DAG
    ) as dag:
 
         # Parameters

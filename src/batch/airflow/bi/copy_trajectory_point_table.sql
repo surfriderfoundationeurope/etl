@@ -1,5 +1,7 @@
-DELETE FROM bi_temp.trajectory_point
-WHERE id_ref_campaign_fk IN (SELECT campaign_id FROM bi_temp.pipeline_to_compute);
+-- Changed logic from deleting just current points to all points
+-- DELETE FROM bi_temp.trajectory_point
+-- WHERE id_ref_campaign_fk IN (SELECT campaign_id FROM bi_temp.pipeline_to_compute);
+TRUNCATE bi_temp.trajectory_point;
 INSERT INTO bi_temp.trajectory_point (
     id,
     the_geom,
