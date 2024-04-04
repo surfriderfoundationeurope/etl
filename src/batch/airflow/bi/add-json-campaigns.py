@@ -1,3 +1,4 @@
+import logging
 from airflow import DAG
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.utils.dates import days_ago
@@ -7,6 +8,7 @@ from postgre import get_pg_connection_string, open_pg_connection, close_pg_conne
 
 import uuid
 from datetime import datetime
+
 
 doc_md_DAG = """
 ## Add JSON Campaigns
@@ -35,6 +37,8 @@ data within the mobile App or API.
 #### Maintainers
 - Charles Ollion or Clément Le Roux
 """
+
+logger = logging.getLogger()
 
 with DAG(
 
@@ -67,46 +71,47 @@ with DAG(
     pg_conn_string = get_pg_connection_string()
     pg_connection = open_pg_connection(pg_conn_string)
     #pg_cursor = pg_connection.cursor()
+    
 
     # [START add_json_campaign]
     @task(task_id="add_json_campaign")
     
     def add_json_campaign(pg_connection, **context):
-
+        data = context["params"]
         campaign_query = """
             INSERT INTO campaign.campaign (id, locomotion, isaidriven, remark, id_ref_user_fk, riverside, createdon)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         campaign_values = (
-            uuid.UUID(data['id']),
+            data['id'],
             data['move'],
-            data['trackingMode'],
+            "true" if data['trackingMode'] == "automatic" else "false",
             data['comment'],
             data['user'], 
-            data['bank'],
-            data['createdon']
+            "right" if data['bank']=="rightBank" else "left",
+            data['date']
         )
         trajectory_query = """
             INSERT INTO campaign.trajectory_point (id, id_ref_campaign_fk, "time", lat, lon, createdon)
             VALUES (%s, %s, %s, %s, %s, %s)
         """
-
-        data = context["params"]
+        createdon = datetime.now()
         with pg_connection.cursor() as cursor:
+            
             cursor.execute(campaign_query, campaign_values)
             campaign_id = uuid.UUID(data['id'])
 
             for position in data['positions']:
                 trajectory_values = (
-                    uuid.uuid4(),
-                    campaign_id,
+                    str(uuid.uuid4()),
+                    data['id'],
                     position['date'],
                     position['lat'],
                     position['lng'],
-                    position['createdon']
+                    str(createdon)
                 )
-            cursor.execute(trajectory_query, trajectory_values)
-
+                cursor.execute(trajectory_query, trajectory_values)
+        
         pg_connection.commit()
         pg_connection.close()
 
