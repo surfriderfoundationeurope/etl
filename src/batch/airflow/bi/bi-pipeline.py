@@ -3,13 +3,37 @@ from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.utils.dates import days_ago
 
+doc_md_DAG = """
+## BI Pipeline
+
+This DAG triggers a series of processing named BI (Business Intelligence) which compute various metrics
+related to the campaigns, trash, and users. In particular, it links the campaigns to a referential of rivers.
+
+**VERY IMPORTANT: Always run `etl_batch_trigger_all` before running this DAG !**
+
+#### How it works
+- It selects campaigns from `campaign.campaign` where `has_been_computed` is `null`
+- It uses campaign, trajectory points, trash, rivers information.
+- It fills information in the `bi` tables.
+
+When finished, it automatically starts the `bi-postprocessing` DAG.
+
+#### If it fails
+- It only writes data in the database if it works until the end (besides temporary data)
+- You can safely rerun it or run it twice
+- Try to see which node fails and see error in logs
+
+#### Maintainers
+- Charles Ollion or Clément Le Roux
+"""
+
 with DAG(
 
     dag_id="bi-pipeline",
     start_date=days_ago(1),
     schedule_interval=None,
     catchup=False,
-
+    doc_md=doc_md_DAG
 ) as dag:
 
     get_new_campaign_ids = PostgresOperator(
