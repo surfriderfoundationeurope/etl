@@ -13,18 +13,24 @@ from datetime import datetime
 doc_md_DAG = """
 ## Add JSON Campaigns
 
-This DAG enables to add campaigns directly from JSONs of a user. It is typically used when there was an error with
-data within the mobile App or API.
 
-### Running this DAG
+This DAG enables to add campaigns directly from a json file of a user. It is typically used when there was an error with
+data within the mobile App or API.
+It does what the mobile API normally does. You still have to run the etl and bi-pipeline to finalise adding the data to the database 
+
+### Running this DAG 
 
 - Find the user you want to add the campaign to, by looking at the `campaign.user` database, and noting the `[userID]`
-- Open the json file and copy the id (it looks like: ace36cf3-0170-45d7-b5f0-e45aaee2148c). Rename the file [id].json
-- In the file, just after the first bracket '{', add the user: \"user\": \"[userID]\"
-- Copy the contents of the JSON
-- When triggerin the DAG, select \"Run with parameters\"
-- replace the json content by pasting your own JSON and click Trigger
-- Finally, upload the Json file in the `manual` container
+- Open the json file and copy the id in it (it looks like: ace36cf3-0170-45d7-b5f0-e45aaee2148c / first line of the json). Rename the file from `trace_14-07-2023_16h05.json` to `[id].json`. Be careful, this campaign id is different from `[userID]`!  
+- Upload the Json file in the manual container. A notification informs you that the file has been added, checking that it was not already in the container. 
+
+Then trigger the DAG:
+- When triggerin the DAG, select "Run with parameters":
+- Copy the contents of the JSON file
+- Replace the json content by pasting your own JSON  
+- just after the first bracket '{', add the user: "user": "[userID]" 
+- click `Trigger` 
+--
 
 #### How it works
 
